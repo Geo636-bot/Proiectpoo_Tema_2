@@ -20,8 +20,6 @@ public:
 
     virtual void afiseazaDetalii() const = 0;
     [[nodiscard]] [[maybe_unused]] virtual double calculeazaEnergie() const = 0;
-    [[nodiscard]] const std::string& getNume() const { return nume; }
-    [[nodiscard]] [[maybe_unused]] int getGramaj() const { return gramaj; }
 };
 // Clasa pentru bauturi
 class Bautura : public Produs {
@@ -511,7 +509,7 @@ public:
         }
 
         // Bucatarii
-        for ([[maybe_unused]] const auto& comanda : comenziDePreparat) {
+        for ([[maybe_unused]] const auto* comanda : comenziDePreparat) {
             for (auto& bucatar : bucatari) {
                 if (bucatar->poatePrepara() && bucatar->esteLiber()) {
                     bucatar->preparaComanda();
@@ -521,7 +519,7 @@ public:
         }
 
         // Alti pot prepara daca nu este optim
-        for (const auto& comanda : comenziDePreparat) {
+        for (const auto* comanda : comenziDePreparat) {
             if (!comanda->estePreparata()) {
                 for (auto& angajat : angajati) {
                     if (angajat->poatePrepara()) {
