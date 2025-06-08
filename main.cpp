@@ -10,13 +10,6 @@
 #include <ctime>
 #include <ranges>
 
-int genereazaNumarAleator(int min, int max) {
-    static std::random_device rd;  // Dispozitiv hardware pentru seed
-    static std::mt19937 gen(rd()); // Mersenne Twister engine
-    std::uniform_int_distribution<> distrib(min, max);
-    return distrib(gen);
-}
-
 class Produs {
 protected:
     std::string nume;
@@ -26,9 +19,9 @@ public:
     virtual ~Produs() = default;
 
     virtual void afiseazaDetalii() const = 0;
-    [[nodiscard]] virtual double calculeazaEnergie() const = 0;
-    [[nodiscard]] std::string getNume() const { return nume; }
-    [[nodiscard]] int getGramaj() const { return gramaj; }
+    [[nodiscard]] [[maybe_unused]] virtual double calculeazaEnergie() const = 0;
+    [[nodiscard]] const std::string& getNume() const { return nume; }
+    [[nodiscard]] [[maybe_unused]] int getGramaj() const { return gramaj; }
 };
 // Clasa pentru bauturi
 class Bautura : public Produs {
@@ -445,7 +438,7 @@ public:
 
         // Sortam dupa prioritate
         std::ranges::sort(comenziNepreluate,
-                          [](Comanda* a, Comanda* b) {
+                          [](const Comanda* a, const Comanda* b) {
                               if (a->estePrioritara() != b->estePrioritara()) {
                                   return a->estePrioritara();
                               }
@@ -496,7 +489,7 @@ public:
         switch(strategie) {
             case StrategiePreparare::PRIORITATE_PRIMUL:
                 std::ranges::sort(comenziDePreparat,
-                                  [](Comanda* a, Comanda* b) {
+                                  [](const Comanda* a, const Comanda* b) {
                                       if (a->estePrioritara() != b->estePrioritara()) {
                                           return a->estePrioritara();
                                       }
@@ -505,20 +498,20 @@ public:
                 break;
             case StrategiePreparare::CELE_MAI_USOARE:
                 std::ranges::sort(comenziDePreparat,
-                                  [](Comanda* a, Comanda* b) {
+                                  [](const Comanda* a, const Comanda* b) {
                                       return a->calculeazaEnergieTotala() < b->calculeazaEnergieTotala();
                                   });
                 break;
             case StrategiePreparare::CELE_MAI_GRELE:
                 std::ranges::sort(comenziDePreparat,
-                                  [](Comanda* a, Comanda* b) {
+                                  [](const Comanda* a, const Comanda* b) {
                                       return a->calculeazaEnergieTotala() > b->calculeazaEnergieTotala();
                                   });
                 break;
         }
 
         // Bucatarii
-        for ([[maybe_unused]] auto& comanda : comenziDePreparat) {
+        for ([[maybe_unused]] const auto& comanda : comenziDePreparat) {
             for (auto& bucatar : bucatari) {
                 if (bucatar->poatePrepara() && bucatar->esteLiber()) {
                     bucatar->preparaComanda();
@@ -528,7 +521,7 @@ public:
         }
 
         // Alti pot prepara daca nu este optim
-        for (auto& comanda : comenziDePreparat) {
+        for (const auto& comanda : comenziDePreparat) {
             if (!comanda->estePreparata()) {
                 for (auto& angajat : angajati) {
                     if (angajat->poatePrepara()) {
@@ -543,7 +536,7 @@ public:
     void livrareComenzi() const {
         std::cout << "\n=== ETAPA DE LIVRARE COMENZI ===\n";
 
-        for (auto& comanda : comenzi) {
+        for (const auto& comanda : comenzi) {
             if (comanda.estePreparata() && !comanda.esteLivrata()) {
                 for (auto& angajat : angajati) {
                     if (angajat->getTip() == TipAngajat::LIVRATOR && angajat->poateLivra()) {
@@ -556,7 +549,7 @@ public:
         }
 
         // Asignam ati daca e nevoie
-        for (auto& comanda : comenzi) {
+        for (const auto& comanda : comenzi) {
             if (comanda.estePreparata() && !comanda.esteLivrata()) {
                 for (auto& angajat : angajati) {
                     if (angajat->poateLivra()) {
