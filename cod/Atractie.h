@@ -11,7 +11,7 @@ protected:
   int capacitate;
 
 public:
-  Atractie(const std::string& nume, int inaltimeMinima, int capacitate):nume(nume),inaltimeMinima(inaltimeMinima),capacitate(capacitate){}
+  Atractie(const std::string& nume, int inaltimeMinima, int capacitate){}
 
   virtual ~Atractie() = default;
 
