@@ -1,3 +1,4 @@
+
 #ifndef ANGAJAT_H
 #define ANGAJAT_H
 
@@ -12,23 +13,23 @@ protected:
     double salariu;
 
 public:
-    Angajat(const std::string& nume, int varsta, int experientaAni, double salariu){};
+    Angajat(const std::string& nume, int varsta, int experientaAni, double salariu);
     virtual ~Angajat() = default;
-
-    virtual void print(std::ostream& out) const = 0;
-
-    friend std::ostream& operator<<(std::ostream& out,const Angajat& ang){
-        ang.print(out);
-        return out;
-    }
+    
     virtual std::string getTip() const = 0;
-
-
+    virtual double calculeazaSalariuTotal() const;
+    
+    // Operatorul << virtual pentru polimorfism
+    friend std::ostream& operator<<(std::ostream& os, const Angajat& angajat);
+    
     // Getters
     std::string getNume() const { return nume; }
     int getVarsta() const { return varsta; }
     int getExperientaAni() const { return experientaAni; }
     double getSalariu() const { return salariu; }
+
+protected:
+    virtual void afiseaza(std::ostream& os) const;
 };
 
 class OperatorAtractie : public Angajat {
@@ -37,15 +38,12 @@ private:
 
 public:
     OperatorAtractie(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& atractieDeservita);
-    void print(std::ostream& out) const override {
-        out << "Operator Atractie: " << nume <<std::endl<<"Varsta: " << varsta<<std::endl
-          <<"Experienta: " << experientaAni << " ani"<<std::endl
-          <<"Salariu: " << salariu<<std::endl
-          <<"Atractie: " << atractieDeservita<<std::endl;
-    }
     std::string getTip() const override { return "Operator Atractie"; }
-
+    double calculeazaSalariuTotal() const override;
     std::string getAtractieDeservita() const { return atractieDeservita; }
+
+protected:
+    void afiseaza(std::ostream& os) const override;
 };
 
 class AgentPaza : public Angajat {
@@ -54,17 +52,12 @@ private:
 
 public:
     AgentPaza(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& zonaAsignata);
-    void print(std::ostream& out) const override{
-        out << "Agent Paza: " << nume <<std::endl
-          <<"Varsta: " << varsta<<std::endl
-          <<"Experienta: " << experientaAni << " ani"<<std::endl
-          <<"Salariu: " << salariu<<std::endl
-          <<"Zona in care este asignat: "<<zonaAsignata<<std::endl;
-
-    }
     std::string getTip() const override { return "Agent Paza"; }
-
+    double calculeazaSalariuTotal() const override;
     std::string getZonaAsignata() const { return zonaAsignata; }
+
+protected:
+    void afiseaza(std::ostream& os) const override;
 };
 
 class Casier : public Angajat {
@@ -73,15 +66,11 @@ private:
 
 public:
     Casier(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& interval);
-    void print(std::ostream& out)const override{
-        out << "Casier: " << nume <<std::endl
-          <<"Varsta: " << varsta<<std::endl
-          <<"Experienta: " << experientaAni << " ani"<<std::endl
-          <<"Salariu: " << salariu<<std::endl
-          <<"Interval tura: "<<interval<<std::endl;
-    }
     std::string getTip() const override { return "Casier"; }
     std::string getInterval() const { return interval; }
+
+protected:
+    void afiseaza(std::ostream& os) const override;
 };
 
 #endif
