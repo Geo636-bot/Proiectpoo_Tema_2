@@ -1,3 +1,4 @@
+
 #ifndef ATRACTIE_H
 #define ATRACTIE_H
 
@@ -6,76 +7,65 @@
 
 class Atractie {
 protected:
-  std::string nume;
-  int inaltimeMinima;
-  int capacitate;
+    std::string nume;
+    int inaltimeMinima;
+    int capacitate;
 
 public:
-  Atractie(const std::string& nume, int inaltimeMinima, int capacitate){}
+    Atractie(const std::string& nume, int inaltimeMinima, int capacitate);
+    virtual ~Atractie() = default;
+    
+    virtual std::string getTip() const = 0;
+    
+    // Operatorul << virtual pentru polimorfism
+    friend std::ostream& operator<<(std::ostream& os, const Atractie& atractie);
+    
+    // Getters
+    std::string getNume() const { return nume; }
+    int getInaltimeMinima() const { return inaltimeMinima; }
+    int getCapacitate() const { return capacitate; }
 
-  virtual ~Atractie() = default;
-
-  virtual void print(std::ostream& out) const = 0;
-
-  friend std::ostream& operator<<(std::ostream& out,const Atractie& atr){
-    atr.print(out);
-    return out;
-  }
-
-  virtual std::string getTip() const = 0;
-
-  // Getters
-  std::string getNume() const { return nume; }
-  int getInaltimeMinima() const { return inaltimeMinima; }
-  int getCapacitate() const { return capacitate; }
+protected:
+    virtual void afiseaza(std::ostream& os) const;
 };
 
-class RollerCoaster : public Atractie {
+class MontagneRusse : public Atractie {
 private:
-  int vitezaMaxima;
+    int vitezaMaxima;
 
 public:
-  RollerCoaster(const std::string& nume, int inaltimeMinima, int capacitate, int vitezaMaxima);
-  void print(std::ostream& out) const override{
-    out <<"Roller Coaster: " << nume <<std::endl
-        <<"Inaltime minima obligatorie: " << inaltimeMinima<<std::endl
-        <<"Capacitate: " << capacitate <<std::endl
-        <<"Viteza maxima: " << vitezaMaxima <<std::endl;
+    MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate, int vitezaMaxima);
+    std::string getTip() const override { return "Montagne Russe"; }
+    int getVitezaMaxima() const { return vitezaMaxima; }
 
-  }
-  std::string getTip() const override { return "Roller Coaster"; }
-  int getVitezaMaxima() const { return vitezaMaxima; }
+protected:
+    void afiseaza(std::ostream& os) const override;
 };
 
 class Carusel : public Atractie {
 private:
-  int numarCai;
+    int numarCai;
 
 public:
-  Carusel(const std::string& nume, int inaltimeMinima, int capacitate, int numarCai);
-  void print(std::ostream& out) const override{
-    out << "Carusel: " << nume <<std::endl<<"Inaltime minima obligatorie: " << inaltimeMinima
-          <<std::endl<<"Capacitate: " << capacitate <<std::endl<<"Numarul de cai: "<<numarCai<<std::endl;
+    Carusel(const std::string& nume, int inaltimeMinima, int capacitate, int numarCai);
+    std::string getTip() const override { return "Carusel"; }
+    int getNumarCai() const { return numarCai; }
 
-  }
-  std::string getTip() const override { return "Carusel"; }
-  int getNumarCai() const { return numarCai; }
+protected:
+    void afiseaza(std::ostream& os) const override;
 };
 
 class CasaGroazei : public Atractie {
 private:
-  int nivelFrica;
+    int nivelFrica;
 
 public:
-  CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate, int nivelFrica);
-  void print(std::ostream& out) const override{
-    out << "Casa Groazei: " << nume <<std::endl
-        <<"Inaltime minima obligatorie: " << inaltimeMinima<<std::endl
-        <<"Capacitate: " << capacitate <<std::endl
-        <<"Nivel de frica: "<<nivelFrica<<std::endl;
-  }
-  std::string getTip() const override { return "Casa Groazei"; }
-  int getNivelFrica() const { return nivelFrica; }
+    CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate, int nivelFrica);
+    std::string getTip() const override { return "Casa Groazei"; }
+    int getNivelFrica() const { return nivelFrica; }
+
+protected:
+    void afiseaza(std::ostream& os) const override;
 };
 
 #endif
