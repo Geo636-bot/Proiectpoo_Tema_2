@@ -45,28 +45,16 @@ Acest proiect reprezintă o aplicație simplă care modelează un **parc de dist
 - Inițializarea și gestionarea listelor de atracții, angajați, bilete și vizitatori
 - Verificarea eligibilității unui vizitator pentru o atracție (ex: înălțime, vârstă)
 - Afișarea informațiilor detaliate despre fiecare entitate
-- Demonstratii de **polimorfism** cu metode virtuale
 - Exemplu de **moștenire multiplă** și **suprascriere a metodelor**
 
 ---
 
 ## 🚀 Tehnologii utilizate
 
-- Limbaj: `C++` / `Java` / `Python` *(alege în funcție de implementare)*
+- Limbaj: `C++` 
 - Paradigme: Programare Orientată pe Obiecte
 - Opțional: Interfață CLI (meniu în consolă)
 
 ---
 
-## 📦 Structura fișierelor
 
-```bash
-📁 ParcDistractii/
-├── src/
-│   ├── Atractie.h / .cpp
-│   ├── Angajat.h / .cpp
-│   ├── Bilet.h / .cpp
-│   ├── Vizitator.h / .cpp
-│   └── main.cpp
-├── README.md
-└── Makefile / CMakeLists.txt 
