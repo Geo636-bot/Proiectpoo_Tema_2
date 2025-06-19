@@ -76,5 +76,4 @@ class Casier:public Angajat{
 };
 
 
-
 #endif
