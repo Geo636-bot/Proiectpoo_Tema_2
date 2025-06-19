@@ -11,7 +11,7 @@ Acest proiect reprezintă o aplicație simplă care modelează un **parc de dist
 ### ✅ Clase de bază și clase derivate
 
 #### 1. `Atracție`
-- Atribute comune: `nume`, `inaltimeMinima`, `capacitate`, `durata`
+- Atribute comune: `nume`, `inaltimeMinima`, `capacitate`
 - Derivate:
   - `MontagneRusse` → `vitezaMaxima`
   - `Carusel` → `numarCai`
@@ -21,8 +21,8 @@ Acest proiect reprezintă o aplicație simplă care modelează un **parc de dist
 - Atribute comune: `nume`, `varsta`, `experientaAni`, `salariu`
 - Derivate:
   - `OperatorAtracție` → `atractieDeservita`
-  - `AgentPaza` → `nivelAlerta`
-  - `Casier` → `casierieID`
+  - `AgentPaza` → `zonaAsignata`
+  - `Casier` → `Interval`
 
 #### 3. `Bilet`
 - Atribute comune: `pret`, `tip`, `valabilitateZile`
