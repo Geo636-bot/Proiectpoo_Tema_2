@@ -1,7 +1,7 @@
+
 #ifndef BILET_H
 #define BILET_H
 
-#include <stdexcept>
 #include <string>
 #include <iostream>
 
@@ -11,22 +11,21 @@ protected:
     int valabilitateZile;
 
 public:
-    Bilet(double pret, int valabilitateZile): pret(pret), valabilitateZile(valabilitateZile) {}
+    Bilet(double pret, int valabilitateZile);
     virtual ~Bilet() = default;
-
-    virtual void print(std::ostream& out) const = 0;
-
-    friend std::ostream& operator<<(std::ostream& out,const Bilet& bil){
-        bil.print(out);
-        return out;
-    }
-    virtual double calculeazaPretFinal() const=0;
+    
     virtual std::string getTip() const = 0;
-    virtual double calculeazaReducere() const;
-
+    virtual double calculeazaPretFinal() const;
+    
+    // Operatorul << virtual pentru polimorfism
+    friend std::ostream& operator<<(std::ostream& os, const Bilet& bilet);
+    
     // Getters
     double getPret() const { return pret; }
     int getValabilitateZile() const { return valabilitateZile; }
+
+protected:
+    virtual void afiseaza(std::ostream& os) const;
 };
 
 class BiletCopil : public Bilet {
@@ -34,82 +33,41 @@ private:
     int varstaCopil;
 
 public:
-    BiletCopil(int valabilitateZile, int varstaCopil): Bilet(45, valabilitateZile), varstaCopil(varstaCopil) {
-    if (varstaCopil > 15) {
-        throw std::invalid_argument("Copilul e prea mare, trebuie sa cumparati un bilet adult.");
-    }
-    }
-
-    void print(std::ostream& out) const override{
-        out << "Tip Bilet: Bilet Copil"<<std::endl;
-        out << "Valabilitate: " << valabilitateZile << " zile" << std::endl;
-        out << "Varsta copil: " << varstaCopil << " ani" << std::endl;
-        out << "Reducere: " << calculeazaReducere() << "%" << std::endl;
-        out << "Pret bilet: "<< calculeazaPretFinal()<<"RON"<<std::endl;
-
-    }
+    BiletCopil(double pret, int valabilitateZile, int varstaCopil);
     std::string getTip() const override { return "Bilet Copil"; }
+    double calculeazaPretFinal() const override;
     int getVarstaCopil() const { return varstaCopil; }
 
-    double calculeazaReducere() const override{
-        if (varstaCopil <= 5)
-            return 50.0; // reducere 50%
-        else if (varstaCopil <= 12)
-            return 30.0; // reducere 30%
-        else if (varstaCopil<=15){
-            return 10.0; // reducere 10%
-        }
-        return 0.0;
-    }
-    double calculeazaPretFinal()const override{
-      double reducere=calculeazaReducere();
-      return pret-pret/reducere;
-    }
+protected:
+    void afiseaza(std::ostream& os) const override;
 };
 
 class BiletAdult : public Bilet {
 private:
-    bool Platitavans;
+    bool includeFastPass;
 
 public:
-    BiletAdult(int valabilitateZile, bool Platitavans): Bilet(85, valabilitateZile), Platitavans(Platitavans) {}
-
-    void print(std::ostream& out) const override{
-        out << "Tip Bilet: Bilet Adult"<<std::endl;
-        out << "Valabilitate: " << valabilitateZile << " zile" << std::endl;
-        out << "Platit avans: " << (Platitavans ? "Da":"Nu")<< std::endl;
-        out << "Pret bilet: "<< calculeazaPretFinal()<<"RON"<<std::endl;
-    }
-
+    BiletAdult(double pret, int valabilitateZile, bool includeFastPass);
     std::string getTip() const override { return "Bilet Adult"; }
+    double calculeazaPretFinal() const override;
+    bool getIncludeFastPass() const { return includeFastPass; }
 
-    bool getPlatitavans() const { return Platitavans; }
-    double calculeazaPretFinal() const override{
-      if(Platitavans)return pret+50;
-      return pret;
-    }
+protected:
+    void afiseaza(std::ostream& os) const override;
 };
 
-class BiletAllfamily : public Bilet {
+class BiletVIP : public Bilet {
 private:
     bool accesLounge;
 
 public:
-    BiletAllfamily(int valabilitateZile, bool accesLounge): Bilet(240, valabilitateZile), accesLounge(accesLounge) {}
-
-    void print(std::ostream& out) const override{
-        out << "Tip Bilet: Bilet All family"<<std::endl;
-        out << "Valabilitate: " << valabilitateZile << " zile" << std::endl;
-        out << "Acces Lounge: " << (accesLounge ? "Da":"Nu")<< std::endl;
-        out << "Pret bilet: "<< calculeazaPretFinal()<<"RON"<<std::endl;
-    }
+    BiletVIP(double pret, int valabilitateZile, bool accesLounge);
     std::string getTip() const override { return "Bilet VIP"; }
-    double calculeazaPretFinal() const override{
-        if(accesLounge)return pret+100;
-        return pret;
-    }
-
+    double calculeazaPretFinal() const override;
     bool getAccesLounge() const { return accesLounge; }
+
+protected:
+    void afiseaza(std::ostream& os) const override;
 };
 
 #endif
