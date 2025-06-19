@@ -21,8 +21,8 @@ Acest proiect reprezintă o aplicație simplă care modelează un **parc de dist
 - Atribute comune: `nume`, `varsta`, `experientaAni`, `salariu`
 - Derivate:
   - `OperatorAtracție` → `atractieDeservita`
-  - `AgentPaza` → `nivelAlerta`
-  - `Casier` → `casierieID`
+  - `AgentPaza` → `zonaAsignata`
+  - `Casier` → `Interval`
 
 #### 3. `Bilet`
 - Atribute comune: `pret`, `tip`, `valabilitateZile`
