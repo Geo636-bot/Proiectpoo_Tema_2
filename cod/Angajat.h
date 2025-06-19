@@ -12,7 +12,7 @@ protected:
     double salariu;
 
 public:
-    Angajat(const std::string& nume, int varsta, int experientaAni, double salariu): nume(nume), varsta(varsta),experientaAni(experientaAni),salariu(salariu){};
+    Angajat(const std::string& nume, int varsta, int experientaAni, double salariu){};
     virtual ~Angajat() = default;
     
     virtual void print(std::ostream& out) const = 0;
