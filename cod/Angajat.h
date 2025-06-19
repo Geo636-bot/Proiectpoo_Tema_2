@@ -38,9 +38,10 @@ private:
 public:
     OperatorAtractie(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& atractieDeservita);
     void print(std::ostream& out) const override {
-        out << "Operator Atractie: " << nume <<std::endl<<"Varsta: " << varsta
-            <<std::endl<<"Experienta: " << experientaAni << " ani"<<std::endl<<"Salariu: " << salariu
-            <<std::endl<<"Atractie: " << atractieDeservita<<std::endl;
+        out << "Operator Atractie: " << nume <<std::endl<<"Varsta: " << varsta<<std::endl
+          <<"Experienta: " << experientaAni << " ani"<<std::endl
+          <<"Salariu: " << salariu<<std::endl
+          <<"Atractie: " << atractieDeservita<<std::endl;
     }
     std::string getTip() const override { return "Operator Atractie"; }
 
@@ -54,9 +55,11 @@ private:
 public:
     AgentPaza(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& zonaAsignata);
     void print(std::ostream& out) const override{
-        out << "Agent Paza: " << nume <<std::endl<<"Varsta: " << varsta
-                <<std::endl<<"Experienta: " << experientaAni << " ani"<<std::endl<<"Salariu: " << salariu
-                <<std::endl<<"Zona in care este asignat: "<<zonaAsignata<<std::endl;
+        out << "Agent Paza: " << nume <<std::endl
+          <<"Varsta: " << varsta<<std::endl
+          <<"Experienta: " << experientaAni << " ani"<<std::endl
+          <<"Salariu: " << salariu<<std::endl
+          <<"Zona in care este asignat: "<<zonaAsignata<<std::endl;
 
     }
     std::string getTip() const override { return "Agent Paza"; }
@@ -71,9 +74,11 @@ private:
 public:
     Casier(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& interval);
     void print(std::ostream& out)const override{
-        out << "Casier: " << nume <<std::endl<<"Varsta: " << varsta
-             <<std::endl<<"Experienta: " << experientaAni << " ani"<<std::endl<<"Salariu: " << salariu
-             <<std::endl<<"Interval tura: "<<interval<<std::endl;
+        out << "Casier: " << nume <<std::endl
+          <<"Varsta: " << varsta<<std::endl
+          <<"Experienta: " << experientaAni << " ani"<<std::endl
+          <<"Salariu: " << salariu<<std::endl
+          <<"Interval tura: "<<interval<<std::endl;
     }
     std::string getTip() const override { return "Casier"; }
     std::string getInterval() const { return interval; }
