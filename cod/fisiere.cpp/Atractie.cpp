@@ -19,8 +19,8 @@ Atractie::Atractie(const Atractie& other)
 
 Atractie& Atractie::operator=(const Atractie& other) {
     if (this != &other) {
-        Atractie temp(other);
-        swap(temp);
+        auto temp = other.clone();
+        swap(*temp);
     }
     return *this;
 }
