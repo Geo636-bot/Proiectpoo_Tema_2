@@ -34,7 +34,7 @@ public:
     static void actualizareSalariuMediu(double nouSalariu);
     
     // Getters
-    std::string getNume() const { return nume; }
+    const std::string& getNume() const { return nume; }
     int getVarsta() const { return varsta; }
     int getExperientaAni() const { return experientaAni; }
     double getSalariu() const { return salariu; }
@@ -56,7 +56,7 @@ public:
     std::unique_ptr<Angajat> clone() const override;
     std::string getTip() const override { return "Operator Atractie"; }
     double calculeazaSalariuTotal() const override;
-    std::string getAtractieDeservita() const { return atractieDeservita; }
+    const std::string& getAtractieDeservita() const { return atractieDeservita; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
@@ -74,7 +74,7 @@ public:
     std::unique_ptr<Angajat> clone() const override;
     std::string getTip() const override { return "Agent Paza"; }
     double calculeazaSalariuTotal() const override;
-    std::string getZonaAsignata() const { return zonaAsignata; }
+    const std::string& getZonaAsignata() const { return zonaAsignata; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
@@ -91,7 +91,7 @@ public:
     
     std::unique_ptr<Angajat> clone() const override;
     std::string getTip() const override { return "Casier"; }
-    std::string getInterval() const { return interval; }
+    const std::string& getInterval() const { return interval; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
