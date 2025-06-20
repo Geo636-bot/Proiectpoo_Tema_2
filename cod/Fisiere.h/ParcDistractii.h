@@ -40,15 +40,9 @@ public:
     double calculezaVenitTotal() const;
     double calculezaCosturiSalariale() const;
 
-    // Funcții statice
-    static int getNumarParcuri() { return numarParcuri; }
-    static void resetContorParcuri() { numarParcuri = 0; }
 
     // Getters
-    std::string getNume() const { return nume; }
-    size_t getNumarAtractii() const { return atractii.size(); }
-    size_t getNumarAngajati() const { return angajati.size(); }
-    size_t getNumarVizitatori() const { return vizitatori.size(); }
+    const std::string& getNume() const { return nume; }
 
 private:
     void swap(ParcDistractii& other);
