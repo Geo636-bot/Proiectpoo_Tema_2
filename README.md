@@ -59,16 +59,16 @@ Acest proiect reprezintă o aplicație simplă care modelează un **parc de dist
 ## Structura proiectului
 
 Proiectpoo_Tema_2/
-├── cod/
-|   ├──fisiere.cpp
-│       ├── Angajat.cpp
-│       ├── Atractie.cpp
-│       ├── Bilet.cpp
-│       ├── Meniu.cpp
-│       ├── ParcDistractii.cpp
-│       ├── Vizitator.cpp
-│       ├── main.cpp
-│   ├── Fisiere.h/
+├── cod/               # Codul sursă al proiectului
+│   ├── fisiere.cpp/   # Fișierele .cpp pentru fiecare clasă
+│   │   ├── Angajat.cpp
+│   │   ├── Atractie.cpp
+│   │   ├── Bilet.cpp
+│   │   ├── Meniu.cpp
+│   │   ├── ParcDistractii.cpp
+│   │   ├── Vizitator.cpp
+│   │   ├── main.cpp   # Punctul de pornire al aplicației
+│   ├── Fisiere.h/     # Fișierele header (.h)
 │       ├── Angajat.h
 │       ├── Atractie.h
 │       ├── Bilet.h
@@ -76,15 +76,16 @@ Proiectpoo_Tema_2/
 │       ├── Meniu.h
 │       ├── ParcDistractii.h
 │       ├── Vizitator.h
-├── generated/
+├── generated/         # Fișiere generate automat
 │   └── src/
 │       └── Helper.cpp
-├── cmake/
+├── cmake/             # Configurări pentru CMake
 │   ├── CompilerFlags.cmake
 │   ├── CopyHelper.cmake
 │   └── Options.cmake
-├── tastatura.txt
-├── CMakeLists.txt
-└── README.md
+├── tastatura.txt      # Fișier de intrare de la tastatură
+├── CMakeLists.txt     # Configurația proiectului pentru CMake
+└── README.md          # Acest fișier
+
 
 
