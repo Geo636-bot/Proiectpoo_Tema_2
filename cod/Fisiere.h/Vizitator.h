@@ -35,7 +35,7 @@ public:
     static void resetContorVizitatori() { numarTotalVizitatori = 0; }
     
     // Getters
-    std::string getNume() const { return nume; }
+    const std::string& getNume() const { return nume; }
     int getVarsta() const { return varsta; }
     int getInaltime() const { return inaltime; }
     const Bilet* getBilet() const { return bilet.get(); }
@@ -91,7 +91,7 @@ public:
     
     std::unique_ptr<Vizitator> clone() const override;
     std::string getTip() const override { return "Adult"; }
-    std::string getOcupatie() const { return ocupatie; }
+    const std::string& getOcupatie() const { return ocupatie; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
