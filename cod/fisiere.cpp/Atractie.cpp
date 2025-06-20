@@ -1,27 +1,26 @@
 
 #include "../Fisiere.h/Atractie.h"
-#include <algorithm>
+#include <iostream>
 
 using namespace std;
 
 // Inițializare atribut static
 int Atractie::numarTotalAtractii = 0;
 
-// Clasa de baza Atractie
-Atractie::Atractie(const std::string& nume, int inaltimeMinima, int capacitate)
+Atractie::Atractie(const std::string& nume, int inaltimeMinima, int capacitate) 
     : nume(nume), inaltimeMinima(inaltimeMinima), capacitate(capacitate) {
     ++numarTotalAtractii;
 }
 
-Atractie::Atractie(const Atractie& other)
+Atractie::Atractie(const Atractie& other) 
     : nume(other.nume), inaltimeMinima(other.inaltimeMinima), capacitate(other.capacitate) {
     ++numarTotalAtractii;
 }
 
 Atractie& Atractie::operator=(const Atractie& other) {
     if (this != &other) {
-        Atractie temp(other); // copy constructor
-        swap(temp); // swap cu temporary
+        Atractie temp(other);
+        swap(temp);
     }
     return *this;
 }
@@ -32,18 +31,17 @@ void Atractie::swap(Atractie& other) {
     std::swap(capacitate, other.capacitate);
 }
 
-void Atractie::afiseaza(std::ostream& os) const {
-    os << "Nume: " << nume << std::endl;
-    os << "Inaltime minima: " << inaltimeMinima << " cm" << std::endl;
-    os << "Capacitate: " << capacitate << " persoane" << std::endl;
-}
-
 std::ostream& operator<<(std::ostream& os, const Atractie& atractie) {
     atractie.afiseaza(os);
     return os;
 }
 
-// MontagneRusse
+void Atractie::afiseaza(std::ostream& os) const {
+    os << "🎢 " << getTip() << ": " << nume 
+       << " (Inaltime min: " << inaltimeMinima << "cm, Capacitate: " << capacitate << ")";
+}
+
+// MontagneRusse implementation
 MontagneRusse::MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate, int vitezaMaxima)
     : Atractie(nume, inaltimeMinima, capacitate), vitezaMaxima(vitezaMaxima) {}
 
@@ -63,13 +61,11 @@ std::unique_ptr<Atractie> MontagneRusse::clone() const {
 }
 
 void MontagneRusse::afiseaza(std::ostream& os) const {
-    os << "=== MONTAGNE RUSSE ===" << std::endl;
     Atractie::afiseaza(os);
-    os << "Viteza maxima: " << vitezaMaxima << " km/h" << std::endl;
-    os << "========================" << std::endl;
+    os << " - Viteza maxima: " << vitezaMaxima << " km/h";
 }
 
-// Carusel
+// Carusel implementation
 Carusel::Carusel(const std::string& nume, int inaltimeMinima, int capacitate, int numarCai)
     : Atractie(nume, inaltimeMinima, capacitate), numarCai(numarCai) {}
 
@@ -89,13 +85,11 @@ std::unique_ptr<Atractie> Carusel::clone() const {
 }
 
 void Carusel::afiseaza(std::ostream& os) const {
-    os << "=== CARUSEL ===" << std::endl;
     Atractie::afiseaza(os);
-    os << "Numar cai: " << numarCai << std::endl;
-    os << "===============" << std::endl;
+    os << " - Numar cai: " << numarCai;
 }
 
-// CasaGroazei
+// CasaGroazei implementation
 CasaGroazei::CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate, int nivelFrica)
     : Atractie(nume, inaltimeMinima, capacitate), nivelFrica(nivelFrica) {}
 
@@ -115,8 +109,6 @@ std::unique_ptr<Atractie> CasaGroazei::clone() const {
 }
 
 void CasaGroazei::afiseaza(std::ostream& os) const {
-    os << "=== CASA GROAZEI ===" << std::endl;
     Atractie::afiseaza(os);
-    os << "Nivel frica (1-10): " << nivelFrica << std::endl;
-    os << "====================" << std::endl;
+    os << " - Nivel frica: " << nivelFrica << "/10";
 }
