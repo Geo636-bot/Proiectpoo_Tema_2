@@ -1,10 +1,56 @@
 
-
-#include "ParcDistractii.h"
+#include "../Fisiere.h/ParcDistractii.h"
 #include <iostream>
 #include <algorithm>
 
-ParcDistractii::ParcDistractii(const std::string& nume) : nume(nume) {}
+using namespace std;
+
+// Inițializare atribut static
+int ParcDistractii::numarParcuri = 0;
+
+ParcDistractii::ParcDistractii(const std::string& nume) : nume(nume) {
+    ++numarParcuri;
+}
+
+ParcDistractii::ParcDistractii(const ParcDistractii& other) : nume(other.nume) {
+    ++numarParcuri;
+    copiazaAtractii(other.atractii);
+    copiazaAngajati(other.angajati);
+    copiazaVizitatori(other.vizitatori);
+}
+
+ParcDistractii& ParcDistractii::operator=(const ParcDistractii& other) {
+    if (this != &other) {
+        ParcDistractii temp(other);
+        swap(temp);
+    }
+    return *this;
+}
+
+void ParcDistractii::swap(ParcDistractii& other) {
+    std::swap(nume, other.nume);
+    atractii.swap(other.atractii);
+    angajati.swap(other.angajati);
+    vizitatori.swap(other.vizitatori);
+}
+
+void ParcDistractii::copiazaAtractii(const std::vector<std::unique_ptr<Atractie>>& sursa) {
+    for (const auto& atractie : sursa) {
+        atractii.push_back(atractie->clone());
+    }
+}
+
+void ParcDistractii::copiazaAngajati(const std::vector<std::unique_ptr<Angajat>>& sursa) {
+    for (const auto& angajat : sursa) {
+        angajati.push_back(angajat->clone());
+    }
+}
+
+void ParcDistractii::copiazaVizitatori(const std::vector<std::unique_ptr<Vizitator>>& sursa) {
+    for (const auto& vizitator : sursa) {
+        vizitatori.push_back(vizitator->clone());
+    }
+}
 
 void ParcDistractii::adaugaAtractie(std::unique_ptr<Atractie> atractie) {
     atractii.push_back(std::move(atractie));
@@ -19,6 +65,38 @@ void ParcDistractii::adaugaAngajat(std::unique_ptr<Angajat> angajat) {
 void ParcDistractii::adaugaVizitator(std::unique_ptr<Vizitator> vizitator) {
     vizitatori.push_back(std::move(vizitator));
     std::cout << "✅ Vizitator adaugat cu succes!" << std::endl;
+}
+
+void ParcDistractii::demonstratieDynamicCast() const {
+    std::cout << "\n🔬 ========== DEMONSTRATIE DYNAMIC_CAST ========== 🔬\n" << std::endl;
+    
+    // Dynamic cast pentru atractii
+    for (const auto& atractie : atractii) {
+        std::cout << "Atractie: " << atractie->getNume() << " - ";
+        
+        if (auto montagne = dynamic_cast<const MontagneRusse*>(atractie.get())) {
+            std::cout << "Este Montagne Russe cu viteza " << montagne->getVitezaMaxima() << " km/h" << std::endl;
+        } else if (auto carusel = dynamic_cast<const Carusel*>(atractie.get())) {
+            std::cout << "Este Carusel cu " << carusel->getNumarCai() << " cai" << std::endl;
+        } else if (auto casa = dynamic_cast<const CasaGroazei*>(atractie.get())) {
+            std::cout << "Este Casa Groazei cu nivel frica " << casa->getNivelFrica() << std::endl;
+        }
+    }
+    
+    // Dynamic cast pentru angajati
+    for (const auto& angajat : angajati) {
+        std::cout << "Angajat: " << angajat->getNume() << " - ";
+        
+        if (auto operator_atr = dynamic_cast<const OperatorAtractie*>(angajat.get())) {
+            std::cout << "Operator pentru " << operator_atr->getAtractieDeservita() << std::endl;
+        } else if (auto agent = dynamic_cast<const AgentPaza*>(angajat.get())) {
+            std::cout << "Agent paza in zona " << agent->getZonaAsignata() << std::endl;
+        } else if (auto casier = dynamic_cast<const Casier*>(angajat.get())) {
+            std::cout << "Casier cu intervalul " << casier->getInterval() << std::endl;
+        }
+    }
+    
+    std::cout << "==================================================\n" << std::endl;
 }
 
 void ParcDistractii::afiseazaAtractii() const {
@@ -68,6 +146,11 @@ void ParcDistractii::afiseazaStatistici() const {
     std::cout << "Numar total vizitatori: " << vizitatori.size() << std::endl;
     std::cout << "Venit total din bilete: " << calculezaVenitTotal() << " RON" << std::endl;
     std::cout << "Costuri salariale totale: " << calculezaCosturiSalariale() << " RON" << std::endl;
+    
+    // Afisare statistici statice
+    std::cout << "Numar total atractii create: " << Atractie::getNumarTotalAtractii() << std::endl;
+    std::cout << "Salariu mediu angajati: " << Angajat::getSalariuMediu() << " RON" << std::endl;
+    std::cout << "Numar parcuri create: " << getNumarParcuri() << std::endl;
     
     double profit = calculezaVenitTotal() - calculezaCosturiSalariale();
     std::cout << "Profit estimat: " << profit << " RON" << std::endl;
