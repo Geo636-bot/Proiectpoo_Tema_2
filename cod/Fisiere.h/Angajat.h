@@ -30,14 +30,11 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Angajat& angajat);
     
     // Funcții statice
-    __attribute__((unused)) static double getSalariuMediu() { return salariuMediu; }
+    
     static void actualizareSalariuMediu(double nouSalariu);
     
     // Getters
     const std::string& getNume() const { return nume; }
-    __attribute__((unused)) int getVarsta() const { return varsta; }
-    __attribute__((unused)) int getExperientaAni() const { return experientaAni; }
-    __attribute__((unused)) double getSalariu() const { return salariu; }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;
