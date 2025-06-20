@@ -18,7 +18,7 @@ private:
     static int numarParcuri; // atribut static
 
 public:
-    ParcDistractii(const std::string& nume);
+    explicit ParcDistractii(const std::string& nume);
     ParcDistractii(const ParcDistractii& other); // copy constructor
     ParcDistractii& operator=(const ParcDistractii& other); // assignment operator
     ~ParcDistractii() = default;
@@ -45,7 +45,7 @@ public:
     static void resetContorParcuri() { numarParcuri = 0; }
 
     // Getters
-    std::string getNume() const { return nume; }
+    const std::string& getNume() const { return nume; }
     size_t getNumarAtractii() const { return atractii.size(); }
     size_t getNumarAngajati() const { return angajati.size(); }
     size_t getNumarVizitatori() const { return vizitatori.size(); }
