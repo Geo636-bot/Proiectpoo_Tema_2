@@ -8,7 +8,6 @@ using namespace std;
 // Inițializare atribut static
 int Vizitator::numarTotalVizitatori = 0;
 
-// Clasa de baza Vizitator
 Vizitator::Vizitator(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet)
     : nume(nume), varsta(varsta), inaltime(inaltime), bilet(std::move(bilet)) {
     ++numarTotalVizitatori;
@@ -37,14 +36,8 @@ void Vizitator::swap(Vizitator& other) {
     bilet.swap(other.bilet);
 }
 
-void Vizitator::afiseaza(std::ostream& os) const {
-    os << "Nume: " << nume << std::endl;
-    os << "Varsta: " << varsta << " ani" << std::endl;
-    os << "Inaltime: " << inaltime << " cm" << std::endl;
-    if (bilet) {
-        os << "Tip bilet: " << bilet->getTip() << std::endl;
-        os << "Pret bilet: " << bilet->calculeazaPretFinal() << " RON" << std::endl;
-    }
+bool Vizitator::poateAccesaAtractia(int inaltimeMinima, int varstaNecesara) const {
+    return inaltime >= inaltimeMinima && varsta >= varstaNecesara;
 }
 
 std::ostream& operator<<(std::ostream& os, const Vizitator& vizitator) {
@@ -52,11 +45,15 @@ std::ostream& operator<<(std::ostream& os, const Vizitator& vizitator) {
     return os;
 }
 
-bool Vizitator::poateAccesaAtractia(int inaltimeMinima, int varstaNecesara) const {
-    return inaltime >= inaltimeMinima && varsta >= varstaNecesara;
+void Vizitator::afiseaza(std::ostream& os) const {
+    os << "👤 " << getTip() << ": " << nume 
+       << " (Varsta: " << varsta << ", Inaltime: " << inaltime << "cm)";
+    if (bilet) {
+        os << "\n   " << *bilet;
+    }
 }
 
-// Copil
+// Copil implementation
 Copil::Copil(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet, bool insotitDeAdult)
     : Vizitator(nume, varsta, inaltime, std::move(bilet)), insotitDeAdult(insotitDeAdult) {}
 
@@ -75,22 +72,22 @@ std::unique_ptr<Vizitator> Copil::clone() const {
     return std::make_unique<Copil>(*this);
 }
 
-void Copil::afiseaza(std::ostream& os) const {
-    os << "=== VIZITATOR COPIL ===" << std::endl;
-    Vizitator::afiseaza(os);
-    os << "Insotit de adult: " << (insotitDeAdult ? "Da" : "Nu") << std::endl;
-    os << "=======================" << std::endl;
-}
-
 bool Copil::poateAccesaAtractia(int inaltimeMinima, int varstaNecesara) const {
-    bool conditiiDeBase = Vizitator::poateAccesaAtractia(inaltimeMinima, varstaNecesara);
-    if (varsta < 8 && !insotitDeAdult) {
+    if (!Vizitator::poateAccesaAtractia(inaltimeMinima, varstaNecesara)) {
         return false;
     }
-    return conditiiDeBase;
+    if (varsta < 8) {
+        return insotitDeAdult;
+    }
+    return true;
 }
 
-// Adolescent
+void Copil::afiseaza(std::ostream& os) const {
+    Vizitator::afiseaza(os);
+    os << " - " << (insotitDeAdult ? "Insotit de adult" : "Neinsotit");
+}
+
+// Adolescent implementation
 Adolescent::Adolescent(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet, bool areBuletin)
     : Vizitator(nume, varsta, inaltime, std::move(bilet)), areBuletin(areBuletin) {}
 
@@ -110,13 +107,11 @@ std::unique_ptr<Vizitator> Adolescent::clone() const {
 }
 
 void Adolescent::afiseaza(std::ostream& os) const {
-    os << "=== VIZITATOR ADOLESCENT ===" << std::endl;
     Vizitator::afiseaza(os);
-    os << "Are buletin: " << (areBuletin ? "Da" : "Nu") << std::endl;
-    os << "============================" << std::endl;
+    os << " - " << (areBuletin ? "Cu buletin" : "Fara buletin");
 }
 
-// Adult
+// Adult implementation
 Adult::Adult(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet, const std::string& ocupatie)
     : Vizitator(nume, varsta, inaltime, std::move(bilet)), ocupatie(ocupatie) {}
 
@@ -136,8 +131,6 @@ std::unique_ptr<Vizitator> Adult::clone() const {
 }
 
 void Adult::afiseaza(std::ostream& os) const {
-    os << "=== VIZITATOR ADULT ===" << std::endl;
     Vizitator::afiseaza(os);
-    os << "Ocupatie: " << ocupatie << std::endl;
-    os << "=======================" << std::endl;
+    os << " - Ocupatie: " << ocupatie;
 }
