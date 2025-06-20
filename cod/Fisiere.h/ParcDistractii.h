@@ -18,7 +18,7 @@ private:
     static int numarParcuri; // atribut static
 
 public:
-    ParcDistractii(const std::string& nume);
+    explicit ParcDistractii(const std::string& nume);
     ParcDistractii(const ParcDistractii& other); // copy constructor
     ParcDistractii& operator=(const ParcDistractii& other); // assignment operator
     ~ParcDistractii() = default;
