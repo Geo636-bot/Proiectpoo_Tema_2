@@ -11,11 +11,8 @@ private:
 
     static void clearInput();
     static int getValidInt(const std::string& prompt, int min = 0, int max = 999999);
-
     static double getValidDouble(const std::string& prompt, double min = 0.0, double max = 999999.0);
-
     static std::string getValidString(const std::string& prompt);
-
     static bool getYesNo(const std::string& prompt);
 
 public:

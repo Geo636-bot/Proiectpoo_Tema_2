@@ -15,7 +15,7 @@ protected:
     static int numarTotalVizitatori; // atribut static
 
 public:
-    Vizitator(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet);
+    Vizitator(std::string  nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet);
     Vizitator(const Vizitator& other);
     Vizitator& operator=(const Vizitator& other);
     virtual ~Vizitator() = default;
@@ -30,8 +30,8 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Vizitator& vizitator);
     
     // Funcții statice
-    static int getNumarTotalVizitatori() { return numarTotalVizitatori; }
-    static void resetContorVizitatori() { numarTotalVizitatori = 0; }
+    //static int getNumarTotalVizitatori() { return numarTotalVizitatori; }
+    //static void resetContorVizitatori() { numarTotalVizitatori = 0; }
     
     // Getters
     [[nodiscard]] const std::string& getNume() const { return nume; }
@@ -56,7 +56,7 @@ public:
     [[nodiscard]] std::unique_ptr<Vizitator> clone() const override;
     [[nodiscard]] std::string getTip() const override { return "Copil"; }
     [[nodiscard]] bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara = 0) const override;
-    [[nodiscard]] bool getInsotitDeAdult() const { return insotitDeAdult; }
+    //[[nodiscard]] bool getInsotitDeAdult() const { return insotitDeAdult; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
@@ -73,7 +73,7 @@ public:
     
     [[nodiscard]] std::unique_ptr<Vizitator> clone() const override;
     [[nodiscard]] std::string getTip() const override { return "Adolescent"; }
-    [[nodiscard]] bool getAreBuletin() const { return areBuletin; }
+    //[[nodiscard]] bool getAreBuletin() const { return areBuletin; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
@@ -90,7 +90,7 @@ public:
     
     [[nodiscard]] std::unique_ptr<Vizitator> clone() const override;
     [[nodiscard]] std::string getTip() const override { return "Adult"; }
-    [[nodiscard]] const std::string& getOcupatie() const { return ocupatie; }
+    //[[nodiscard]] const std::string& getOcupatie() const { return ocupatie; }
 
 protected:
     void afiseaza(std::ostream& os) const override;

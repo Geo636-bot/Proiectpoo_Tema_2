@@ -2,15 +2,17 @@
 #include "../Fisiere.h/ParcDistractii.h"
 #include <iostream>
 #include <algorithm>
+#include <utility>
 
 using namespace std;
 
 // Inițializare atribut static
 int ParcDistractii::numarParcuri = 0;
 
-ParcDistractii::ParcDistractii(const std::string& nume) : nume(nume) {
+ParcDistractii::ParcDistractii(std::string  nume) : nume(std::move(nume)) {
     ++numarParcuri;
 }
+
 
 ParcDistractii::ParcDistractii(const ParcDistractii& other) : nume(other.nume) {
     ++numarParcuri;

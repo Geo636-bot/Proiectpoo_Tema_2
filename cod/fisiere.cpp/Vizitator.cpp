@@ -2,14 +2,15 @@
 #include <iostream>
 #include "../Fisiere.h/Vizitator.h"
 #include <algorithm>
+#include <utility>
 
 using namespace std;
 
 // Inițializare atribut static
 int Vizitator::numarTotalVizitatori = 0;
 
-Vizitator::Vizitator(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet)
-    : nume(nume), varsta(varsta), inaltime(inaltime), bilet(std::move(bilet)) {
+Vizitator::Vizitator(std::string  nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet)
+    : nume(std::move(nume)), varsta(varsta), inaltime(inaltime), bilet(std::move(bilet)) {
     ++numarTotalVizitatori;
 }
 

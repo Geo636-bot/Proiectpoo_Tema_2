@@ -29,12 +29,12 @@ public:
     
     // Funcție statică
     static int getNumarTotalAtractii() { return numarTotalAtractii; }
-    static void resetContorAtractii() { numarTotalAtractii = 0; }
-    
+//    static void resetContorAtractii() { numarTotalAtractii = 0; }
+
     // Getters
     [[nodiscard]] const std::string& getNume() const { return nume; }
     [[nodiscard]] int getInaltimeMinima() const { return inaltimeMinima; }
-    [[nodiscard]] int getCapacitate() const { return capacitate; }
+   // [[nodiscard]] int getCapacitate() const { return capacitate; }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;

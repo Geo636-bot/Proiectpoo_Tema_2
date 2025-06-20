@@ -18,7 +18,7 @@ private:
     static int numarParcuri; // atribut static
 
 public:
-    explicit ParcDistractii(const std::string& nume);
+    explicit ParcDistractii(std::string  nume);
     ParcDistractii(const ParcDistractii& other); // copy constructor
     ParcDistractii& operator=(const ParcDistractii& other); // assignment operator
     ~ParcDistractii() = default;
@@ -42,13 +42,13 @@ public:
 
     // Funcții statice
     static int getNumarParcuri() { return numarParcuri; }
-    static void resetContorParcuri() { numarParcuri = 0; }
+    //static void resetContorParcuri() { numarParcuri = 0; }
 
     // Getters
     [[nodiscard]] const std::string& getNume() const { return nume; }
-    [[nodiscard]] size_t getNumarAtractii() const { return atractii.size(); }
-    [[nodiscard]] size_t getNumarAngajati() const { return angajati.size(); }
-    [[nodiscard]] size_t getNumarVizitatori() const { return vizitatori.size(); }
+    //[[nodiscard]] size_t getNumarAtractii() const { return atractii.size(); }
+    //[[nodiscard]] size_t getNumarAngajati() const { return angajati.size(); }
+    //[[nodiscard]] size_t getNumarVizitatori() const { return vizitatori.size(); }
 
 private:
     void swap(ParcDistractii& other) noexcept;
