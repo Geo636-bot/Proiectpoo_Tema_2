@@ -28,12 +28,9 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Bilet& bilet);
     
     // Funcții statice
-    static double getPretMediu() { return pretMediu; }
+    
     static void actualizarePretMediu(double nouPret);
     
-    // Getters
-    double getPret() const { return pret; }
-    int getValabilitateZile() const { return valabilitateZile; }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;
@@ -52,8 +49,7 @@ public:
     std::unique_ptr<Bilet> clone() const override;
     std::string getTip() const override { return "Bi Let Copil"; }
     double calculeazaPretFinal() const override;
-    int getVarstaCopil() const { return varstaCopil; }
-
+    
 protected:
     void afiseaza(std::ostream& os) const override;
 };
@@ -70,7 +66,7 @@ public:
     std::unique_ptr<Bilet> clone() const override;
     std::string getTip() const override { return "Bilet Adult"; }
     double calculeazaPretFinal() const override;
-    bool getIncludeFastPass() const { return includeFastPass; }
+    
 
 protected:
     void afiseaza(std::ostream& os) const override;
@@ -88,7 +84,7 @@ public:
     std::unique_ptr<Bilet> clone() const override;
     std::string getTip() const override { return "Bilet VIP"; }
     double calculeazaPretFinal() const override;
-    bool getAccesLounge() const { return accesLounge; }
+    
 
 protected:
     void afiseaza(std::ostream& os) const override;
