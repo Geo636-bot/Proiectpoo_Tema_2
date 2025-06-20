@@ -1,5 +1,5 @@
 
-#include "Bilet.h"
+#include "../Fisiere.h/Bilet.h"
 #include <algorithm>
 
 using namespace std;
