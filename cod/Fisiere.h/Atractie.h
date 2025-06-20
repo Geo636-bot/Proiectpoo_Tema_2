@@ -28,10 +28,13 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Atractie& atractie);
     
     // Funcție statică
-    
+    static int getNumarTotalAtractii() { return numarTotalAtractii; }
+    static void resetContorAtractii() { numarTotalAtractii = 0; }
     
     // Getters
-    const std::string& getNume() const { return nume; }
+    std::string getNume() const { return nume; }
+    int getInaltimeMinima() const { return inaltimeMinima; }
+    int getCapacitate() const { return capacitate; }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;
@@ -48,7 +51,9 @@ public:
     MontagneRusse& operator=(const MontagneRusse& other);
     
     std::unique_ptr<Atractie> clone() const override;
-   
+    std::string getTip() const override { return "Montagne Russe"; }
+    int getVitezaMaxima() const { return vitezaMaxima; }
+
 protected:
     void afiseaza(std::ostream& os) const override;
 };
@@ -63,8 +68,8 @@ public:
     Carusel& operator=(const Carusel& other);
     
     std::unique_ptr<Atractie> clone() const override;
-    
-   
+    std::string getTip() const override { return "Carusel"; }
+    int getNumarCai() const { return numarCai; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
@@ -80,8 +85,9 @@ public:
     CasaGroazei& operator=(const CasaGroazei& other);
     
     std::unique_ptr<Atractie> clone() const override;
-    
-    
+    std::string getTip() const override { return "Casa Groazei"; }
+    int getNivelFrica() const { return nivelFrica; }
+
 protected:
     void afiseaza(std::ostream& os) const override;
 };
