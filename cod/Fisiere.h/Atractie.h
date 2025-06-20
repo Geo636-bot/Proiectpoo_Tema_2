@@ -32,7 +32,7 @@ public:
     static void resetContorAtractii() { numarTotalAtractii = 0; }
     
     // Getters
-    std::string getNume() const { return nume; }
+    const std::string& getNume() const { return nume; }
     int getInaltimeMinima() const { return inaltimeMinima; }
     int getCapacitate() const { return capacitate; }
 
