@@ -1,15 +1,16 @@
 
 #include "../Fisiere.h/Angajat.h"
-#include <algorithm>
+#include <iostream>
 
 using namespace std;
 
 // Inițializare atribut static
-double Angajat::salariuMediu = 3000.0;
+double Angajat::salariuMediu = 2500.0;
 
-// Clasa de baza Angajat
 Angajat::Angajat(const std::string& nume, int varsta, int experientaAni, double salariu)
-    : nume(nume), varsta(varsta), experientaAni(experientaAni), salariu(salariu) {}
+    : nume(nume), varsta(varsta), experientaAni(experientaAni), salariu(salariu) {
+    actualizareSalariuMediu(salariu);
+}
 
 Angajat::Angajat(const Angajat& other)
     : nume(other.nume), varsta(other.varsta), experientaAni(other.experientaAni), salariu(other.salariu) {}
@@ -29,15 +30,12 @@ void Angajat::swap(Angajat& other) {
     std::swap(salariu, other.salariu);
 }
 
-void Angajat::actualizareSalariuMediu(double nouSalariu) {
-    salariuMediu = (salariuMediu + nouSalariu) / 2.0;
+double Angajat::calculeazaSalariuTotal() const {
+    return salariu + (experientaAni * 100); // bonus experienta
 }
 
-void Angajat::afiseaza(std::ostream& os) const {
-    os << "Nume: " << nume << std::endl;
-    os << "Varsta: " << varsta << " ani" << std::endl;
-    os << "Experienta: " << experientaAni << " ani" << std::endl;
-    os << "Salariu: " << salariu << " RON" << std::endl;
+void Angajat::actualizareSalariuMediu(double nouSalariu) {
+    salariuMediu = (salariuMediu + nouSalariu) / 2.0;
 }
 
 std::ostream& operator<<(std::ostream& os, const Angajat& angajat) {
@@ -45,11 +43,13 @@ std::ostream& operator<<(std::ostream& os, const Angajat& angajat) {
     return os;
 }
 
-double Angajat::calculeazaSalariuTotal() const {
-    return salariu;
+void Angajat::afiseaza(std::ostream& os) const {
+    os << "👤 " << getTip() << ": " << nume 
+       << " (Varsta: " << varsta << ", Experienta: " << experientaAni 
+       << " ani, Salariu: " << salariu << " RON)";
 }
 
-// OperatorAtractie
+// OperatorAtractie implementation
 OperatorAtractie::OperatorAtractie(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& atractieDeservita)
     : Angajat(nume, varsta, experientaAni, salariu), atractieDeservita(atractieDeservita) {}
 
@@ -68,19 +68,16 @@ std::unique_ptr<Angajat> OperatorAtractie::clone() const {
     return std::make_unique<OperatorAtractie>(*this);
 }
 
-void OperatorAtractie::afiseaza(std::ostream& os) const {
-    os << "=== OPERATOR ATRACTIE ===" << std::endl;
-    Angajat::afiseaza(os);
-    os << "Atractie deservita: " << atractieDeservita << std::endl;
-    os << "Salariu total: " << calculeazaSalariuTotal() << " RON" << std::endl;
-    os << "=========================" << std::endl;
-}
-
 double OperatorAtractie::calculeazaSalariuTotal() const {
-    return salariu + (experientaAni * 100);
+    return Angajat::calculeazaSalariuTotal() + 500; // bonus responsabilitate
 }
 
-// AgentPaza
+void OperatorAtractie::afiseaza(std::ostream& os) const {
+    Angajat::afiseaza(os);
+    os << " - Opereaza: " << atractieDeservita;
+}
+
+// AgentPaza implementation
 AgentPaza::AgentPaza(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& zonaAsignata)
     : Angajat(nume, varsta, experientaAni, salariu), zonaAsignata(zonaAsignata) {}
 
@@ -99,19 +96,16 @@ std::unique_ptr<Angajat> AgentPaza::clone() const {
     return std::make_unique<AgentPaza>(*this);
 }
 
-void AgentPaza::afiseaza(std::ostream& os) const {
-    os << "=== AGENT PAZA ===" << std::endl;
-    Angajat::afiseaza(os);
-    os << "Zona asignata: " << zonaAsignata << std::endl;
-    os << "Salariu total: " << calculeazaSalariuTotal() << " RON" << std::endl;
-    os << "==================" << std::endl;
-}
-
 double AgentPaza::calculeazaSalariuTotal() const {
-    return salariu + 200;
+    return Angajat::calculeazaSalariuTotal() + 300; // bonus paza
 }
 
-// Casier
+void AgentPaza::afiseaza(std::ostream& os) const {
+    Angajat::afiseaza(os);
+    os << " - Zona: " << zonaAsignata;
+}
+
+// Casier implementation
 Casier::Casier(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& interval)
     : Angajat(nume, varsta, experientaAni, salariu), interval(interval) {}
 
@@ -131,8 +125,6 @@ std::unique_ptr<Angajat> Casier::clone() const {
 }
 
 void Casier::afiseaza(std::ostream& os) const {
-    os << "=== CASIER ===" << std::endl;
     Angajat::afiseaza(os);
-    os << "Interval: " << interval << std::endl;
-    os << "==============" << std::endl;
+    os << " - Program: " << interval;
 }
