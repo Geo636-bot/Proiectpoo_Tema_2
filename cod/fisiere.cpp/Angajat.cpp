@@ -17,8 +17,10 @@ Angajat::Angajat(const Angajat& other)
 
 Angajat& Angajat::operator=(const Angajat& other) {
     if (this != &other) {
-        Angajat temp(other);
-        swap(temp);
+         nume = other.nume;
+        varsta = other.varsta;
+        experientaAni = other.experientaAni;
+        salariu = other.salariu;
     }
     return *this;
 }
