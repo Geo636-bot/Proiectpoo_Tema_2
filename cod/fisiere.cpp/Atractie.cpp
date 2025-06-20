@@ -19,8 +19,9 @@ Atractie::Atractie(const Atractie& other)
 
 Atractie& Atractie::operator=(const Atractie& other) {
     if (this != &other) {
-        auto temp = other.clone();
-        swap(*temp);
+        nume = other.nume;
+        inaltimeMinima = other.inaltimeMinima;
+        capacitate = other.capacitate;
     }
     return *this;
 }
