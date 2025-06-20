@@ -19,10 +19,10 @@ public:
     virtual ~Bilet() = default;
     
     // Constructor virtual (clone pattern)
-    virtual std::unique_ptr<Bilet> clone() const = 0;
+    [[nodiscard]] virtual std::unique_ptr<Bilet> clone() const = 0;
     
-    virtual std::string getTip() const = 0;
-    virtual double calculeazaPretFinal() const;
+    [[nodiscard]] virtual std::string getTip() const = 0;
+    [[nodiscard]] virtual double calculeazaPretFinal() const;
     
     // Operatorul << virtual pentru polimorfism
     friend std::ostream& operator<<(std::ostream& os, const Bilet& bilet);
@@ -32,12 +32,12 @@ public:
     static void actualizarePretMediu(double nouPret);
     
     // Getters
-    double getPret() const { return pret; }
-    int getValabilitateZile() const { return valabilitateZile; }
+    [[nodiscard]] double getPret() const { return pret; }
+    [[nodiscard]] int getValabilitateZile() const { return valabilitateZile; }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;
-    void swap(Bilet& other);
+    void swap(Bilet& other) noexcept;
 };
 
 class BiletCopil : public Bilet {
@@ -49,10 +49,10 @@ public:
     BiletCopil(const BiletCopil& other);
     BiletCopil& operator=(const BiletCopil& other);
     
-    std::unique_ptr<Bilet> clone() const override;
-    std::string getTip() const override { return "Bi Let Copil"; }
-    double calculeazaPretFinal() const override;
-    int getVarstaCopil() const { return varstaCopil; }
+    [[nodiscard]] std::unique_ptr<Bilet> clone() const override;
+    [[nodiscard]] std::string getTip() const override { return "Bi Let Copil"; }
+    [[nodiscard]] double calculeazaPretFinal() const override;
+    [[nodiscard]] int getVarstaCopil() const { return varstaCopil; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
@@ -67,10 +67,10 @@ public:
     BiletAdult(const BiletAdult& other);
     BiletAdult& operator=(const BiletAdult& other);
     
-    std::unique_ptr<Bilet> clone() const override;
-    std::string getTip() const override { return "Bilet Adult"; }
-    double calculeazaPretFinal() const override;
-    bool getIncludeFastPass() const { return includeFastPass; }
+    [[nodiscard]] std::unique_ptr<Bilet> clone() const override;
+    [[nodiscard]] std::string getTip() const override { return "Bilet Adult"; }
+    [[nodiscard]] double calculeazaPretFinal() const override;
+    [[nodiscard]] bool getIncludeFastPass() const { return includeFastPass; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
@@ -85,10 +85,10 @@ public:
     BiletVIP(const BiletVIP& other);
     BiletVIP& operator=(const BiletVIP& other);
     
-    std::unique_ptr<Bilet> clone() const override;
-    std::string getTip() const override { return "Bilet VIP"; }
-    double calculeazaPretFinal() const override;
-    bool getAccesLounge() const { return accesLounge; }
+    [[nodiscard]] std::unique_ptr<Bilet> clone() const override;
+    [[nodiscard]] std::string getTip() const override { return "Bilet VIP"; }
+    [[nodiscard]] double calculeazaPretFinal() const override;
+    [[nodiscard]] bool getAccesLounge() const { return accesLounge; }
 
 protected:
     void afiseaza(std::ostream& os) const override;

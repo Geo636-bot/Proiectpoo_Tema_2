@@ -37,21 +37,21 @@ public:
     // Metode pentru verificari cu dynamic_cast
     void verificaAccesAtractie(const std::string& numeVizitator, const std::string& numeAtractie) const;
     void demonstratieDynamicCast() const;
-    double calculezaVenitTotal() const;
-    double calculezaCosturiSalariale() const;
+    [[nodiscard]] double calculezaVenitTotal() const;
+    [[nodiscard]] double calculezaCosturiSalariale() const;
 
     // Funcții statice
     static int getNumarParcuri() { return numarParcuri; }
     static void resetContorParcuri() { numarParcuri = 0; }
 
     // Getters
-    const std::string& getNume() const { return nume; }
-    size_t getNumarAtractii() const { return atractii.size(); }
-    size_t getNumarAngajati() const { return angajati.size(); }
-    size_t getNumarVizitatori() const { return vizitatori.size(); }
+    [[nodiscard]] const std::string& getNume() const { return nume; }
+    [[nodiscard]] size_t getNumarAtractii() const { return atractii.size(); }
+    [[nodiscard]] size_t getNumarAngajati() const { return angajati.size(); }
+    [[nodiscard]] size_t getNumarVizitatori() const { return vizitatori.size(); }
 
 private:
-    void swap(ParcDistractii& other);
+    void swap(ParcDistractii& other) noexcept;
     void copiazaAtractii(const std::vector<std::unique_ptr<Atractie>>& sursa);
     void copiazaAngajati(const std::vector<std::unique_ptr<Angajat>>& sursa);
     void copiazaVizitatori(const std::vector<std::unique_ptr<Vizitator>>& sursa);

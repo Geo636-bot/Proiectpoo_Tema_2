@@ -3,7 +3,6 @@
 #define VIZITATOR_H
 
 #include <string>
-#include <iostream>
 #include <memory>
 #include "Bilet.h"
 
@@ -22,10 +21,10 @@ public:
     virtual ~Vizitator() = default;
     
     // Constructor virtual (clone pattern)
-    virtual std::unique_ptr<Vizitator> clone() const = 0;
+    [[nodiscard]] virtual std::unique_ptr<Vizitator> clone() const = 0;
     
-    virtual std::string getTip() const = 0;
-    virtual bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara = 0) const;
+    [[nodiscard]] virtual std::string getTip() const = 0;
+    [[nodiscard]] virtual bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara = 0) const;
     
     // Operatorul << virtual pentru polimorfism
     friend std::ostream& operator<<(std::ostream& os, const Vizitator& vizitator);
@@ -35,14 +34,14 @@ public:
     static void resetContorVizitatori() { numarTotalVizitatori = 0; }
     
     // Getters
-    const std::string& getNume() const { return nume; }
-    int getVarsta() const { return varsta; }
-    int getInaltime() const { return inaltime; }
-    const Bilet* getBilet() const { return bilet.get(); }
+    [[nodiscard]] const std::string& getNume() const { return nume; }
+    [[nodiscard]] int getVarsta() const { return varsta; }
+    [[nodiscard]] int getInaltime() const { return inaltime; }
+    [[nodiscard]] const Bilet* getBilet() const { return bilet.get(); }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;
-    void swap(Vizitator& other);
+    void swap(Vizitator& other) noexcept;
 };
 
 class Copil : public Vizitator {
@@ -54,10 +53,10 @@ public:
     Copil(const Copil& other);
     Copil& operator=(const Copil& other);
     
-    std::unique_ptr<Vizitator> clone() const override;
-    std::string getTip() const override { return "Copil"; }
-    bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara = 0) const override;
-    bool getInsotitDeAdult() const { return insotitDeAdult; }
+    [[nodiscard]] std::unique_ptr<Vizitator> clone() const override;
+    [[nodiscard]] std::string getTip() const override { return "Copil"; }
+    [[nodiscard]] bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara = 0) const override;
+    [[nodiscard]] bool getInsotitDeAdult() const { return insotitDeAdult; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
@@ -72,9 +71,9 @@ public:
     Adolescent(const Adolescent& other);
     Adolescent& operator=(const Adolescent& other);
     
-    std::unique_ptr<Vizitator> clone() const override;
-    std::string getTip() const override { return "Adolescent"; }
-    bool getAreBuletin() const { return areBuletin; }
+    [[nodiscard]] std::unique_ptr<Vizitator> clone() const override;
+    [[nodiscard]] std::string getTip() const override { return "Adolescent"; }
+    [[nodiscard]] bool getAreBuletin() const { return areBuletin; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
@@ -89,9 +88,9 @@ public:
     Adult(const Adult& other);
     Adult& operator=(const Adult& other);
     
-    std::unique_ptr<Vizitator> clone() const override;
-    std::string getTip() const override { return "Adult"; }
-    const std::string& getOcupatie() const { return ocupatie; }
+    [[nodiscard]] std::unique_ptr<Vizitator> clone() const override;
+    [[nodiscard]] std::string getTip() const override { return "Adult"; }
+    [[nodiscard]] const std::string& getOcupatie() const { return ocupatie; }
 
 protected:
     void afiseaza(std::ostream& os) const override;

@@ -23,7 +23,7 @@ Bilet& Bilet::operator=(const Bilet& other) {
     return *this;
 }
 
-void Bilet::swap(Bilet& other) {
+void Bilet::swap(Bilet& other) noexcept {
     std::swap(pret, other.pret);
     std::swap(valabilitateZile, other.valabilitateZile);
 }

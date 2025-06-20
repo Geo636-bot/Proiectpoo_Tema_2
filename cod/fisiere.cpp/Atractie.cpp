@@ -26,7 +26,7 @@ Atractie& Atractie::operator=(const Atractie& other) {
     return *this;
 }
 
-void Atractie::swap(Atractie& other) {
+void Atractie::swap(Atractie& other) noexcept {
     std::swap(nume, other.nume);
     std::swap(inaltimeMinima, other.inaltimeMinima);
     std::swap(capacitate, other.capacitate);

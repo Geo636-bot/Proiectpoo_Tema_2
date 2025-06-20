@@ -20,9 +20,9 @@ public:
     virtual ~Atractie() = default;
     
     // Constructor virtual (clone pattern)
-    virtual std::unique_ptr<Atractie> clone() const = 0;
+    [[nodiscard]] virtual std::unique_ptr<Atractie> clone() const = 0;
     
-    virtual std::string getTip() const = 0;
+    [[nodiscard]] virtual std::string getTip() const = 0;
     
     // Operatorul << virtual pentru polimorfism
     friend std::ostream& operator<<(std::ostream& os, const Atractie& atractie);
@@ -32,13 +32,13 @@ public:
     static void resetContorAtractii() { numarTotalAtractii = 0; }
     
     // Getters
-    const std::string& getNume() const { return nume; }
-    int getInaltimeMinima() const { return inaltimeMinima; }
-    int getCapacitate() const { return capacitate; }
+    [[nodiscard]] const std::string& getNume() const { return nume; }
+    [[nodiscard]] int getInaltimeMinima() const { return inaltimeMinima; }
+    [[nodiscard]] int getCapacitate() const { return capacitate; }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;
-    void swap(Atractie& other); // pentru copy-and-swap
+    void swap(Atractie& other) noexcept; // pentru copy-and-swap
 };
 
 class MontagneRusse : public Atractie {
@@ -50,9 +50,9 @@ public:
     MontagneRusse(const MontagneRusse& other);
     MontagneRusse& operator=(const MontagneRusse& other);
     
-    std::unique_ptr<Atractie> clone() const override;
-    std::string getTip() const override { return "Montagne Russe"; }
-    int getVitezaMaxima() const { return vitezaMaxima; }
+    [[nodiscard]] std::unique_ptr<Atractie> clone() const override;
+    [[nodiscard]] std::string getTip() const override { return "Montagne Russe"; }
+    [[nodiscard]] int getVitezaMaxima() const { return vitezaMaxima; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
@@ -67,9 +67,9 @@ public:
     Carusel(const Carusel& other);
     Carusel& operator=(const Carusel& other);
     
-    std::unique_ptr<Atractie> clone() const override;
-    std::string getTip() const override { return "Carusel"; }
-    int getNumarCai() const { return numarCai; }
+    [[nodiscard]] std::unique_ptr<Atractie> clone() const override;
+    [[nodiscard]] std::string getTip() const override { return "Carusel"; }
+    [[nodiscard]] int getNumarCai() const { return numarCai; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
@@ -84,9 +84,10 @@ public:
     CasaGroazei(const CasaGroazei& other);
     CasaGroazei& operator=(const CasaGroazei& other);
     
-    std::unique_ptr<Atractie> clone() const override;
-    std::string getTip() const override { return "Casa Groazei"; }
-    int getNivelFrica() const { return nivelFrica; }
+
+    [[nodiscard]] std::unique_ptr<Atractie> clone() const override;
+    [[nodiscard]] std::string getTip() const override { return "Casa Groazei"; }
+    [[nodiscard]] int getNivelFrica() const { return nivelFrica; }
 
 protected:
     void afiseaza(std::ostream& os) const override;

@@ -1,37 +1,42 @@
 
-#ifndef MENU_H
-#define MENU_H
+#ifndef MENIU_H
+#define MENIU_H
 
 #include "ParcDistractii.h"
 #include <memory>
 
-class Menu {
+class Meniu {
 private:
     ParcDistractii& parc;
-    
-    void clearInput();
-    int getValidInt(const std::string& prompt, int min = 0, int max = 999999);
-    double getValidDouble(const std::string& prompt, double min = 0.0, double max = 999999.0);
-    std::string getValidString(const std::string& prompt);
-    bool getYesNo(const std::string& prompt);
+
+    static void clearInput();
+    static int getValidInt(const std::string& prompt, int min = 0, int max = 999999);
+
+    static double getValidDouble(const std::string& prompt, double min = 0.0, double max = 999999.0);
+
+    static std::string getValidString(const std::string& prompt);
+
+    static bool getYesNo(const std::string& prompt);
 
 public:
-    explicit Menu(ParcDistractii& parc);
-    
-    void afiseazaMeniu();
-    void ruleazaMeniu();
+    explicit Meniu(ParcDistractii& parc);
+
+    static void afiseazaMeniu();
+    void ruleazaMeniu() const;
     
     // Metode pentru gestionarea datelor
-    void adaugaAtractieInteractiv();
-    void adaugaAngajatInteractiv();
-    void adaugaVizitatorInteractiv();
-    void verificaAccesInteractiv();
+    void adaugaAtractieInteractiv() const;
+    void adaugaAngajatInteractiv() const;
+    void adaugaVizitatorInteractiv() const;
+    void verificaAccesInteractiv() const;
     
     // Metode pentru crearea obiectelor
-    std::unique_ptr<Atractie> creeazaAtractie();
-    std::unique_ptr<Angajat> creeazaAngajat();
-    std::unique_ptr<Vizitator> creeazaVizitator();
-    std::unique_ptr<Bilet> creeazaBilet();
+    static std::unique_ptr<Atractie> creeazaAtractie();
+
+    static std::unique_ptr<Angajat> creeazaAngajat();
+    static std::unique_ptr<Vizitator> creeazaVizitator();
+
+    static std::unique_ptr<Bilet> creeazaBilet();
 };
 
 #endif

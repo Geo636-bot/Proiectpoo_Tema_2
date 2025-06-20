@@ -35,7 +35,7 @@ Vizitator& Vizitator::operator=(const Vizitator& other) {
     return *this;
 }
 
-void Vizitator::swap(Vizitator& other) {
+void Vizitator::swap(Vizitator& other) noexcept {
     std::swap(nume, other.nume);
     std::swap(varsta, other.varsta);
     std::swap(inaltime, other.inaltime);

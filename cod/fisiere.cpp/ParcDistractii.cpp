@@ -27,7 +27,7 @@ ParcDistractii& ParcDistractii::operator=(const ParcDistractii& other) {
     return *this;
 }
 
-void ParcDistractii::swap(ParcDistractii& other) {
+void ParcDistractii::swap(ParcDistractii& other) noexcept {
     std::swap(nume, other.nume);
     atractii.swap(other.atractii);
     angajati.swap(other.angajati);
@@ -159,10 +159,10 @@ void ParcDistractii::afiseazaStatistici() const {
 
 void ParcDistractii::verificaAccesAtractie(const std::string& numeVizitator, const std::string& numeAtractie) const {
     // Cauta vizitatorul
-    auto vizitatorIt = std::find_if(vizitatori.begin(), vizitatori.end(),
-        [&numeVizitator](const std::unique_ptr<Vizitator>& v) {
-            return v->getNume() == numeVizitator;
-        });
+    auto vizitatorIt = ranges::find_if(vizitatori,
+                                       [&numeVizitator](const std::unique_ptr<Vizitator>& v) {
+                                           return v->getNume() == numeVizitator;
+                                       });
     
     if (vizitatorIt == vizitatori.end()) {
         std::cout << "❌ Vizitatorul '" << numeVizitator << "' nu a fost gasit!" << std::endl;
@@ -170,10 +170,10 @@ void ParcDistractii::verificaAccesAtractie(const std::string& numeVizitator, con
     }
     
     // Cauta atractia
-    auto atractieIt = std::find_if(atractii.begin(), atractii.end(),
-        [&numeAtractie](const std::unique_ptr<Atractie>& a) {
-            return a->getNume() == numeAtractie;
-        });
+    auto atractieIt = ranges::find_if(atractii,
+                                      [&numeAtractie](const std::unique_ptr<Atractie>& a) {
+                                          return a->getNume() == numeAtractie;
+                                      });
     
     if (atractieIt == atractii.end()) {
         std::cout << "❌ Atractia '" << numeAtractie << "' nu a fost gasita!" << std::endl;
@@ -186,10 +186,8 @@ void ParcDistractii::verificaAccesAtractie(const std::string& numeVizitator, con
     std::cout << "\n🔍 Verificare acces pentru:" << std::endl;
     std::cout << "Vizitator: " << vizitator->getNume() << " (" << vizitator->getTip() << ")" << std::endl;
     std::cout << "Atractie: " << atractie->getNume() << " (" << atractie->getTip() << ")" << std::endl;
-    
-    bool poateAccesa = vizitator->poateAccesaAtractia(atractie->getInaltimeMinima());
-    
-    if (poateAccesa) {
+
+    if (vizitator->poateAccesaAtractia(atractie->getInaltimeMinima())) {
         std::cout << "✅ ACCES PERMIS! Vizitatorul poate accesa atractia." << std::endl;
     } else {
         std::cout << "❌ ACCES INTERZIS! Motivele posibile:" << std::endl;

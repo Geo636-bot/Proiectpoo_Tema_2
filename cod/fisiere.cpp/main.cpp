@@ -12,7 +12,7 @@ int main() {
         std::cout << "🎪 Bun venit la " << parc.getNume() << "! 🎪\n" << std::endl;
         std::cout << "Toate datele vor fi introduse interactiv de la tastatura.\n" << std::endl;
         
-        Menu menu(parc);
+        Meniu menu(parc);
         menu.ruleazaMeniu();
         
     } catch (const ParcException& e) {

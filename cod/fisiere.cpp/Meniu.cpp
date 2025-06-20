@@ -3,14 +3,14 @@
 #include <iostream>
 #include <limits>
 
-Menu::Menu(ParcDistractii& parc) : parc(parc) {}
+Meniu::Meniu(ParcDistractii& parc) : parc(parc) {}
 
-void Menu::clearInput() {
+void Meniu::clearInput() {
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-int Menu::getValidInt(const std::string& prompt, int min, int max) {
+int Meniu::getValidInt(const std::string& prompt, int min, int max) {
     int value;
     while (true) {
         std::cout << prompt;
@@ -23,7 +23,7 @@ int Menu::getValidInt(const std::string& prompt, int min, int max) {
     }
 }
 
-double Menu::getValidDouble(const std::string& prompt, double min, double max) {
+double Meniu::getValidDouble(const std::string& prompt, double min, double max) {
     double value;
     while (true) {
         std::cout << prompt;
@@ -36,7 +36,7 @@ double Menu::getValidDouble(const std::string& prompt, double min, double max) {
     }
 }
 
-std::string Menu::getValidString(const std::string& prompt) {
+std::string Meniu::getValidString(const std::string& prompt) {
     std::string value;
     while (true) {
         std::cout << prompt;
@@ -48,7 +48,7 @@ std::string Menu::getValidString(const std::string& prompt) {
     }
 }
 
-bool Menu::getYesNo(const std::string& prompt) {
+bool Meniu::getYesNo(const std::string& prompt) {
     char response;
     while (true) {
         std::cout << prompt << " (y/n): ";
@@ -60,7 +60,7 @@ bool Menu::getYesNo(const std::string& prompt) {
     }
 }
 
-void Menu::afiseazaMeniu() {
+void Meniu::afiseazaMeniu() {
     std::cout << "\n🎡 ========== SISTEM GESTIUNE PARC DE DISTRACTII ========== 🎡\n";
     std::cout << "1. Afiseaza toate atractiile" << std::endl;
     std::cout << "2. Afiseaza toti angajatii" << std::endl;
@@ -76,7 +76,7 @@ void Menu::afiseazaMeniu() {
     std::cout << "Alege optiunea: ";
 }
 
-void Menu::ruleazaMeniu() {
+void Meniu::ruleazaMeniu() const {
     int optiune;
     do {
         afiseazaMeniu();
@@ -114,6 +114,7 @@ void Menu::ruleazaMeniu() {
                 case 0:
                     std::cout << "\n🎡 Multumim ca ai vizitat " << parc.getNume() << "! La revedere! 🎡\n" << std::endl;
                     break;
+                default: ;
             }
         } catch (const ParcException& e) {
             std::cout << "❌ Eroare: " << e.what() << std::endl;
@@ -127,7 +128,7 @@ void Menu::ruleazaMeniu() {
     } while (optiune != 0);
 }
 
-void Menu::adaugaAtractieInteractiv() {
+void Meniu::adaugaAtractieInteractiv() const {
     std::cout << "\n➕ ========== ADAUGARE ATRACTIE NOUA ========== ➕\n" << std::endl;
     try {
         auto atractie = creeazaAtractie();
@@ -137,7 +138,7 @@ void Menu::adaugaAtractieInteractiv() {
     }
 }
 
-void Menu::adaugaAngajatInteractiv() {
+void Meniu::adaugaAngajatInteractiv() const {
     std::cout << "\n➕ ========== ADAUGARE ANGAJAT NOU ========== ➕\n" << std::endl;
     try {
         auto angajat = creeazaAngajat();
@@ -147,7 +148,7 @@ void Menu::adaugaAngajatInteractiv() {
     }
 }
 
-void Menu::adaugaVizitatorInteractiv() {
+void Meniu::adaugaVizitatorInteractiv() const {
     std::cout << "\n➕ ========== ADAUGARE VIZITATOR NOU ========== ➕\n" << std::endl;
     try {
         auto vizitator = creeazaVizitator();
@@ -157,7 +158,7 @@ void Menu::adaugaVizitatorInteractiv() {
     }
 }
 
-void Menu::verificaAccesInteractiv() {
+void Meniu::verificaAccesInteractiv() const {
     std::cout << "\n🔍 ========== VERIFICARE ACCES ATRACTIE ========== 🔍\n" << std::endl;
     
     std::string numeVizitator = getValidString("Nume vizitator: ");
@@ -166,7 +167,7 @@ void Menu::verificaAccesInteractiv() {
     parc.verificaAccesAtractie(numeVizitator, numeAtractie);
 }
 
-std::unique_ptr<Atractie> Menu::creeazaAtractie() {
+std::unique_ptr<Atractie> Meniu::creeazaAtractie() {
     std::cout << "\nTip atractie:" << std::endl;
     std::cout << "1. Montagne Russe" << std::endl;
     std::cout << "2. Carusel" << std::endl;
@@ -200,7 +201,7 @@ std::unique_ptr<Atractie> Menu::creeazaAtractie() {
     }
 }
 
-std::unique_ptr<Angajat> Menu::creeazaAngajat() {
+std::unique_ptr<Angajat> Meniu::creeazaAngajat() {
     std::cout << "\nTip angajat:" << std::endl;
     std::cout << "1. Operator Atractie" << std::endl;
     std::cout << "2. Agent Paza" << std::endl;
@@ -235,7 +236,7 @@ std::unique_ptr<Angajat> Menu::creeazaAngajat() {
     }
 }
 
-std::unique_ptr<Vizitator> Menu::creeazaVizitator() {
+std::unique_ptr<Vizitator> Meniu::creeazaVizitator() {
     std::cout << "\nTip vizitator:" << std::endl;
     std::cout << "1. Copil" << std::endl;
     std::cout << "2. Adolescent" << std::endl;
@@ -276,7 +277,7 @@ std::unique_ptr<Vizitator> Menu::creeazaVizitator() {
     }
 }
 
-std::unique_ptr<Bilet> Menu::creeazaBilet() {
+std::unique_ptr<Bilet> Meniu::creeazaBilet() {
     std::cout << "\nTip bilet:" << std::endl;
     std::cout << "1. Bilet Copil" << std::endl;
     std::cout << "2. Bilet Adult" << std::endl;

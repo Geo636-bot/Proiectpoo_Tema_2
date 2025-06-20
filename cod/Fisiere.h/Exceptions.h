@@ -5,14 +5,16 @@
 
 #include <exception>
 #include <string>
+#include <utility>
 
 class ParcException : public std::exception {
 protected:
     std::string message;
 
 public:
-    explicit ParcException(const std::string& msg) : message(msg) {}
-    virtual const char* what() const noexcept override {
+    explicit ParcException(std::string  msg) : message(std::move(msg)) {}
+
+    [[nodiscard]] const char* what() const noexcept override {
         return message.c_str();
     }
 };

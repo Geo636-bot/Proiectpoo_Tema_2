@@ -1,14 +1,15 @@
 
 #include "../Fisiere.h/Angajat.h"
 #include <iostream>
+#include <utility>
 
 using namespace std;
 
 // Inițializare atribut static
 double Angajat::salariuMediu = 2500.0;
 
-Angajat::Angajat(const std::string& nume, int varsta, int experientaAni, double salariu)
-    : nume(nume), varsta(varsta), experientaAni(experientaAni), salariu(salariu) {
+Angajat::Angajat(std::string  nume, int varsta, int experientaAni, double salariu)
+    : nume(std::move(nume)), varsta(varsta), experientaAni(experientaAni), salariu(salariu) {
     actualizareSalariuMediu(salariu);
 }
 
@@ -25,7 +26,11 @@ Angajat& Angajat::operator=(const Angajat& other) {
     return *this;
 }
 
-void Angajat::swap(Angajat& other) {
+std::unique_ptr<Angajat> Angajat::clone() const {
+    return nullptr;
+}
+
+void Angajat::swap(Angajat& other) noexcept {
     std::swap(nume, other.nume);
     std::swap(varsta, other.varsta);
     std::swap(experientaAni, other.experientaAni);
