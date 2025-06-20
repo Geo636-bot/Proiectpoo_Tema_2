@@ -4,6 +4,7 @@
 #include "../Fisiere.h/Meniu.h"
 #include "../Fisiere.h/Exceptions.h"
 
+
 int main() {
     try {
         ParcDistractii parc("Wonderland Adventure Park");
