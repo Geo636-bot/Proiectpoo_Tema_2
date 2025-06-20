@@ -64,7 +64,7 @@ add_executable(${MAIN_EXECUTABLE_NAME}
     cod/Fisiere.h/Meniu.h
     cod/Fisiere.h/ParcDistractii.h
     cod/Fisiere.h/Vizitator.h
-
+    
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )
