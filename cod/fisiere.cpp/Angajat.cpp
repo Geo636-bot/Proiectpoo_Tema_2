@@ -1,5 +1,5 @@
 
-#include "Angajat.h"
+#include "../Fisiere.h/Angajat.h"
 #include <algorithm>
 
 using namespace std;
