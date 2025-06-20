@@ -49,7 +49,7 @@ include(cmake/CopyHelper.cmake)
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${MAIN_EXECUTABLE_NAME}
-    main.cpp
+    cod/fisiere.cpp/main.cpp
     generated/src/Helper.cpp
 )
 
