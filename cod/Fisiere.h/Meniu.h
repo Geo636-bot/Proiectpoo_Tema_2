@@ -16,7 +16,7 @@ private:
     bool getYesNo(const std::string& prompt);
 
 public:
-    Menu(ParcDistractii& parc);
+    explicit Menu(ParcDistractii& parc);
     
     void afiseazaMeniu();
     void ruleazaMeniu();
