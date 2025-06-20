@@ -56,9 +56,6 @@ Acest proiect reprezintă o aplicație simplă care modelează un **parc de dist
 - Opțional: Interfață CLI (meniu în consolă)
 
 ---
-# Proiect POO - Tema 2 🏝️
-
-Acest proiect reprezintă o simulare a unui **Parc de Distracții**, dezvoltat în C++ folosind principiile programării orientate pe obiect.
 
 ## Structura Proiectului
 
