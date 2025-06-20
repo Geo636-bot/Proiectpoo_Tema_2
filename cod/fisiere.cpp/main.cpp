@@ -1,7 +1,7 @@
 
 #include <iostream>
 #include "../Fisiere.h/ParcDistractii.h"
-#include "../Fisiere.h/Menu.h"
+#include "../Fisiere.h/Meniu.h"
 #include "../Fisiere.h/Exceptions.h"
 
 int main() {
