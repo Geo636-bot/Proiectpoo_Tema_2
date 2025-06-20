@@ -1,17 +1,18 @@
 
 #include "../Fisiere.h/Bilet.h"
-#include <algorithm>
+#include <iostream>
 
 using namespace std;
 
 // Inițializare atribut static
-double Bilet::pretMediu = 85.0;
+double Bilet::pretMediu = 50.0;
 
-// Clasa de baza Bilet
-Bilet::Bilet(double pret, int valabilitateZile)
-    : pret(pret), valabilitateZile(valabilitateZile) {}
+Bilet::Bilet(double pret, int valabilitateZile) 
+    : pret(pret), valabilitateZile(valabilitateZile) {
+    actualizarePretMediu(pret);
+}
 
-Bilet::Bilet(const Bilet& other)
+Bilet::Bilet(const Bilet& other) 
     : pret(other.pret), valabilitateZile(other.valabilitateZile) {}
 
 Bilet& Bilet::operator=(const Bilet& other) {
@@ -27,13 +28,12 @@ void Bilet::swap(Bilet& other) {
     std::swap(valabilitateZile, other.valabilitateZile);
 }
 
-void Bilet::actualizarePretMediu(double nouPret) {
-    pretMediu = (pretMediu + nouPret) / 2.0;
+double Bilet::calculeazaPretFinal() const {
+    return pret;
 }
 
-void Bilet::afiseaza(std::ostream& os) const {
-    os << "Pret: " << pret << " RON" << std::endl;
-    os << "Valabilitate: " << valabilitateZile << " zile" << std::endl;
+void Bilet::actualizarePretMediu(double nouPret) {
+    pretMediu = (pretMediu + nouPret) / 2.0;
 }
 
 std::ostream& operator<<(std::ostream& os, const Bilet& bilet) {
@@ -41,11 +41,12 @@ std::ostream& operator<<(std::ostream& os, const Bilet& bilet) {
     return os;
 }
 
-double Bilet::calculeazaPretFinal() const {
-    return pret;
+void Bilet::afiseaza(std::ostream& os) const {
+    os << "🎫 " << getTip() << " - Pret: " << calculeazaPretFinal() 
+       << " RON (Valabil " << valabilitateZile << " zile)";
 }
 
-// BiletCopil
+// BiletCopil implementation
 BiletCopil::BiletCopil(double pret, int valabilitateZile, int varstaCopil)
     : Bilet(pret, valabilitateZile), varstaCopil(varstaCopil) {}
 
@@ -64,24 +65,16 @@ std::unique_ptr<Bilet> BiletCopil::clone() const {
     return std::make_unique<BiletCopil>(*this);
 }
 
-void BiletCopil::afiseaza(std::ostream& os) const {
-    os << "=== BILET COPIL ===" << std::endl;
-    Bilet::afiseaza(os);
-    os << "Varsta copil: " << varstaCopil << " ani" << std::endl;
-    os << "Pret final: " << calculeazaPretFinal() << " RON" << std::endl;
-    os << "===================" << std::endl;
-}
-
 double BiletCopil::calculeazaPretFinal() const {
-    if (varstaCopil < 5) {
-        return 0;
-    } else if (varstaCopil < 12) {
-        return pret * 0.5;
-    }
-    return pret;
+    return pret * 0.5; // 50% reducere pentru copii
 }
 
-// BiletAdult
+void BiletCopil::afiseaza(std::ostream& os) const {
+    Bilet::afiseaza(os);
+    os << " - Varsta copil: " << varstaCopil;
+}
+
+// BiletAdult implementation
 BiletAdult::BiletAdult(double pret, int valabilitateZile, bool includeFastPass)
     : Bilet(pret, valabilitateZile), includeFastPass(includeFastPass) {}
 
@@ -100,23 +93,22 @@ std::unique_ptr<Bilet> BiletAdult::clone() const {
     return std::make_unique<BiletAdult>(*this);
 }
 
-void BiletAdult::afiseaza(std::ostream& os) const {
-    os << "=== BILET ADULT ===" << std::endl;
-    Bilet::afiseaza(os);
-    os << "Fast Pass: " << (includeFastPass ? "Da" : "Nu") << std::endl;
-    os << "Pret final: " << calculeazaPretFinal() << " RON" << std::endl;
-    os << "===================" << std::endl;
-}
-
 double BiletAdult::calculeazaPretFinal() const {
     double pretFinal = pret;
     if (includeFastPass) {
-        pretFinal += 50;
+        pretFinal += 30; // taxa Fast Pass
     }
     return pretFinal;
 }
 
-// BiletVIP
+void BiletAdult::afiseaza(std::ostream& os) const {
+    Bilet::afiseaza(os);
+    if (includeFastPass) {
+        os << " + Fast Pass";
+    }
+}
+
+// BiletVIP implementation
 BiletVIP::BiletVIP(double pret, int valabilitateZile, bool accesLounge)
     : Bilet(pret, valabilitateZile), accesLounge(accesLounge) {}
 
@@ -135,18 +127,17 @@ std::unique_ptr<Bilet> BiletVIP::clone() const {
     return std::make_unique<BiletVIP>(*this);
 }
 
-void BiletVIP::afiseaza(std::ostream& os) const {
-    os << "=== BILET VIP ===" << std::endl;
-    Bilet::afiseaza(os);
-    os << "Acces Lounge: " << (accesLounge ? "Da" : "Nu") << std::endl;
-    os << "Pret final: " << calculeazaPretFinal() << " RON" << std::endl;
-    os << "================" << std::endl;
-}
-
 double BiletVIP::calculeazaPretFinal() const {
-    double pretFinal = pret * 2;
+    double pretFinal = pret * 2; // VIP costa dublu
     if (accesLounge) {
-        pretFinal += 100;
+        pretFinal += 50; // taxa lounge
     }
     return pretFinal;
+}
+
+void BiletVIP::afiseaza(std::ostream& os) const {
+    Bilet::afiseaza(os);
+    if (accesLounge) {
+        os << " + Acces Lounge VIP";
+    }
 }
