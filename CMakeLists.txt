@@ -57,13 +57,13 @@ add_executable(${MAIN_EXECUTABLE_NAME}
     cod/fisiere.cpp/ParcDistractii.cpp
     cod/fisiere.cpp/Vizitator.cpp
     cod/fisiere.cpp/main.cpp
-    cod/Fisere.h/Angajat.h
-    cod/Fisere.h/Atractie.h
-    cod/Fisere.h/Bilet.h
-    cod/Fisere.h/Exceptions.h
-    cod/Fisere.h/Meniu.h
-    cod/Fisere.h/ParcDistractii.h
-    cod/Fisere.h/Vizitator.h
+    cod/Fisiere.h/Angajat.h
+    cod/Fisiere.h/Atractie.h
+    cod/Fisiere.h/Bilet.h
+    cod/Fisiere.h/Exceptions.h
+    cod/Fisiere.h/Meniu.h
+    cod/Fisiere.h/ParcDistractii.h
+    cod/Fisiere.h/Vizitator.h
     
 )
 
