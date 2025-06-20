@@ -67,7 +67,7 @@ public:
     AgentPaza& operator=(const AgentPaza& other);
     
     std::unique_ptr<Angajat> clone() const override;
-    std::string getTip() const override { return "Agent Paza"; }
+    
     double calculeazaSalariuTotal() const override;
     
 protected:
