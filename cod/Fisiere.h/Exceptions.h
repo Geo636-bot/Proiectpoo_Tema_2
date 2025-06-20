@@ -10,7 +10,7 @@ protected:
     std::string message;
 
 public:
-    ParcException(const std::string& msg) : message(msg) {}
+    explicit ParcException(const std::string& msg) : message(msg) {}
     virtual const char* what() const noexcept override {
         return message.c_str();
     }
@@ -18,25 +18,25 @@ public:
 
 class InaltimeInsuficienta : public ParcException {
 public:
-    InaltimeInsuficienta(const std::string& msg) 
+    explicit InaltimeInsuficienta(const std::string& msg) 
         : ParcException("Inaltime insuficienta: " + msg) {}
 };
 
 class VarstaNecorespunzatoare : public ParcException {
 public:
-    VarstaNecorespunzatoare(const std::string& msg) 
+    explicit VarstaNecorespunzatoare(const std::string& msg) 
         : ParcException("Varsta necorespunzatoare: " + msg) {}
 };
 
 class CapacitateDepasita : public ParcException {
 public:
-    CapacitateDepasita(const std::string& msg) 
+    explicit CapacitateDepasita(const std::string& msg) 
         : ParcException("Capacitate depasita: " + msg) {}
 };
 
 class DateInvalide : public ParcException {
 public:
-    DateInvalide(const std::string& msg) 
+    explicit DateInvalide(const std::string& msg) 
         : ParcException("Date invalide: " + msg) {}
 };
 
