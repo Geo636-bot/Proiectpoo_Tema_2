@@ -53,8 +53,7 @@ public:
     std::unique_ptr<Angajat> clone() const override;
     std::string getTip() const override { return "Operator Atractie"; }
     double calculeazaSalariuTotal() const override;
-    const std::string& getAtractieDeservita() const { return atractieDeservita; }
-
+    
 protected:
     void afiseaza(std::ostream& os) const override;
 };
@@ -71,8 +70,7 @@ public:
     std::unique_ptr<Angajat> clone() const override;
     std::string getTip() const override { return "Agent Paza"; }
     double calculeazaSalariuTotal() const override;
-    const std::string& getZonaAsignata() const { return zonaAsignata; }
-
+    
 protected:
     void afiseaza(std::ostream& os) const override;
 };
@@ -88,7 +86,7 @@ public:
     
     std::unique_ptr<Angajat> clone() const override;
     std::string getTip() const override { return "Casier"; }
-    const std::string& getInterval() const { return interval; }
+    
 
 protected:
     void afiseaza(std::ostream& os) const override;
