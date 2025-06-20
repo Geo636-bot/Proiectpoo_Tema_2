@@ -1,5 +1,5 @@
 #include "../Fisiere.h/Meniu.h"
-#include "../FIsiere.h/Exceptions.h"
+#include "../Fisiere.h/Exceptions.h"
 #include <iostream>
 #include <limits>
 
