@@ -56,5 +56,35 @@ Acest proiect reprezintă o aplicație simplă care modelează un **parc de dist
 - Opțional: Interfață CLI (meniu în consolă)
 
 ---
+## Structura proiectului
+
+Proiectpoo_Tema_2/
+├── cod/
+|   ├──fisiere.cpp
+│       ├── Angajat.cpp
+│       ├── Atractie.cpp
+│       ├── Bilet.cpp
+│       ├── Meniu.cpp
+│       ├── ParcDistractii.cpp
+│       ├── Vizitator.cpp
+│       ├── main.cpp
+│   ├── Fisiere.h/
+│       ├── Angajat.h
+│       ├── Atractie.h
+│       ├── Bilet.h
+│       ├── Exceptions.h
+│       ├── Meniu.h
+│       ├── ParcDistractii.h
+│       ├── Vizitator.h
+├── generated/
+│   └── src/
+│       └── Helper.cpp
+├── cmake/
+│   ├── CompilerFlags.cmake
+│   ├── CopyHelper.cmake
+│   └── Options.cmake
+├── tastatura.txt
+├── CMakeLists.txt
+└── README.md
 
 
