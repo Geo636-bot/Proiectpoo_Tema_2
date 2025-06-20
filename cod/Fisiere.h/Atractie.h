@@ -63,7 +63,7 @@ public:
     Carusel& operator=(const Carusel& other);
     
     std::unique_ptr<Atractie> clone() const override;
-    std::string getTip() const override { return "Carusel"; }
+    const std::string& getTip() const override { return "Carusel"; }
    
 
 protected:
