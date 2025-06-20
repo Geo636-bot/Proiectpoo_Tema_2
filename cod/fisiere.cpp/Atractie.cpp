@@ -1,5 +1,5 @@
 
-#include "Atractie.h"
+#include "../Fisiere.h/Atractie.h"
 #include <algorithm>
 
 using namespace std;
