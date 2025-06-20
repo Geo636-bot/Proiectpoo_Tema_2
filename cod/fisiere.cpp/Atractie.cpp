@@ -1,10 +1,36 @@
 
-
 #include "Atractie.h"
+#include <algorithm>
+
+using namespace std;
+
+// Inițializare atribut static
+int Atractie::numarTotalAtractii = 0;
 
 // Clasa de baza Atractie
 Atractie::Atractie(const std::string& nume, int inaltimeMinima, int capacitate)
-    : nume(nume), inaltimeMinima(inaltimeMinima), capacitate(capacitate) {}
+    : nume(nume), inaltimeMinima(inaltimeMinima), capacitate(capacitate) {
+    ++numarTotalAtractii;
+}
+
+Atractie::Atractie(const Atractie& other)
+    : nume(other.nume), inaltimeMinima(other.inaltimeMinima), capacitate(other.capacitate) {
+    ++numarTotalAtractii;
+}
+
+Atractie& Atractie::operator=(const Atractie& other) {
+    if (this != &other) {
+        Atractie temp(other); // copy constructor
+        swap(temp); // swap cu temporary
+    }
+    return *this;
+}
+
+void Atractie::swap(Atractie& other) {
+    std::swap(nume, other.nume);
+    std::swap(inaltimeMinima, other.inaltimeMinima);
+    std::swap(capacitate, other.capacitate);
+}
 
 void Atractie::afiseaza(std::ostream& os) const {
     os << "Nume: " << nume << std::endl;
@@ -21,6 +47,21 @@ std::ostream& operator<<(std::ostream& os, const Atractie& atractie) {
 MontagneRusse::MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate, int vitezaMaxima)
     : Atractie(nume, inaltimeMinima, capacitate), vitezaMaxima(vitezaMaxima) {}
 
+MontagneRusse::MontagneRusse(const MontagneRusse& other)
+    : Atractie(other), vitezaMaxima(other.vitezaMaxima) {}
+
+MontagneRusse& MontagneRusse::operator=(const MontagneRusse& other) {
+    if (this != &other) {
+        Atractie::operator=(other);
+        vitezaMaxima = other.vitezaMaxima;
+    }
+    return *this;
+}
+
+std::unique_ptr<Atractie> MontagneRusse::clone() const {
+    return std::make_unique<MontagneRusse>(*this);
+}
+
 void MontagneRusse::afiseaza(std::ostream& os) const {
     os << "=== MONTAGNE RUSSE ===" << std::endl;
     Atractie::afiseaza(os);
@@ -31,6 +72,21 @@ void MontagneRusse::afiseaza(std::ostream& os) const {
 // Carusel
 Carusel::Carusel(const std::string& nume, int inaltimeMinima, int capacitate, int numarCai)
     : Atractie(nume, inaltimeMinima, capacitate), numarCai(numarCai) {}
+
+Carusel::Carusel(const Carusel& other)
+    : Atractie(other), numarCai(other.numarCai) {}
+
+Carusel& Carusel::operator=(const Carusel& other) {
+    if (this != &other) {
+        Atractie::operator=(other);
+        numarCai = other.numarCai;
+    }
+    return *this;
+}
+
+std::unique_ptr<Atractie> Carusel::clone() const {
+    return std::make_unique<Carusel>(*this);
+}
 
 void Carusel::afiseaza(std::ostream& os) const {
     os << "=== CARUSEL ===" << std::endl;
@@ -43,10 +99,24 @@ void Carusel::afiseaza(std::ostream& os) const {
 CasaGroazei::CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate, int nivelFrica)
     : Atractie(nume, inaltimeMinima, capacitate), nivelFrica(nivelFrica) {}
 
+CasaGroazei::CasaGroazei(const CasaGroazei& other)
+    : Atractie(other), nivelFrica(other.nivelFrica) {}
+
+CasaGroazei& CasaGroazei::operator=(const CasaGroazei& other) {
+    if (this != &other) {
+        Atractie::operator=(other);
+        nivelFrica = other.nivelFrica;
+    }
+    return *this;
+}
+
+std::unique_ptr<Atractie> CasaGroazei::clone() const {
+    return std::make_unique<CasaGroazei>(*this);
+}
+
 void CasaGroazei::afiseaza(std::ostream& os) const {
     os << "=== CASA GROAZEI ===" << std::endl;
     Atractie::afiseaza(os);
     os << "Nivel frica (1-10): " << nivelFrica << std::endl;
     os << "====================" << std::endl;
 }
-
