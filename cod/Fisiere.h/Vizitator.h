@@ -14,16 +14,26 @@ protected:
     int varsta;
     int inaltime;
     std::unique_ptr<Bilet> bilet;
+    static int numarTotalVizitatori; // atribut static
 
 public:
     Vizitator(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet);
+    Vizitator(const Vizitator& other);
+    Vizitator& operator=(const Vizitator& other);
     virtual ~Vizitator() = default;
+    
+    // Constructor virtual (clone pattern)
+    virtual std::unique_ptr<Vizitator> clone() const = 0;
     
     virtual std::string getTip() const = 0;
     virtual bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara = 0) const;
     
     // Operatorul << virtual pentru polimorfism
     friend std::ostream& operator<<(std::ostream& os, const Vizitator& vizitator);
+    
+    // Funcții statice
+    static int getNumarTotalVizitatori() { return numarTotalVizitatori; }
+    static void resetContorVizitatori() { numarTotalVizitatori = 0; }
     
     // Getters
     std::string getNume() const { return nume; }
@@ -33,6 +43,7 @@ public:
 
 protected:
     virtual void afiseaza(std::ostream& os) const;
+    void swap(Vizitator& other);
 };
 
 class Copil : public Vizitator {
@@ -41,6 +52,10 @@ private:
 
 public:
     Copil(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet, bool insotitDeAdult);
+    Copil(const Copil& other);
+    Copil& operator=(const Copil& other);
+    
+    std::unique_ptr<Vizitator> clone() const override;
     std::string getTip() const override { return "Copil"; }
     bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara = 0) const override;
     bool getInsotitDeAdult() const { return insotitDeAdult; }
@@ -55,6 +70,10 @@ private:
 
 public:
     Adolescent(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet, bool areBuletin);
+    Adolescent(const Adolescent& other);
+    Adolescent& operator=(const Adolescent& other);
+    
+    std::unique_ptr<Vizitator> clone() const override;
     std::string getTip() const override { return "Adolescent"; }
     bool getAreBuletin() const { return areBuletin; }
 
@@ -68,6 +87,10 @@ private:
 
 public:
     Adult(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet, const std::string& ocupatie);
+    Adult(const Adult& other);
+    Adult& operator=(const Adult& other);
+    
+    std::unique_ptr<Vizitator> clone() const override;
     std::string getTip() const override { return "Adult"; }
     std::string getOcupatie() const { return ocupatie; }
 
