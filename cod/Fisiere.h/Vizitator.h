@@ -31,15 +31,9 @@ public:
     // Operatorul << virtual pentru polimorfism
     friend std::ostream& operator<<(std::ostream& os, const Vizitator& vizitator);
     
-    // Funcții statice
-    static int getNumarTotalVizitatori() { return numarTotalVizitatori; }
-    static void resetContorVizitatori() { numarTotalVizitatori = 0; }
     
     // Getters
-    std::string getNume() const { return nume; }
-    int getVarsta() const { return varsta; }
-    int getInaltime() const { return inaltime; }
-    const Bilet* getBilet() const { return bilet.get(); }
+    const std::string& getNume() const { return nume; }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;
@@ -58,8 +52,7 @@ public:
     std::unique_ptr<Vizitator> clone() const override;
     std::string getTip() const override { return "Copil"; }
     bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara = 0) const override;
-    bool getInsotitDeAdult() const { return insotitDeAdult; }
-
+    
 protected:
     void afiseaza(std::ostream& os) const override;
 };
@@ -75,7 +68,6 @@ public:
     
     std::unique_ptr<Vizitator> clone() const override;
     std::string getTip() const override { return "Adolescent"; }
-    bool getAreBuletin() const { return areBuletin; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
@@ -92,7 +84,6 @@ public:
     
     std::unique_ptr<Vizitator> clone() const override;
     std::string getTip() const override { return "Adult"; }
-    std::string getOcupatie() const { return ocupatie; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
