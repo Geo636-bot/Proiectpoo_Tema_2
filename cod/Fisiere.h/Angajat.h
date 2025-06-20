@@ -51,7 +51,6 @@ public:
     OperatorAtractie& operator=(const OperatorAtractie& other);
     
     std::unique_ptr<Angajat> clone() const override;
-    std::string getTip() const override { return "Operator Atractie"; }
     double calculeazaSalariuTotal() const override;
     
 protected:
