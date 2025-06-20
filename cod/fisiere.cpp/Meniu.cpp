@@ -1,5 +1,5 @@
-#include "Menu.h"
-#include "Exceptions.h"
+#include "../Fisiere.h/Meniu.h"
+#include "../FIsiere.h/Exceptions.h"
 #include <iostream>
 #include <limits>
 
