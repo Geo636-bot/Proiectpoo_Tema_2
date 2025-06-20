@@ -50,7 +50,9 @@ public:
     MontagneRusse(const MontagneRusse& other);
     MontagneRusse& operator=(const MontagneRusse& other);
     
-    std::unique_ptr<Atractie> clone() const override;
+    std::unique_ptr<Atractie> clone() const override{
+        return std::make_unique<MontagneRusse>(*this);
+    }
     std::string getTip() const override { return "Montagne Russe"; }
     int getVitezaMaxima() const { return vitezaMaxima; }
 
