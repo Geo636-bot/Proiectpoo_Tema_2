@@ -56,36 +56,39 @@ Acest proiect reprezintă o aplicație simplă care modelează un **parc de dist
 - Opțional: Interfață CLI (meniu în consolă)
 
 ---
-## Structura proiectului
+# Proiect POO - Tema 2 🏝️
 
+Acest proiect reprezintă o simulare a unui **Parc de Distracții**, dezvoltat în C++ folosind principiile programării orientate pe obiect.
+
+## Structura Proiectului
+
+```text
 Proiectpoo_Tema_2/
-├── cod/               # Codul sursă al proiectului
-│   ├── fisiere.cpp/   # Fișierele .cpp pentru fiecare clasă
+├── cod/                  # Codul sursă al proiectului
+│   ├── fisiere.cpp/      # Fișierele .cpp pentru fiecare clasă
 │   │   ├── Angajat.cpp
 │   │   ├── Atractie.cpp
 │   │   ├── Bilet.cpp
 │   │   ├── Meniu.cpp
 │   │   ├── ParcDistractii.cpp
 │   │   ├── Vizitator.cpp
-│   │   ├── main.cpp   # Punctul de pornire al aplicației
-│   ├── Fisiere.h/     # Fișierele header (.h)
-│       ├── Angajat.h
-│       ├── Atractie.h
-│       ├── Bilet.h
-│       ├── Exceptions.h
-│       ├── Meniu.h
-│       ├── ParcDistractii.h
-│       ├── Vizitator.h
-├── generated/         # Fișiere generate automat
-│   └── src/
-│       └── Helper.cpp
-├── cmake/             # Configurări pentru CMake
-│   ├── CompilerFlags.cmake
-│   ├── CopyHelper.cmake
-│   └── Options.cmake
-├── tastatura.txt      # Fișier de intrare de la tastatură
-├── CMakeLists.txt     # Configurația proiectului pentru CMake
-└── README.md          # Acest fișier
-
-
-
+│   │   └—— main.cpp      # Punctul de pornire al aplicației
+│   └—— Fisiere.h/        # Fișierele header (.h)
+│       ├—— Angajat.h
+│       ├—— Atractie.h
+│       ├—— Bilet.h
+│       ├—— Exceptions.h
+│       ├—— Meniu.h
+│       ├—— ParcDistractii.h
+│       └—— Vizitator.h
+├── generated/            # Fișiere generate automat
+│   └—— src/
+│       └—— Helper.cpp
+├── cmake/                # Configurări pentru CMake
+│   ├—— CompilerFlags.cmake
+│   ├—— CopyHelper.cmake
+│   └—— Options.cmake
+├── tastatura.txt         # Fișier de intrare de la tastatură
+├── CMakeLists.txt        # Configurația proiectului pentru CMake
+└—— README.md             # Acest fișier
+```
