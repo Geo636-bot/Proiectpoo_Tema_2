@@ -23,8 +23,14 @@ Vizitator::Vizitator(const Vizitator& other)
 
 Vizitator& Vizitator::operator=(const Vizitator& other) {
     if (this != &other) {
-        Vizitator temp(other);
-        swap(temp);
+        nume = other.nume;
+        varsta = other.varsta;
+        inaltime = other.inaltime;
+        if (other.bilet) {
+            bilet = other.bilet->clone();
+        } else {
+            bilet.reset();
+        }
     }
     return *this;
 }
