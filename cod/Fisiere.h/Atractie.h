@@ -80,7 +80,7 @@ public:
     CasaGroazei& operator=(const CasaGroazei& other);
     
     std::unique_ptr<Atractie> clone() const override;
-    std::string getTip() const override { return "Casa Groazei"; }
+    
     
 protected:
     void afiseaza(std::ostream& os) const override;
