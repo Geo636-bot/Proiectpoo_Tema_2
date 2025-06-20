@@ -50,21 +50,14 @@ include(cmake/CopyHelper.cmake)
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${MAIN_EXECUTABLE_NAME}
     generated/src/Helper.cpp
-    cod/fisiere.cpp/Angajat.cpp
-    cod/fisiere.cpp/Atractie.cpp
-    cod/fisiere.cpp/Bilet.cpp
-    cod/fisiere.cpp/Meniu.cpp
-    cod/fisiere.cpp/ParcDistractii.cpp
-    cod/fisiere.cpp/Vizitator.cpp
-    cod/fisiere.cpp/main.cpp
-    cod/Fisiere.h/Angajat.h
-    cod/Fisiere.h/Atractie.h
-    cod/Fisiere.h/Bilet.h
-    cod/Fisiere.h/Exceptions.h
-    cod/Fisiere.h/Meniu.h
-    cod/Fisiere.h/ParcDistractii.h
-    cod/Fisiere.h/Vizitator.h
-    
+    cod/fisiere.cpp
+    cod/Angajat.cpp
+    cod/Atractie.cpp
+    cod/Bilet.cpp
+    cod/Meniu.cpp
+    cod/ParcDistractii.cpp
+    cod/Vizitator.cpp
+    cod/main.cpp
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )
@@ -78,6 +71,11 @@ set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})
 
 # use SYSTEM so cppcheck and clang-tidy do not report warnings from these directories
 target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE generated/include)
+target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE
+    generated/include
+    cod
+    cod/Fisiere.h
+)
 # target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ext/<SomeHppLib>/include)
 # target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ${<SomeLib>_SOURCE_DIR}/include)
 # target_link_directories(${MAIN_EXECUTABLE_NAME} PRIVATE ${<SomeLib>_BINARY_DIR}/lib)
