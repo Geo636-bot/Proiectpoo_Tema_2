@@ -17,8 +17,8 @@ Bilet::Bilet(const Bilet& other)
 
 Bilet& Bilet::operator=(const Bilet& other) {
     if (this != &other) {
-        Bilet temp(other);
-        swap(temp);
+        pret = other.pret;
+        valabilitateZile = other.valabilitateZile;
     }
     return *this;
 }
