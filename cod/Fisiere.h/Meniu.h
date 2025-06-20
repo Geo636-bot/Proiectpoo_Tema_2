@@ -1,5 +1,4 @@
 
-
 #ifndef MENU_H
 #define MENU_H
 
@@ -17,7 +16,7 @@ private:
     bool getYesNo(const std::string& prompt);
 
 public:
-    explicit Menu(ParcDistractii& parc);
+    Menu(ParcDistractii& parc);
     
     void afiseazaMeniu();
     void ruleazaMeniu();
