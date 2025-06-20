@@ -49,8 +49,22 @@ include(cmake/CopyHelper.cmake)
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${MAIN_EXECUTABLE_NAME}
-    cod/fisiere.cpp/main.cpp
     generated/src/Helper.cpp
+    cod/fisiere.cpp/Angajat.cpp
+    cod/fisiere.cpp/Atractie.cpp
+    cod/fisiere.cpp/Bilet.cpp
+    cod/fisiere.cpp/Meniu.cpp
+    cod/fisiere.cpp/ParcDistractii.cpp
+    cod/fisiere.cpp/Vizitator.cpp
+    cod/fisiere.cpp/main.cpp
+    cod/Fisere.h/Angajat.h
+    cod/Fisere.h/Atractie.h
+    cod/Fisere.h/Bilet.h
+    cod/Fisere.h/Exceptions.h
+    cod/Fisere.h/Meniu.h
+    cod/Fisere.h/ParcDistractii.h
+    cod/Fisere.h/Vizitator.h
+    
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )
