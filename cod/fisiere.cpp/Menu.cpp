@@ -232,8 +232,6 @@ void Menu::verificaAccesInteractiv() const {
     parc.verificaAccesAtractie(numeVizitator, numeAtractie);
 }
 
-void Menu::afiseazaStatisticiTemplate() {
-}
 
 std::unique_ptr<Atractie> Menu::creeazaAtractie() {
     cout << "\nTip atractie:" << endl;

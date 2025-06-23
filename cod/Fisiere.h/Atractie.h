@@ -12,7 +12,7 @@ protected:
     std::string nume;
     int inaltimeMinima;
     int capacitate;
-    int varstaNecesara;
+    int varstaNecesara{};
     static int numarTotalAtractii; // atribut static
 
 public:
