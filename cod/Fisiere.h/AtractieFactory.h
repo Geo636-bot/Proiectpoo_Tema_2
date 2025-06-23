@@ -91,13 +91,13 @@ public:
         return nullptr;
     }
 
-    [[nodiscard]] std::vector<std::string> getTipuriDisponibile() const {
-        std::vector<std::string> tipuri;
-        for (const auto& pair : factories) {
-            tipuri.push_back(pair.first + " (" + pair.second->getTipAtractie() + ")");
-        }
-        return tipuri;
-    }
+    // [[nodiscard]] std::vector<std::string> getTipuriDisponibile() const {
+    //     std::vector<std::string> tipuri;
+    //     for (const auto& pair : factories) {
+    //         tipuri.push_back(pair.first + " (" + pair.second->getTipAtractie() + ")");
+    //     }
+    //     return tipuri;
+    // }
 };
 
 #endif
