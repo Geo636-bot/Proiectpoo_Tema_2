@@ -1,18 +1,19 @@
 
 #include "../Fisiere.h/Atractie.h"
 #include <iostream>
+#include <utility>
 
 using namespace std;
 
 // Inițializare atribut static
 int Atractie::numarTotalAtractii = 0;
 
-Atractie::Atractie(const std::string& nume, int inaltimeMinima, int capacitate) 
-    : nume(nume), inaltimeMinima(inaltimeMinima), capacitate(capacitate) {
+Atractie::Atractie(std::string  nume, int inaltimeMinima, int capacitate)
+    : nume(std::move(nume)), inaltimeMinima(inaltimeMinima), capacitate(capacitate) {
     ++numarTotalAtractii;
 }
 
-Atractie::Atractie(const Atractie& other) 
+Atractie::Atractie(const Atractie& other)
     : nume(other.nume), inaltimeMinima(other.inaltimeMinima), capacitate(other.capacitate) {
     ++numarTotalAtractii;
 }
@@ -38,7 +39,7 @@ std::ostream& operator<<(std::ostream& os, const Atractie& atractie) {
 }
 
 void Atractie::afiseaza(std::ostream& os) const {
-    os << "🎢 " << getTip() << ": " << nume 
+    os << "🎢 " << getTip() << ": " << nume
        << " (Inaltime min: " << inaltimeMinima << "cm, Capacitate: " << capacitate << ")";
 }
 

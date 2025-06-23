@@ -1,5 +1,5 @@
-#include "Meniu.h"
-#include "Exceptions.h"
+#include "../Fisiere.h/Menu.h"
+#include "../Fisiere.h/Exceptions.h"
 #include <iostream>
 #include <limits>
 
@@ -9,7 +9,7 @@ Menu::Menu(ParcDistractii& parc) : parc(parc) {
     // Creez observeri și îi adaug la parc
     logObserver = std::make_shared<LogObserver>();
     statsObserver = std::make_shared<StatisticsObserver>();
-    
+
     parc.adaugaObserver(logObserver);
     parc.adaugaObserver(statsObserver);
 }
@@ -87,13 +87,13 @@ void Menu::afiseazaMeniu() {
     cout << "Alegerea ta: ";
 }
 
-void Menu::ruleazaMeniu() {
+void Menu::ruleazaMeniu() const {
     int optiune;
-    
+
     do {
         afiseazaMeniu();
         optiune = getValidInt("", 0, 11);
-        
+
         try {
             switch (optiune) {
                 case 1:
@@ -131,7 +131,7 @@ void Menu::ruleazaMeniu() {
                     break;
                 case 0:
                     cout << "\n🎪 Multumim ca ati vizitat parcul! La revedere! 🎪\n" << endl;
-                    cout << "📊 Statistici finale observeri: " << statsObserver->getNumarEvenimente() 
+                    cout << "📊 Statistici finale observeri: " << statsObserver->getNumarEvenimente()
                          << " evenimente procesate" << endl;
                     break;
                 default:
@@ -142,26 +142,26 @@ void Menu::ruleazaMeniu() {
         } catch (const exception& e) {
             cout << "❌ Eroare neasteptata: " << e.what() << endl;
         }
-        
+
         if (optiune != 0) {
             cout << "\nApasa Enter pentru a continua...";
             cin.ignore();
             cin.get();
         }
-        
+
     } while (optiune != 0);
 }
 
-void Menu::adaugaAtractieFactory() {
+void Menu::adaugaAtractieFactory() const {
     cout << "\n🏭 === ADAUGARE ATRACTIE CU FACTORY PATTERN === 🏭\n" << endl;
-    
+
     cout << "Tipuri disponibile:" << endl;
     cout << "1. montagne (Montagne Russe)" << endl;
     cout << "2. carusel (Carusel)" << endl;
     cout << "3. casa (Casa Groazei)" << endl;
-    
+
     int tipOptiune = getValidInt("Alege tipul atractiei (1-3): ", 1, 3);
-    
+
     string tipAtractie;
     string parametruNume;
     switch (tipOptiune) {
@@ -177,16 +177,15 @@ void Menu::adaugaAtractieFactory() {
             tipAtractie = "casa";
             parametruNume = "nivel frica (1-10)";
             break;
+        default: ;
     }
-    
+
     string nume = getValidString("Numele atractiei: ");
     int inaltimeMinima = getValidInt("Inaltimea minima (cm): ", 50, 200);
     int capacitate = getValidInt("Capacitatea: ", 1, 100);
     int parametruSpecific = getValidInt(parametruNume + ": ", 1, 300);
-    
-    auto atractie = parc.creeazaAtractieFactory(tipAtractie, nume, inaltimeMinima, capacitate, parametruSpecific);
-    
-    if (atractie) {
+
+    if (auto atractie = parc.creeazaAtractieFactory(tipAtractie, nume, inaltimeMinima, capacitate, parametruSpecific)) {
         parc.adaugaAtractie(std::move(atractie));
         cout << "✅ Atractie creata cu succes folosind Factory Pattern!" << endl;
     } else {
@@ -194,7 +193,7 @@ void Menu::adaugaAtractieFactory() {
     }
 }
 
-void Menu::adaugaAtractieInteractiv() {
+void Menu::adaugaAtractieInteractiv() const {
     cout << "\n➕ ========== ADAUGARE ATRACTIE NOUA ========== ➕\n" << endl;
     try {
         auto atractie = creeazaAtractie();
@@ -204,7 +203,7 @@ void Menu::adaugaAtractieInteractiv() {
     }
 }
 
-void Menu::adaugaAngajatInteractiv() {
+void Menu::adaugaAngajatInteractiv() const {
     cout << "\n➕ ========== ADAUGARE ANGAJAT NOU ========== ➕\n" << endl;
     try {
         auto angajat = creeazaAngajat();
@@ -214,7 +213,7 @@ void Menu::adaugaAngajatInteractiv() {
     }
 }
 
-void Menu::adaugaVizitatorInteractiv() {
+void Menu::adaugaVizitatorInteractiv() const {
     cout << "\n➕ ========== ADAUGARE VIZITATOR NOU ========== ➕\n" << endl;
     try {
         auto vizitator = creeazaVizitator();
@@ -224,13 +223,16 @@ void Menu::adaugaVizitatorInteractiv() {
     }
 }
 
-void Menu::verificaAccesInteractiv() {
+void Menu::verificaAccesInteractiv() const {
     cout << "\n🔍 ========== VERIFICARE ACCES ATRACTIE ========== 🔍\n" << endl;
-    
+
     string numeVizitator = getValidString("Nume vizitator: ");
     string numeAtractie = getValidString("Nume atractie: ");
-    
+
     parc.verificaAccesAtractie(numeVizitator, numeAtractie);
+}
+
+void Menu::afiseazaStatisticiTemplate() {
 }
 
 std::unique_ptr<Atractie> Menu::creeazaAtractie() {
@@ -238,17 +240,17 @@ std::unique_ptr<Atractie> Menu::creeazaAtractie() {
     cout << "1. Montagne Russe" << endl;
     cout << "2. Carusel" << endl;
     cout << "3. Casa Groazei" << endl;
-    
+
     int tip = getValidInt("Alege tipul: ", 1, 3);
-    
+
     string nume = getValidString("Nume atractie: ");
     int inaltime = getValidInt("Inaltime minima (cm): ", 50, 200);
     int capacitate = getValidInt("Capacitate (persoane): ", 1, 100);
-    
+
     if (inaltime < 50) {
         throw InaltimeInsuficienta("Inaltimea minima nu poate fi sub 50 cm");
     }
-    
+
     switch (tip) {
         case 1: {
             int viteza = getValidInt("Viteza maxima (km/h): ", 10, 200);
@@ -272,18 +274,18 @@ std::unique_ptr<Angajat> Menu::creeazaAngajat() {
     cout << "1. Operator Atractie" << endl;
     cout << "2. Agent Paza" << endl;
     cout << "3. Casier" << endl;
-    
+
     int tip = getValidInt("Alege tipul: ", 1, 3);
-    
+
     string nume = getValidString("Nume angajat: ");
     int varsta = getValidInt("Varsta: ", 18, 70);
     int experienta = getValidInt("Experienta (ani): ", 0, 50);
     double salariu = getValidDouble("Salariu: ", 1000.0, 50000.0);
-    
+
     if (varsta < 18) {
         throw VarstaNecorespunzatoare("Angajatul trebuie sa aiba minim 18 ani");
     }
-    
+
     switch (tip) {
         case 1: {
             string atractie = getValidString("Atractie deservita: ");
@@ -307,15 +309,15 @@ std::unique_ptr<Vizitator> Menu::creeazaVizitator() {
     cout << "1. Copil" << endl;
     cout << "2. Adolescent" << endl;
     cout << "3. Adult" << endl;
-    
+
     int tip = getValidInt("Alege tipul: ", 1, 3);
-    
+
     string nume = getValidString("Nume vizitator: ");
     int varsta = getValidInt("Varsta: ", 1, 120);
     int inaltime = getValidInt("Inaltime (cm): ", 50, 250);
-    
+
     auto bilet = creeazaBilet();
-    
+
     switch (tip) {
         case 1: {
             if (varsta > 17) {
@@ -348,12 +350,12 @@ std::unique_ptr<Bilet> Menu::creeazaBilet() {
     cout << "1. Bilet Copil" << endl;
     cout << "2. Bilet Adult" << endl;
     cout << "3. Bilet VIP" << endl;
-    
+
     int tip = getValidInt("Alege tipul: ", 1, 3);
-    
+
     double pret = getValidDouble("Pret de baza: ", 10.0, 1000.0);
     int valabilitate = getValidInt("Valabilitate (zile): ", 1, 365);
-    
+
     switch (tip) {
         case 1: {
             int varsta = getValidInt("Varsta copilului: ", 1, 17);

@@ -5,7 +5,6 @@
 #include <vector>
 #include <memory>
 #include <string>
-#include <algorithm>
 
 // Observer interface
 class Observer {
@@ -21,32 +20,26 @@ private:
 
 public:
     virtual ~Subject() = default;
-    
-    void adaugaObserver(std::weak_ptr<Observer> observer) {
+
+    void adaugaObserver(const std::weak_ptr<Observer>& observer) {
         observeri.push_back(observer);
     }
-    
+
     void stergeObserver(std::shared_ptr<Observer> observer) {
-        observeri.erase(
-            std::remove_if(observeri.begin(), observeri.end(),
-                [&observer](const std::weak_ptr<Observer>& weak_obs) {
-                    return weak_obs.expired() || weak_obs.lock() == observer;
-                }),
-            observeri.end()
-        );
+        std::erase_if(observeri,
+                      [&observer](const std::weak_ptr<Observer>& weak_obs) {
+                          return weak_obs.expired() || weak_obs.lock() == observer;
+                      });
     }
-    
+
 protected:
     void notificaObserveri(const std::string& eveniment, const std::string& detalii) {
         // Cleanup expired observers
-        observeri.erase(
-            std::remove_if(observeri.begin(), observeri.end(),
-                [](const std::weak_ptr<Observer>& weak_obs) {
-                    return weak_obs.expired();
-                }),
-            observeri.end()
-        );
-        
+        std::erase_if(observeri,
+                      [](const std::weak_ptr<Observer>& weak_obs) {
+                          return weak_obs.expired();
+                      });
+
         // Notify active observers
         for (auto& weak_obs : observeri) {
             if (auto obs = weak_obs.lock()) {
@@ -72,11 +65,11 @@ private:
 public:
     void notifica(const std::string& eveniment, const std::string& detalii) override {
         ++numarEvenimente;
-        std::cout << "📊 STATS: Eveniment #" << numarEvenimente 
+        std::cout << "📊 STATS: Eveniment #" << numarEvenimente
                   << " - " << eveniment << std::endl;
     }
-    
-    int getNumarEvenimente() const { return numarEvenimente; }
+
+    [[nodiscard]] int getNumarEvenimente() const { return numarEvenimente; }
 };
 
 #endif

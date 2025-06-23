@@ -1,7 +1,6 @@
 
-#include <iostream>
 #include "../Fisiere.h/Vizitator.h"
-#include <algorithm>
+#include <iostream>
 #include <utility>
 
 using namespace std;
@@ -53,7 +52,7 @@ std::ostream& operator<<(std::ostream& os, const Vizitator& vizitator) {
 }
 
 void Vizitator::afiseaza(std::ostream& os) const {
-    os << "👤 " << getTip() << ": " << nume 
+    os << "👤 " << getTip() << ": " << nume
        << " (Varsta: " << varsta << ", Inaltime: " << inaltime << "cm)";
     if (bilet) {
         os << "\n   " << *bilet;
@@ -119,8 +118,8 @@ void Adolescent::afiseaza(std::ostream& os) const {
 }
 
 // Adult implementation
-Adult::Adult(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet, const std::string& ocupatie)
-    : Vizitator(nume, varsta, inaltime, std::move(bilet)), ocupatie(ocupatie) {}
+Adult::Adult(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet, std::string  ocupatie)
+    : Vizitator(nume, varsta, inaltime, std::move(bilet)), ocupatie(std::move(ocupatie)) {}
 
 Adult::Adult(const Adult& other)
     : Vizitator(other), ocupatie(other.ocupatie) {}

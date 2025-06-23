@@ -1,20 +1,26 @@
-
 #include "../Fisiere.h/ParcDistractii.h"
 #include <iostream>
 #include <algorithm>
-#include <utility>
 
 using namespace std;
 
 // Inițializare atribut static
 int ParcDistractii::numarParcuri = 0;
 
-ParcDistractii::ParcDistractii(std::string  nume) : nume(std::move(nume)) {
+ParcDistractii::ParcDistractii(const std::string& nume)
+    : nume(nume),
+      statisticiPreturi("Preturi Bilete"),
+      statisticiVarste("Varste Vizitatori"),
+      statisticiInaltimi("Inaltimi Vizitatori") {
     ++numarParcuri;
+    notificaObserveri("PARC_CREAT", "Parc nou creat: " + nume);
 }
 
-
-ParcDistractii::ParcDistractii(const ParcDistractii& other) : nume(other.nume) {
+ParcDistractii::ParcDistractii(const ParcDistractii& other)
+    : nume(other.nume),
+      statisticiPreturi("Preturi Bilete"),
+      statisticiVarste("Varste Vizitatori"),
+      statisticiInaltimi("Inaltimi Vizitatori") {
     ++numarParcuri;
     copiazaAtractii(other.atractii);
     copiazaAngajati(other.angajati);
@@ -29,7 +35,7 @@ ParcDistractii& ParcDistractii::operator=(const ParcDistractii& other) {
     return *this;
 }
 
-void ParcDistractii::swap(ParcDistractii& other) noexcept {
+void ParcDistractii::swap(ParcDistractii& other) {
     std::swap(nume, other.nume);
     atractii.swap(other.atractii);
     angajati.swap(other.angajati);
@@ -54,28 +60,82 @@ void ParcDistractii::copiazaVizitatori(const std::vector<std::unique_ptr<Vizitat
     }
 }
 
+std::unique_ptr<Atractie> ParcDistractii::creeazaAtractieFactory(
+    const std::string& tip,
+    const std::string& nume,
+    int inaltimeMinima,
+    int capacitate,
+    int parametruSpecific) {
+
+    auto atractie = factoryManager.creeazaAtractie(tip, nume, inaltimeMinima, capacitate, parametruSpecific);
+    if (atractie) {
+        notificaObserveri("ATRACTIE_CREATA_FACTORY", "Atractie creata cu Factory: " + nume);
+    }
+    return atractie;
+}
+
 void ParcDistractii::adaugaAtractie(std::unique_ptr<Atractie> atractie) {
+    string numeAtractie = atractie->getNume();
     atractii.push_back(std::move(atractie));
+    notificaObserveri("ATRACTIE_ADAUGATA", "Atractie adaugata: " + numeAtractie);
     std::cout << "✅ Atractie adaugata cu succes!" << std::endl;
 }
 
 void ParcDistractii::adaugaAngajat(std::unique_ptr<Angajat> angajat) {
+    string numeAngajat = angajat->getNume();
     angajati.push_back(std::move(angajat));
+    notificaObserveri("ANGAJAT_ADAUGAT", "Angajat adaugat: " + numeAngajat);
     std::cout << "✅ Angajat adaugat cu succes!" << std::endl;
 }
 
 void ParcDistractii::adaugaVizitator(std::unique_ptr<Vizitator> vizitator) {
+    string numeVizitator = vizitator->getNume();
+
+    // Actualizez statisticile template
+    statisticiVarste.adaugaDate(vizitator->getVarsta());
+    statisticiInaltimi.adaugaDate(vizitator->getInaltime());
+
+    if (vizitator->getBilet()) {
+        statisticiPreturi.adaugaDate(vizitator->getBilet()->calculeazaPretFinal());
+    }
+
     vizitatori.push_back(std::move(vizitator));
+    notificaObserveri("VIZITATOR_ADAUGAT", "Vizitator adaugat: " + numeVizitator);
     std::cout << "✅ Vizitator adaugat cu succes!" << std::endl;
+}
+
+void ParcDistractii::afiseazaStatisticiTemplate() const {
+    std::cout << "\n🔢 ========== STATISTICI TEMPLATE ========== 🔢\n" << std::endl;
+
+    statisticiPreturi.afiseazaStatistici();
+    statisticiVarste.afiseazaStatistici();
+    statisticiInaltimi.afiseazaStatistici();
+
+    // Demonstrez funcția template liberă friend
+    afiseazaComparatie(statisticiVarste, statisticiInaltimi);
+
+    // Demonstrez funcția template generică
+    auto numarCopii = numara_daca(vizitatori, [](const std::unique_ptr<Vizitator>& v) {
+        return v->getVarsta() < 18;
+    });
+
+    auto numarAdulti = numara_daca(vizitatori, [](const std::unique_ptr<Vizitator>& v) {
+        return v->getVarsta() >= 18;
+    });
+
+    std::cout << "📊 Analiza cu template generica:\n";
+    std::cout << "Copii (sub 18 ani): " << numarCopii << std::endl;
+    std::cout << "Adulti (18+ ani): " << numarAdulti << std::endl;
+    std::cout << "============================================\n" << std::endl;
 }
 
 void ParcDistractii::demonstratieDynamicCast() const {
     std::cout << "\n🔬 ========== DEMONSTRATIE DYNAMIC_CAST ========== 🔬\n" << std::endl;
-    
+
     // Dynamic cast pentru atractii
     for (const auto& atractie : atractii) {
         std::cout << "Atractie: " << atractie->getNume() << " - ";
-        
+
         if (auto montagne = dynamic_cast<const MontagneRusse*>(atractie.get())) {
             std::cout << "Este Montagne Russe cu viteza " << montagne->getVitezaMaxima() << " km/h" << std::endl;
         } else if (auto carusel = dynamic_cast<const Carusel*>(atractie.get())) {
@@ -84,11 +144,11 @@ void ParcDistractii::demonstratieDynamicCast() const {
             std::cout << "Este Casa Groazei cu nivel frica " << casa->getNivelFrica() << std::endl;
         }
     }
-    
+
     // Dynamic cast pentru angajati
     for (const auto& angajat : angajati) {
         std::cout << "Angajat: " << angajat->getNume() << " - ";
-        
+
         if (auto operator_atr = dynamic_cast<const OperatorAtractie*>(angajat.get())) {
             std::cout << "Operator pentru " << operator_atr->getAtractieDeservita() << std::endl;
         } else if (auto agent = dynamic_cast<const AgentPaza*>(angajat.get())) {
@@ -97,7 +157,7 @@ void ParcDistractii::demonstratieDynamicCast() const {
             std::cout << "Casier cu intervalul " << casier->getInterval() << std::endl;
         }
     }
-    
+
     std::cout << "==================================================\n" << std::endl;
 }
 
@@ -107,7 +167,7 @@ void ParcDistractii::afiseazaAtractii() const {
         std::cout << "Nu exista atractii disponibile." << std::endl;
         return;
     }
-    
+
     for (const auto& atractie : atractii) {
         std::cout << *atractie << std::endl;
     }
@@ -120,7 +180,7 @@ void ParcDistractii::afiseazaAngajati() const {
         std::cout << "Nu exista angajati inregistrati." << std::endl;
         return;
     }
-    
+
     for (const auto& angajat : angajati) {
         std::cout << *angajat << std::endl;
     }
@@ -133,7 +193,7 @@ void ParcDistractii::afiseazaVizitatori() const {
         std::cout << "Nu exista vizitatori inregistrati." << std::endl;
         return;
     }
-    
+
     for (const auto& vizitator : vizitatori) {
         std::cout << *vizitator << std::endl;
     }
@@ -148,12 +208,12 @@ void ParcDistractii::afiseazaStatistici() const {
     std::cout << "Numar total vizitatori: " << vizitatori.size() << std::endl;
     std::cout << "Venit total din bilete: " << calculezaVenitTotal() << " RON" << std::endl;
     std::cout << "Costuri salariale totale: " << calculezaCosturiSalariale() << " RON" << std::endl;
-    
+
     // Afisare statistici statice
     std::cout << "Numar total atractii create: " << Atractie::getNumarTotalAtractii() << std::endl;
     std::cout << "Salariu mediu angajati: " << Angajat::getSalariuMediu() << " RON" << std::endl;
     std::cout << "Numar parcuri create: " << getNumarParcuri() << std::endl;
-    
+
     double profit = calculezaVenitTotal() - calculezaCosturiSalariale();
     std::cout << "Profit estimat: " << profit << " RON" << std::endl;
     std::cout << "========================================\n" << std::endl;
@@ -165,36 +225,38 @@ void ParcDistractii::verificaAccesAtractie(const std::string& numeVizitator, con
                                        [&numeVizitator](const std::unique_ptr<Vizitator>& v) {
                                            return v->getNume() == numeVizitator;
                                        });
-    
+
     if (vizitatorIt == vizitatori.end()) {
         std::cout << "❌ Vizitatorul '" << numeVizitator << "' nu a fost gasit!" << std::endl;
         return;
     }
-    
+
     // Cauta atractia
     auto atractieIt = ranges::find_if(atractii,
                                       [&numeAtractie](const std::unique_ptr<Atractie>& a) {
                                           return a->getNume() == numeAtractie;
                                       });
-    
+
     if (atractieIt == atractii.end()) {
         std::cout << "❌ Atractia '" << numeAtractie << "' nu a fost gasita!" << std::endl;
         return;
     }
-    
+
     const auto& vizitator = *vizitatorIt;
     const auto& atractie = *atractieIt;
-    
+
     std::cout << "\n🔍 Verificare acces pentru:" << std::endl;
     std::cout << "Vizitator: " << vizitator->getNume() << " (" << vizitator->getTip() << ")" << std::endl;
     std::cout << "Atractie: " << atractie->getNume() << " (" << atractie->getTip() << ")" << std::endl;
 
-    if (vizitator->poateAccesaAtractia(atractie->getInaltimeMinima())) {
+    bool poateAccesa = vizitator->poateAccesaAtractia(atractie->getInaltimeMinima(),atractie->getVarstaNecesara());
+
+    if (poateAccesa) {
         std::cout << "✅ ACCES PERMIS! Vizitatorul poate accesa atractia." << std::endl;
     } else {
         std::cout << "❌ ACCES INTERZIS! Motivele posibile:" << std::endl;
         if (vizitator->getInaltime() < atractie->getInaltimeMinima()) {
-            std::cout << "   - Inaltimea insuficienta (" << vizitator->getInaltime() 
+            std::cout << "   - Inaltimea insuficienta (" << vizitator->getInaltime()
                       << " cm < " << atractie->getInaltimeMinima() << " cm)" << std::endl;
         }
         if (vizitator->getTip() == "Copil" && vizitator->getVarsta() < 8) {
@@ -220,4 +282,21 @@ double ParcDistractii::calculezaCosturiSalariale() const {
         total += angajat->calculeazaSalariuTotal();
     }
     return total;
+}
+
+void ParcDistractii::actualizeazaStatistici() {
+    // Resetez statisticile existente
+    statisticiPreturi = StatisticsManager<double>("Preturi Bilete");
+    statisticiVarste = StatisticsManager<int>("Varste Vizitatori");
+    statisticiInaltimi = StatisticsManager<int>("Inaltimi Vizitatori");
+
+    // Actualizez cu datele curente din vizitatori
+    for (const auto& vizitator : vizitatori) {
+        statisticiVarste.adaugaDate(vizitator->getVarsta());
+        statisticiInaltimi.adaugaDate(vizitator->getInaltime());
+
+        if (vizitator->getBilet()) {
+            statisticiPreturi.adaugaDate(vizitator->getBilet()->calculeazaPretFinal());
+        }
+    }
 }

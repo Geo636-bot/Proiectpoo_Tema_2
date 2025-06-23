@@ -1,4 +1,5 @@
 
+
 #ifndef ATRACTIE_H
 #define ATRACTIE_H
 
@@ -11,30 +12,33 @@ protected:
     std::string nume;
     int inaltimeMinima;
     int capacitate;
+    int varstaNecesara;
     static int numarTotalAtractii; // atribut static
 
 public:
-    Atractie(const std::string& nume, int inaltimeMinima, int capacitate);
+    Atractie(std::string  nume, int inaltimeMinima, int capacitate);
     Atractie(const Atractie& other); // copy constructor
     Atractie& operator=(const Atractie& other); // assignment operator
     virtual ~Atractie() = default;
-    
+
     // Constructor virtual (clone pattern)
     [[nodiscard]] virtual std::unique_ptr<Atractie> clone() const = 0;
-    
+
     [[nodiscard]] virtual std::string getTip() const = 0;
-    
+
     // Operatorul << virtual pentru polimorfism
     friend std::ostream& operator<<(std::ostream& os, const Atractie& atractie);
-    
+
     // Funcție statică
     static int getNumarTotalAtractii() { return numarTotalAtractii; }
-//    static void resetContorAtractii() { numarTotalAtractii = 0; }
+    static void resetContorAtractii() { numarTotalAtractii = 0; }
 
-    // Getters
+    // Getters - return const reference for strings
     [[nodiscard]] const std::string& getNume() const { return nume; }
     [[nodiscard]] int getInaltimeMinima() const { return inaltimeMinima; }
-   // [[nodiscard]] int getCapacitate() const { return capacitate; }
+    [[nodiscard]] int getCapacitate() const { return capacitate; }
+    [[nodiscard]] int getVarstaNecesara() const { return varstaNecesara; }
+
 
 protected:
     virtual void afiseaza(std::ostream& os) const;
@@ -49,7 +53,7 @@ public:
     MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate, int vitezaMaxima);
     MontagneRusse(const MontagneRusse& other);
     MontagneRusse& operator=(const MontagneRusse& other);
-    
+
     [[nodiscard]] std::unique_ptr<Atractie> clone() const override;
     [[nodiscard]] std::string getTip() const override { return "Montagne Russe"; }
     [[nodiscard]] int getVitezaMaxima() const { return vitezaMaxima; }
@@ -66,7 +70,7 @@ public:
     Carusel(const std::string& nume, int inaltimeMinima, int capacitate, int numarCai);
     Carusel(const Carusel& other);
     Carusel& operator=(const Carusel& other);
-    
+
     [[nodiscard]] std::unique_ptr<Atractie> clone() const override;
     [[nodiscard]] std::string getTip() const override { return "Carusel"; }
     [[nodiscard]] int getNumarCai() const { return numarCai; }
@@ -83,7 +87,6 @@ public:
     CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate, int nivelFrica);
     CasaGroazei(const CasaGroazei& other);
     CasaGroazei& operator=(const CasaGroazei& other);
-    
 
     [[nodiscard]] std::unique_ptr<Atractie> clone() const override;
     [[nodiscard]] std::string getTip() const override { return "Casa Groazei"; }

@@ -19,25 +19,25 @@ public:
     Angajat(const Angajat& other);
     Angajat& operator=(const Angajat& other);
     virtual ~Angajat() = default;
-    
+
     // Constructor virtual (clone pattern)
-    [[nodiscard]] virtual std::unique_ptr<Angajat> clone() const;
-    
+    [[nodiscard]] virtual std::unique_ptr<Angajat> clone() const = 0;
+
     [[nodiscard]] virtual std::string getTip() const = 0;
     [[nodiscard]] virtual double calculeazaSalariuTotal() const;
-    
+
     // Operatorul << virtual pentru polimorfism
     friend std::ostream& operator<<(std::ostream& os, const Angajat& angajat);
-    
+
     // Funcții statice
     static double getSalariuMediu() { return salariuMediu; }
     static void actualizareSalariuMediu(double nouSalariu);
-    
-    // Getters
+
+    // Getters - return const references for strings
     [[nodiscard]] const std::string& getNume() const { return nume; }
     [[nodiscard]] int getVarsta() const { return varsta; }
-    // [[nodiscard]] int getExperientaAni() const { return experientaAni; }
-    // [[nodiscard]] double getSalariu() const { return salariu; }
+    [[nodiscard]] int getExperientaAni() const { return experientaAni; }
+    [[nodiscard]] double getSalariu() const { return salariu; }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;
@@ -49,10 +49,10 @@ private:
     std::string atractieDeservita;
 
 public:
-    OperatorAtractie(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& atractieDeservita);
+    OperatorAtractie(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  atractieDeservita);
     OperatorAtractie(const OperatorAtractie& other);
     OperatorAtractie& operator=(const OperatorAtractie& other);
-    
+
     [[nodiscard]] std::unique_ptr<Angajat> clone() const override;
     [[nodiscard]] std::string getTip() const override { return "Operator Atractie"; }
     [[nodiscard]] double calculeazaSalariuTotal() const override;
@@ -67,10 +67,10 @@ private:
     std::string zonaAsignata;
 
 public:
-    AgentPaza(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& zonaAsignata);
+    AgentPaza(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  zonaAsignata);
     AgentPaza(const AgentPaza& other);
     AgentPaza& operator=(const AgentPaza& other);
-    
+
     [[nodiscard]] std::unique_ptr<Angajat> clone() const override;
     [[nodiscard]] std::string getTip() const override { return "Agent Paza"; }
     [[nodiscard]] double calculeazaSalariuTotal() const override;
@@ -85,10 +85,10 @@ private:
     std::string interval;
 
 public:
-    Casier(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& interval);
+    Casier(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  interval);
     Casier(const Casier& other);
     Casier& operator=(const Casier& other);
-    
+
     [[nodiscard]] std::unique_ptr<Angajat> clone() const override;
     [[nodiscard]] std::string getTip() const override { return "Casier"; }
     [[nodiscard]] const std::string& getInterval() const { return interval; }
