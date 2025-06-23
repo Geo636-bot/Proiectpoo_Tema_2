@@ -5,10 +5,10 @@
 
 using namespace std;
 
-Menu::Menu(ParcDistractii& parc) : parc(parc) {
-    // Creez observeri și îi adaug la parc
-    logObserver = std::make_shared<LogObserver>();
-    statsObserver = std::make_shared<StatisticsObserver>();
+Menu::Menu(ParcDistractii& parc)
+    : parc(parc),
+      logObserver(std::make_shared<LogObserver>()),
+      statsObserver(std::make_shared<StatisticsObserver>()) {
 
     parc.adaugaObserver(logObserver);
     parc.adaugaObserver(statsObserver);
