@@ -14,7 +14,7 @@ protected:
     static int numarTotalAtractii; // atribut static
 
 public:
-    Atractie(const std::string& nume, int inaltimeMinima, int capacitate);
+    Atractie(std::string  nume, int inaltimeMinima, int capacitate);
     Atractie(const Atractie& other); // copy constructor
     Atractie& operator=(const Atractie& other); // assignment operator
     virtual ~Atractie() = default;

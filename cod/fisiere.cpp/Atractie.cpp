@@ -2,14 +2,15 @@
 
 #include "../Fisiere.h/Atractie.h"
 #include <iostream>
+#include <utility>
 
 using namespace std;
 
 // Inițializare atribut static
 int Atractie::numarTotalAtractii = 0;
 
-Atractie::Atractie(const std::string& nume, int inaltimeMinima, int capacitate)
-    : nume(nume), inaltimeMinima(inaltimeMinima), capacitate(capacitate) {
+Atractie::Atractie(std::string  nume, int inaltimeMinima, int capacitate)
+    : nume(std::move(nume)), inaltimeMinima(inaltimeMinima), capacitate(capacitate) {
     ++numarTotalAtractii;
 }
 

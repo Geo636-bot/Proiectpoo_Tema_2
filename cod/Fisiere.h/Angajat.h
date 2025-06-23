@@ -49,7 +49,7 @@ private:
     std::string atractieDeservita;
 
 public:
-    OperatorAtractie(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& atractieDeservita);
+    OperatorAtractie(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  atractieDeservita);
     OperatorAtractie(const OperatorAtractie& other);
     OperatorAtractie& operator=(const OperatorAtractie& other);
 
@@ -67,7 +67,7 @@ private:
     std::string zonaAsignata;
 
 public:
-    AgentPaza(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& zonaAsignata);
+    AgentPaza(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  zonaAsignata);
     AgentPaza(const AgentPaza& other);
     AgentPaza& operator=(const AgentPaza& other);
 
@@ -85,7 +85,7 @@ private:
     std::string interval;
 
 public:
-    Casier(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& interval);
+    Casier(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  interval);
     Casier(const Casier& other);
     Casier& operator=(const Casier& other);
 

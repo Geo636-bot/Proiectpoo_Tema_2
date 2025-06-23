@@ -57,8 +57,8 @@ void Angajat::afiseaza(std::ostream& os) const {
 }
 
 // OperatorAtractie implementation
-OperatorAtractie::OperatorAtractie(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& atractieDeservita)
-    : Angajat(nume, varsta, experientaAni, salariu), atractieDeservita(atractieDeservita) {}
+OperatorAtractie::OperatorAtractie(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  atractieDeservita)
+    : Angajat(nume, varsta, experientaAni, salariu), atractieDeservita(std::move(atractieDeservita)) {}
 
 OperatorAtractie::OperatorAtractie(const OperatorAtractie& other)
     : Angajat(other), atractieDeservita(other.atractieDeservita) {}
@@ -85,8 +85,8 @@ void OperatorAtractie::afiseaza(std::ostream& os) const {
 }
 
 // AgentPaza implementation
-AgentPaza::AgentPaza(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& zonaAsignata)
-    : Angajat(nume, varsta, experientaAni, salariu), zonaAsignata(zonaAsignata) {}
+AgentPaza::AgentPaza(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  zonaAsignata)
+    : Angajat(nume, varsta, experientaAni, salariu), zonaAsignata(std::move(zonaAsignata)) {}
 
 AgentPaza::AgentPaza(const AgentPaza& other)
     : Angajat(other), zonaAsignata(other.zonaAsignata) {}
@@ -113,8 +113,8 @@ void AgentPaza::afiseaza(std::ostream& os) const {
 }
 
 // Casier implementation
-Casier::Casier(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& interval)
-    : Angajat(nume, varsta, experientaAni, salariu), interval(interval) {}
+Casier::Casier(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  interval)
+    : Angajat(nume, varsta, experientaAni, salariu), interval(std::move(interval)) {}
 
 Casier::Casier(const Casier& other)
     : Angajat(other), interval(other.interval) {}

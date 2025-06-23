@@ -119,8 +119,8 @@ void Adolescent::afiseaza(std::ostream& os) const {
 }
 
 // Adult implementation
-Adult::Adult(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet, const std::string& ocupatie)
-    : Vizitator(nume, varsta, inaltime, std::move(bilet)), ocupatie(ocupatie) {}
+Adult::Adult(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet, std::string  ocupatie)
+    : Vizitator(nume, varsta, inaltime, std::move(bilet)), ocupatie(std::move(ocupatie)) {}
 
 Adult::Adult(const Adult& other)
     : Vizitator(other), ocupatie(other.ocupatie) {}
