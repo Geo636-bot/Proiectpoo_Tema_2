@@ -23,12 +23,13 @@ public:
 // Concrete Factories
 class MontagneRusseFactory : public AtractieFactory {
 public:
-    [[nodiscard]] std::unique_ptr<Atractie> creeazaAtractie(
+    [[nodiscard]] static std::unique_ptr<Atractie> creeazaAtractie(
         const std::string& nume,
         int inaltimeMinima,
         int capacitate,
-        int vitezaMaxima) const override {
-        return std::make_unique<MontagneRusse>(nume, inaltimeMinima, capacitate, vitezaMaxima);
+        int varstaNecesara,
+        int vitezaMaxima) {
+        return std::make_unique<MontagneRusse>(nume, inaltimeMinima, capacitate,varstaNecesara, vitezaMaxima);
     }
 
     [[nodiscard]] std::string getTipAtractie() const override { return "Montagne Russe"; }
@@ -36,12 +37,13 @@ public:
 
 class CaruselFactory : public AtractieFactory {
 public:
-    [[nodiscard]] std::unique_ptr<Atractie> creeazaAtractie(
+    [[nodiscard]] static std::unique_ptr<Atractie> creeazaAtractie(
         const std::string& nume,
         int inaltimeMinima,
         int capacitate,
-        int numarCai) const override {
-        return std::make_unique<Carusel>(nume, inaltimeMinima, capacitate, numarCai);
+        int varstaNecesara,
+        int numarCai) {
+        return std::make_unique<Carusel>(nume, inaltimeMinima, capacitate,varstaNecesara, numarCai);
     }
 
     [[nodiscard]] std::string getTipAtractie() const override { return "Carusel"; }
@@ -49,12 +51,13 @@ public:
 
 class CasaGroazeiFactory : public AtractieFactory {
 public:
-    [[nodiscard]] std::unique_ptr<Atractie> creeazaAtractie(
+    [[nodiscard]] static std::unique_ptr<Atractie> creeazaAtractie(
         const std::string& nume,
         int inaltimeMinima,
         int capacitate,
-        int nivelFrica) const override {
-        return std::make_unique<CasaGroazei>(nume, inaltimeMinima, capacitate, nivelFrica);
+        int varstaNecesara,
+        int nivelFrica) {
+        return std::make_unique<CasaGroazei>(nume, inaltimeMinima, capacitate,varstaNecesara, nivelFrica);
     }
 
     [[nodiscard]] std::string getTipAtractie() const override { return "Casa Groazei"; }

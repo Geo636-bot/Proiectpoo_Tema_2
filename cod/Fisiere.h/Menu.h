@@ -33,7 +33,6 @@ public:
     void adaugaAngajatInteractiv() const;
     void adaugaVizitatorInteractiv() const;
     void verificaAccesInteractiv() const;
-    void afiseazaStatisticiTemplate();
     
     // Metode pentru crearea obiectelor
     static std::unique_ptr<Atractie> creeazaAtractie();

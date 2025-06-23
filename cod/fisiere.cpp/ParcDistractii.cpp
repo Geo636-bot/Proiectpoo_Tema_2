@@ -60,19 +60,6 @@ void ParcDistractii::copiazaVizitatori(const std::vector<std::unique_ptr<Vizitat
     }
 }
 
-std::unique_ptr<Atractie> ParcDistractii::creeazaAtractieFactory(
-    const std::string& tip,
-    const std::string& nume,
-    int inaltimeMinima,
-    int capacitate,
-    int parametruSpecific) {
-
-    auto atractie = factoryManager.creeazaAtractie(tip, nume, inaltimeMinima, capacitate, parametruSpecific);
-    if (atractie) {
-        notificaObserveri("ATRACTIE_CREATA_FACTORY", "Atractie creata cu Factory: " + nume);
-    }
-    return atractie;
-}
 
 void ParcDistractii::adaugaAtractie(std::unique_ptr<Atractie> atractie) {
     string numeAtractie = atractie->getNume();
@@ -103,6 +90,8 @@ void ParcDistractii::adaugaVizitator(std::unique_ptr<Vizitator> vizitator) {
     notificaObserveri("VIZITATOR_ADAUGAT", "Vizitator adaugat: " + numeVizitator);
     std::cout << "✅ Vizitator adaugat cu succes!" << std::endl;
 }
+
+
 
 void ParcDistractii::afiseazaStatisticiTemplate() const {
     std::cout << "\n🔢 ========== STATISTICI TEMPLATE ========== 🔢\n" << std::endl;

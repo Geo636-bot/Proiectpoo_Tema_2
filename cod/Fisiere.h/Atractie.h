@@ -12,11 +12,11 @@ protected:
     std::string nume;
     int inaltimeMinima;
     int capacitate;
-    int varstaNecesara{};
+    int varstaNecesara; // nou atribut
     static int numarTotalAtractii; // atribut static
 
 public:
-    Atractie(std::string  nume, int inaltimeMinima, int capacitate);
+    Atractie(std::string  nume, int inaltimeMinima, int capacitate, int varstaNecesara);
     Atractie(const Atractie& other); // copy constructor
     Atractie& operator=(const Atractie& other); // assignment operator
     virtual ~Atractie() = default;
@@ -39,7 +39,6 @@ public:
     [[nodiscard]] int getCapacitate() const { return capacitate; }
     [[nodiscard]] int getVarstaNecesara() const { return varstaNecesara; }
 
-
 protected:
     virtual void afiseaza(std::ostream& os) const;
     void swap(Atractie& other) noexcept; // pentru copy-and-swap
@@ -50,7 +49,7 @@ private:
     int vitezaMaxima;
 
 public:
-    MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate, int vitezaMaxima);
+    MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate, int varstaNecesara, int vitezaMaxima);
     MontagneRusse(const MontagneRusse& other);
     MontagneRusse& operator=(const MontagneRusse& other);
 
@@ -67,7 +66,7 @@ private:
     int numarCai;
 
 public:
-    Carusel(const std::string& nume, int inaltimeMinima, int capacitate, int numarCai);
+    Carusel(const std::string& nume, int inaltimeMinima, int capacitate, int varstaNecesara, int numarCai);
     Carusel(const Carusel& other);
     Carusel& operator=(const Carusel& other);
 
@@ -84,7 +83,7 @@ private:
     int nivelFrica;
 
 public:
-    CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate, int nivelFrica);
+    CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate, int varstaNecesara, int nivelFrica);
     CasaGroazei(const CasaGroazei& other);
     CasaGroazei& operator=(const CasaGroazei& other);
 
