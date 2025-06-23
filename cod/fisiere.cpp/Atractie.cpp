@@ -41,7 +41,7 @@ std::ostream& operator<<(std::ostream& os, const Atractie& atractie) {
 
 void Atractie::afiseaza(std::ostream& os) const {
     os << "🎢 " << getTip() << ": " << nume
-       << " (Inaltime min: " << inaltimeMinima << "cm, Capacitate: " << capacitate << ")";
+       << " (Inaltime min: " << inaltimeMinima << "cm, Capacitate: " << capacitate << "Varsta necesara: "<<varstanecesara<<"ani)"<<endl;
 }
 
 // MontagneRusse implementation
