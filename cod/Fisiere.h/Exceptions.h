@@ -1,4 +1,5 @@
 
+
 #ifndef EXCEPTIONS_H
 #define EXCEPTIONS_H
 
@@ -12,6 +13,7 @@ protected:
 
 public:
     explicit ParcException(std::string  msg) : message(std::move(msg)) {}
+
     [[nodiscard]] const char* what() const noexcept override {
         return message.c_str();
     }

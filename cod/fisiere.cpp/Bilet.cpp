@@ -1,101 +1,144 @@
 
-#ifndef ATRACTIEFACTORY_H
-#define ATRACTIEFACTORY_H
 
-#include "../Fisiere.h/Atractie.h"
-#include <memory>
-#include <string>
-#include <map>
-#include <functional>
+#include "../Fisiere.h/Bilet.h"
+#include <iostream>
 
-// Abstract Factory pentru crearea atractiilor
-class AtractieFactory {
-public:
-    virtual ~AtractieFactory() = default;
-    [[nodiscard]] virtual std::unique_ptr<Atractie> creeazaAtractie(
-        const std::string& nume,
-        int inaltimeMinima,
-        int capacitate,
-        int parametruSpecific) const = 0;
-    [[nodiscard]] virtual std::string getTipAtractie() const = 0;
-};
+using namespace std;
 
-// Concrete Factories
-class MontagneRusseFactory : public AtractieFactory {
-public:
-    [[nodiscard]] static std::unique_ptr<Atractie> creeazaAtractie(
-        const std::string& nume,
-        int inaltimeMinima,
-        int capacitate,
-        int varstaNecesara,
-        int vitezaMaxima) {
-        return std::make_unique<MontagneRusse>(nume, inaltimeMinima, capacitate,varstaNecesara, vitezaMaxima);
+// Inițializare atribut static
+double Bilet::pretMediu = 50.0;
+
+Bilet::Bilet(double pret, int valabilitateZile)
+    : pret(pret), valabilitateZile(valabilitateZile) {
+    actualizarePretMediu(pret);
+}
+
+Bilet::Bilet(const Bilet& other)
+    : pret(other.pret), valabilitateZile(other.valabilitateZile) {}
+
+Bilet& Bilet::operator=(const Bilet& other) {
+    if (this != &other) {
+        pret = other.pret;
+        valabilitateZile = other.valabilitateZile;
     }
+    return *this;
+}
 
-    [[nodiscard]] std::string getTipAtractie() const override { return "Montagne Russe"; }
-};
+void Bilet::swap(Bilet& other) noexcept {
+    std::swap(pret, other.pret);
+    std::swap(valabilitateZile, other.valabilitateZile);
+}
 
-class CaruselFactory : public AtractieFactory {
-public:
-    [[nodiscard]] static std::unique_ptr<Atractie> creeazaAtractie(
-        const std::string& nume,
-        int inaltimeMinima,
-        int capacitate,
-        int varstaNecesara,
-        int numarCai) {
-        return std::make_unique<Carusel>(nume, inaltimeMinima, capacitate,varstaNecesara, numarCai);
+double Bilet::calculeazaPretFinal() const {
+    return pret;
+}
+
+void Bilet::actualizarePretMediu(double nouPret) {
+    pretMediu = (pretMediu + nouPret) / 2.0;
+}
+
+std::ostream& operator<<(std::ostream& os, const Bilet& bilet) {
+    bilet.afiseaza(os);
+    return os;
+}
+
+void Bilet::afiseaza(std::ostream& os) const {
+    os << "🎫 " << getTip() << " - Pret: " << calculeazaPretFinal()
+       << " RON (Valabil " << valabilitateZile << " zile)";
+}
+
+// BiletCopil implementation
+BiletCopil::BiletCopil(double pret, int valabilitateZile, int varstaCopil)
+    : Bilet(pret, valabilitateZile), varstaCopil(varstaCopil) {}
+
+BiletCopil::BiletCopil(const BiletCopil& other)
+    : Bilet(other), varstaCopil(other.varstaCopil) {}
+
+BiletCopil& BiletCopil::operator=(const BiletCopil& other) {
+    if (this != &other) {
+        Bilet::operator=(other);
+        varstaCopil = other.varstaCopil;
     }
+    return *this;
+}
 
-    [[nodiscard]] std::string getTipAtractie() const override { return "Carusel"; }
-};
+std::unique_ptr<Bilet> BiletCopil::clone() const {
+    return std::make_unique<BiletCopil>(*this);
+}
 
-class CasaGroazeiFactory : public AtractieFactory {
-public:
-    [[nodiscard]] static std::unique_ptr<Atractie> creeazaAtractie(
-        const std::string& nume,
-        int inaltimeMinima,
-        int capacitate,
-        int varstaNecesara,
-        int nivelFrica) {
-        return std::make_unique<CasaGroazei>(nume, inaltimeMinima, capacitate,varstaNecesara, nivelFrica);
+double BiletCopil::calculeazaPretFinal() const {
+    return pret * 0.5; // 50% reducere pentru copii
+}
+
+void BiletCopil::afiseaza(std::ostream& os) const {
+    Bilet::afiseaza(os);
+    os << " - Varsta copil: " << varstaCopil;
+}
+
+// BiletAdult implementation
+BiletAdult::BiletAdult(double pret, int valabilitateZile, bool includeFastPass)
+    : Bilet(pret, valabilitateZile), includeFastPass(includeFastPass) {}
+
+BiletAdult::BiletAdult(const BiletAdult& other)
+    : Bilet(other), includeFastPass(other.includeFastPass) {}
+
+BiletAdult& BiletAdult::operator=(const BiletAdult& other) {
+    if (this != &other) {
+        Bilet::operator=(other);
+        includeFastPass = other.includeFastPass;
     }
+    return *this;
+}
 
-    [[nodiscard]] std::string getTipAtractie() const override { return "Casa Groazei"; }
-};
+std::unique_ptr<Bilet> BiletAdult::clone() const {
+    return std::make_unique<BiletAdult>(*this);
+}
 
-// Factory Manager pentru registrul de factories
-class AtractieFactoryManager {
-private:
-    std::map<std::string, std::unique_ptr<AtractieFactory>> factories;
-
-public:
-    AtractieFactoryManager() {
-        factories["montagne"] = std::make_unique<MontagneRusseFactory>();
-        factories["carusel"] = std::make_unique<CaruselFactory>();
-        factories["casa"] = std::make_unique<CasaGroazeiFactory>();
+double BiletAdult::calculeazaPretFinal() const {
+    double pretFinal = pret;
+    if (includeFastPass) {
+        pretFinal += 30; // taxa Fast Pass
     }
+    return pretFinal;
+}
 
-    [[nodiscard]] std::unique_ptr<Atractie> creeazaAtractie(
-        const std::string& tip,
-        const std::string& nume,
-        int inaltimeMinima,
-        int capacitate,
-        int parametruSpecific) const {
-
-        auto it = factories.find(tip);
-        if (it != factories.end()) {
-            return it->second->creeazaAtractie(nume, inaltimeMinima, capacitate, parametruSpecific);
-        }
-        return nullptr;
+void BiletAdult::afiseaza(std::ostream& os) const {
+    Bilet::afiseaza(os);
+    if (includeFastPass) {
+        os << " + Fast Pass";
     }
+}
 
-    // [[nodiscard]] std::vector<std::string> getTipuriDisponibile() const {
-    //     std::vector<std::string> tipuri;
-    //     for (const auto& pair : factories) {
-    //         tipuri.push_back(pair.first + " (" + pair.second->getTipAtractie() + ")");
-    //     }
-    //     return tipuri;
-    // }
-};
+// BiletVIP implementation
+BiletVIP::BiletVIP(double pret, int valabilitateZile, bool accesLounge)
+    : Bilet(pret, valabilitateZile), accesLounge(accesLounge) {}
 
-#endif
+BiletVIP::BiletVIP(const BiletVIP& other)
+    : Bilet(other), accesLounge(other.accesLounge) {}
+
+BiletVIP& BiletVIP::operator=(const BiletVIP& other) {
+    if (this != &other) {
+        Bilet::operator=(other);
+        accesLounge = other.accesLounge;
+    }
+    return *this;
+}
+
+std::unique_ptr<Bilet> BiletVIP::clone() const {
+    return std::make_unique<BiletVIP>(*this);
+}
+
+double BiletVIP::calculeazaPretFinal() const {
+    double pretFinal = pret * 2; // VIP costa dublu
+    if (accesLounge) {
+        pretFinal += 50; // taxa lounge
+    }
+    return pretFinal;
+}
+
+void BiletVIP::afiseaza(std::ostream& os) const {
+    Bilet::afiseaza(os);
+    if (accesLounge) {
+        os << " + Acces Lounge VIP";
+    }
+}

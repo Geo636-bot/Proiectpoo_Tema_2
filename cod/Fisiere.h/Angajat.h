@@ -21,7 +21,7 @@ public:
     virtual ~Angajat() = default;
 
     // Constructor virtual (clone pattern)
-    [[nodiscard]] virtual std::unique_ptr<Angajat> clone() const = 0;
+    [[nodiscard]] virtual std::unique_ptr<Angajat> clone() const;
 
     [[nodiscard]] virtual std::string getTip() const = 0;
     [[nodiscard]] virtual double calculeazaSalariuTotal() const;
@@ -33,11 +33,11 @@ public:
     static double getSalariuMediu() { return salariuMediu; }
     static void actualizareSalariuMediu(double nouSalariu);
 
-    // Getters - return const references for strings
+    // Getters
     [[nodiscard]] const std::string& getNume() const { return nume; }
     [[nodiscard]] int getVarsta() const { return varsta; }
-    //[[nodiscard]] int getExperientaAni() const { return experientaAni; }
-    //[[nodiscard]] double getSalariu() const { return salariu; }
+    // [[nodiscard]] int getExperientaAni() const { return experientaAni; }
+    // [[nodiscard]] double getSalariu() const { return salariu; }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;
@@ -49,7 +49,7 @@ private:
     std::string atractieDeservita;
 
 public:
-    OperatorAtractie(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  atractieDeservita);
+    OperatorAtractie(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& atractieDeservita);
     OperatorAtractie(const OperatorAtractie& other);
     OperatorAtractie& operator=(const OperatorAtractie& other);
 
@@ -67,7 +67,7 @@ private:
     std::string zonaAsignata;
 
 public:
-    AgentPaza(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  zonaAsignata);
+    AgentPaza(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& zonaAsignata);
     AgentPaza(const AgentPaza& other);
     AgentPaza& operator=(const AgentPaza& other);
 
@@ -85,7 +85,7 @@ private:
     std::string interval;
 
 public:
-    Casier(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  interval);
+    Casier(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& interval);
     Casier(const Casier& other);
     Casier& operator=(const Casier& other);
 

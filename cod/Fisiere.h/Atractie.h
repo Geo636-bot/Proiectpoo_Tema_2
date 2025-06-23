@@ -1,5 +1,4 @@
 
-
 #ifndef ATRACTIE_H
 #define ATRACTIE_H
 
@@ -12,11 +11,10 @@ protected:
     std::string nume;
     int inaltimeMinima;
     int capacitate;
-    int varstaNecesara; // nou atribut
     static int numarTotalAtractii; // atribut static
 
 public:
-    Atractie(std::string  nume, int inaltimeMinima, int capacitate, int varstaNecesara);
+    Atractie(const std::string& nume, int inaltimeMinima, int capacitate);
     Atractie(const Atractie& other); // copy constructor
     Atractie& operator=(const Atractie& other); // assignment operator
     virtual ~Atractie() = default;
@@ -31,13 +29,12 @@ public:
 
     // Funcție statică
     static int getNumarTotalAtractii() { return numarTotalAtractii; }
-    //static void resetContorAtractii() { numarTotalAtractii = 0; }
+//    static void resetContorAtractii() { numarTotalAtractii = 0; }
 
-    // Getters - return const reference for strings
+    // Getters
     [[nodiscard]] const std::string& getNume() const { return nume; }
     [[nodiscard]] int getInaltimeMinima() const { return inaltimeMinima; }
-    //[[nodiscard]] int getCapacitate() const { return capacitate; }
-    [[nodiscard]] int getVarstaNecesara() const { return varstaNecesara; }
+   // [[nodiscard]] int getCapacitate() const { return capacitate; }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;
@@ -49,7 +46,7 @@ private:
     int vitezaMaxima;
 
 public:
-    MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate, int varstaNecesara, int vitezaMaxima);
+    MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate, int vitezaMaxima);
     MontagneRusse(const MontagneRusse& other);
     MontagneRusse& operator=(const MontagneRusse& other);
 
@@ -66,7 +63,7 @@ private:
     int numarCai;
 
 public:
-    Carusel(const std::string& nume, int inaltimeMinima, int capacitate, int varstaNecesara, int numarCai);
+    Carusel(const std::string& nume, int inaltimeMinima, int capacitate, int numarCai);
     Carusel(const Carusel& other);
     Carusel& operator=(const Carusel& other);
 
@@ -83,9 +80,10 @@ private:
     int nivelFrica;
 
 public:
-    CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate, int varstaNecesara, int nivelFrica);
+    CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate, int nivelFrica);
     CasaGroazei(const CasaGroazei& other);
     CasaGroazei& operator=(const CasaGroazei& other);
+
 
     [[nodiscard]] std::unique_ptr<Atractie> clone() const override;
     [[nodiscard]] std::string getTip() const override { return "Casa Groazei"; }
