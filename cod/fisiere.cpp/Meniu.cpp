@@ -179,23 +179,27 @@ std::unique_ptr<Atractie> Meniu::creeazaAtractie() {
     std::string nume = getValidString("Nume atractie: ");
     int inaltime = getValidInt("Inaltime minima (cm): ", 50, 200);
     int capacitate = getValidInt("Capacitate (persoane): ", 1, 100);
+    int varsta=getValidInt("Varsta (persoane): ", 1, 100);
     
     if (inaltime < 50) {
         throw InaltimeInsuficienta("Inaltimea minima nu poate fi sub 50 cm");
+    }
+    if (varsta<1){
+        throw VarstaNecorespunzatoare("Varsta nu poate fi mai mica de un an");
     }
     
     switch (tip) {
         case 1: {
             int viteza = getValidInt("Viteza maxima (km/h): ", 10, 200);
-            return std::make_unique<MontagneRusse>(nume, inaltime, capacitate, viteza);
+            return std::make_unique<MontagneRusse>(nume, inaltime, capacitate,varsta, viteza);
         }
         case 2: {
             int cai = getValidInt("Numar cai: ", 4, 50);
-            return std::make_unique<Carusel>(nume, inaltime, capacitate, cai);
+            return std::make_unique<Carusel>(nume, inaltime, capacitate,varsta, cai);
         }
         case 3: {
             int frica = getValidInt("Nivel frica (1-10): ", 1, 10);
-            return std::make_unique<CasaGroazei>(nume, inaltime, capacitate, frica);
+            return std::make_unique<CasaGroazei>(nume, inaltime, capacitate,varsta, frica);
         }
         default:
             throw DateInvalide("Tip atractie invalid");

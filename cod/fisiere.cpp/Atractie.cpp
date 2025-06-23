@@ -9,7 +9,7 @@ using namespace std;
 // Inițializare atribut static
 int Atractie::numarTotalAtractii = 0;
 
-Atractie::Atractie(std::string  nume, int inaltimeMinima, int capacitate)
+Atractie::Atractie(std::string  nume, int inaltimeMinima, int capacitate,int varstanecesara)
     : nume(std::move(nume)), inaltimeMinima(inaltimeMinima), capacitate(capacitate) {
     ++numarTotalAtractii;
 }
@@ -45,8 +45,9 @@ void Atractie::afiseaza(std::ostream& os) const {
 }
 
 // MontagneRusse implementation
-MontagneRusse::MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate, int vitezaMaxima)
-    : Atractie(nume, inaltimeMinima, capacitate), vitezaMaxima(vitezaMaxima) {}
+MontagneRusse::MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate,int varstanecesara, int vitezaMaxima)
+    : Atractie(nume, inaltimeMinima, capacitate, varstanecesara), vitezaMaxima(vitezaMaxima) {
+}
 
 MontagneRusse::MontagneRusse(const MontagneRusse& other)
     : Atractie(other), vitezaMaxima(other.vitezaMaxima) {}
@@ -69,8 +70,8 @@ void MontagneRusse::afiseaza(std::ostream& os) const {
 }
 
 // Carusel implementation
-Carusel::Carusel(const std::string& nume, int inaltimeMinima, int capacitate, int numarCai)
-    : Atractie(nume, inaltimeMinima, capacitate), numarCai(numarCai) {}
+Carusel::Carusel(const std::string& nume, int inaltimeMinima, int capacitate,int varstanecesara, int numarCai)
+    : Atractie(nume, inaltimeMinima, capacitate,varstanecesara), numarCai(numarCai) {}
 
 Carusel::Carusel(const Carusel& other)
     : Atractie(other), numarCai(other.numarCai) {}
@@ -93,8 +94,8 @@ void Carusel::afiseaza(std::ostream& os) const {
 }
 
 // CasaGroazei implementation
-CasaGroazei::CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate, int nivelFrica)
-    : Atractie(nume, inaltimeMinima, capacitate), nivelFrica(nivelFrica) {}
+CasaGroazei::CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate,int varstanecesara, int nivelFrica)
+    : Atractie(nume, inaltimeMinima, capacitate,varstanecesara), nivelFrica(nivelFrica) {}
 
 CasaGroazei::CasaGroazei(const CasaGroazei& other)
     : Atractie(other), nivelFrica(other.nivelFrica) {}

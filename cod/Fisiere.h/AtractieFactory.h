@@ -16,6 +16,7 @@ public:
         const std::string& nume,
         int inaltimeMinima,
         int capacitate,
+        int varstaNecesara,
         int parametruSpecific) const = 0;
     virtual std::string getTipAtractie() const = 0;
 };
@@ -23,12 +24,13 @@ public:
 // Concrete Factories
 class MontagneRusseFactory : public AtractieFactory {
 public:
-    std::unique_ptr<Atractie> creeazaAtractie(
+    static std::unique_ptr<Atractie> creeazaAtractie(
         const std::string& nume,
         int inaltimeMinima,
         int capacitate,
-        int vitezaMaxima) const override {
-        return std::make_unique<MontagneRusse>(nume, inaltimeMinima, capacitate, vitezaMaxima);
+        int varstaNecesara,
+        int vitezaMaxima) {
+        return std::make_unique<MontagneRusse>(nume, inaltimeMinima, capacitate,varstaNecesara, vitezaMaxima);
     }
 
     std::string getTipAtractie() const override { return "Montagne Russe"; }
@@ -36,12 +38,13 @@ public:
 
 class CaruselFactory : public AtractieFactory {
 public:
-    std::unique_ptr<Atractie> creeazaAtractie(
+    static std::unique_ptr<Atractie> creeazaAtractie(
         const std::string& nume,
         int inaltimeMinima,
         int capacitate,
-        int numarCai) const override {
-        return std::make_unique<Carusel>(nume, inaltimeMinima, capacitate, numarCai);
+        int varstaNecesara,
+        int numarCai) {
+        return std::make_unique<Carusel>(nume, inaltimeMinima, capacitate,varstaNecesara, numarCai);
     }
 
     std::string getTipAtractie() const override { return "Carusel"; }
@@ -49,12 +52,13 @@ public:
 
 class CasaGroazeiFactory : public AtractieFactory {
 public:
-    std::unique_ptr<Atractie> creeazaAtractie(
+    static std::unique_ptr<Atractie> creeazaAtractie(
         const std::string& nume,
         int inaltimeMinima,
         int capacitate,
-        int nivelFrica) const override {
-        return std::make_unique<CasaGroazei>(nume, inaltimeMinima, capacitate, nivelFrica);
+        int varstaNecesara,
+        int nivelFrica) {
+        return std::make_unique<CasaGroazei>(nume, inaltimeMinima, capacitate,varstaNecesara, nivelFrica);
     }
 
     std::string getTipAtractie() const override { return "Casa Groazei"; }
@@ -77,11 +81,12 @@ public:
         const std::string& nume,
         int inaltimeMinima,
         int capacitate,
+        int varstaNecesara,
         int parametruSpecific) const {
 
         auto it = factories.find(tip);
         if (it != factories.end()) {
-            return it->second->creeazaAtractie(nume, inaltimeMinima, capacitate, parametruSpecific);
+            return it->second->creeazaAtractie(nume, inaltimeMinima, capacitate,varstaNecesara, parametruSpecific);
         }
         return nullptr;
     }

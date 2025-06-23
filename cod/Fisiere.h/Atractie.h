@@ -11,7 +11,7 @@ protected:
     std::string nume;
     int inaltimeMinima;
     int capacitate;
-    int varstanecesara;
+    int varstanecesara{};
     static int numarTotalAtractii; // atribut static
 
 public:
@@ -48,7 +48,7 @@ private:
     int vitezaMaxima;
 
 public:
-    MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate, int vitezaMaxima);
+    MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate,int varstanecesara, int vitezaMaxima);
     MontagneRusse(const MontagneRusse& other);
     MontagneRusse& operator=(const MontagneRusse& other);
 
@@ -65,7 +65,7 @@ private:
     int numarCai;
 
 public:
-    Carusel(const std::string& nume, int inaltimeMinima, int capacitate, int numarCai);
+    Carusel(const std::string& nume, int inaltimeMinima, int capacitate,int varstanecesara, int numarCai);
     Carusel(const Carusel& other);
     Carusel& operator=(const Carusel& other);
 
@@ -82,7 +82,7 @@ private:
     int nivelFrica;
 
 public:
-    CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate, int nivelFrica);
+    CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate,int varstanecesara, int nivelFrica);
     CasaGroazei(const CasaGroazei& other);
     CasaGroazei& operator=(const CasaGroazei& other);
 
