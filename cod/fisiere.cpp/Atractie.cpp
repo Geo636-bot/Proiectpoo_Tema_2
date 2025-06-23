@@ -15,7 +15,7 @@ Atractie::Atractie(std::string  nume, int inaltimeMinima, int capacitate,int var
 }
 
 Atractie::Atractie(const Atractie& other)
-    : nume(other.nume), inaltimeMinima(other.inaltimeMinima), capacitate(other.capacitate) {
+    : nume(other.nume), inaltimeMinima(other.inaltimeMinima), capacitate(other.capacitate), varstanecesara(other.varstanecesara) {
     ++numarTotalAtractii;
 }
 
