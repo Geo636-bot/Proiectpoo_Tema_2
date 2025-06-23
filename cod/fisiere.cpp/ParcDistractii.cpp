@@ -1,4 +1,5 @@
 #include "../Fisiere.h/ParcDistractii.h"
+#include "../Fisiere.h/AtractieFactory.h"
 #include <iostream>
 #include <algorithm>
 
