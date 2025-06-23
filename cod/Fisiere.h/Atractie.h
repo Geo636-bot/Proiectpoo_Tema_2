@@ -12,6 +12,7 @@ protected:
     int inaltimeMinima;
     int capacitate;
     int varstanecesara{};
+    int varstanecesara_{};
     static int numarTotalAtractii; // atribut static
 
 public:

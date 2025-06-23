@@ -10,7 +10,7 @@ using namespace std;
 int Atractie::numarTotalAtractii = 0;
 
 Atractie::Atractie(std::string  nume, int inaltimeMinima, int capacitate,int varstanecesara)
-    : nume(std::move(nume)), inaltimeMinima(inaltimeMinima), capacitate(capacitate) {
+    : nume(std::move(nume)), inaltimeMinima(inaltimeMinima), capacitate(capacitate), varstanecesara(varstanecesara) {
     ++numarTotalAtractii;
 }
 
