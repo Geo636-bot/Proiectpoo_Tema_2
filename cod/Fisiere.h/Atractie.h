@@ -11,10 +11,11 @@ protected:
     std::string nume;
     int inaltimeMinima;
     int capacitate;
+    int varstanecesara;
     static int numarTotalAtractii; // atribut static
 
 public:
-    Atractie(std::string  nume, int inaltimeMinima, int capacitate);
+    Atractie(std::string  nume, int inaltimeMinima, int capacitate,int varstanecesara);
     Atractie(const Atractie& other); // copy constructor
     Atractie& operator=(const Atractie& other); // assignment operator
     virtual ~Atractie() = default;
@@ -35,6 +36,7 @@ public:
     [[nodiscard]] const std::string& getNume() const { return nume; }
     [[nodiscard]] int getInaltimeMinima() const { return inaltimeMinima; }
    // [[nodiscard]] int getCapacitate() const { return capacitate; }
+    [[nodiscard]] int getVarstaNecesara() const { return varstanecesara; }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;

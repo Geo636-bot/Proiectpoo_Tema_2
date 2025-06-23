@@ -190,7 +190,7 @@ void ParcDistractii::verificaAccesAtractie(const std::string& numeVizitator, con
     std::cout << "Vizitator: " << vizitator->getNume() << " (" << vizitator->getTip() << ")" << std::endl;
     std::cout << "Atractie: " << atractie->getNume() << " (" << atractie->getTip() << ")" << std::endl;
 
-    if (vizitator->poateAccesaAtractia(atractie->getInaltimeMinima())) {
+    if (vizitator->poateAccesaAtractia(atractie->getInaltimeMinima(),atractie->getVarstaNecesara())) {
         std::cout << "✅ ACCES PERMIS! Vizitatorul poate accesa atractia." << std::endl;
     } else {
         std::cout << "❌ ACCES INTERZIS! Motivele posibile:" << std::endl;
@@ -200,6 +200,10 @@ void ParcDistractii::verificaAccesAtractie(const std::string& numeVizitator, con
         }
         if (vizitator->getTip() == "Copil" && vizitator->getVarsta() < 8) {
             std::cout << "   - Copilul trebuie insotit de adult" << std::endl;
+        }
+        if (vizitator->getVarsta() < atractie->getVarstaNecesara()) {
+            std::cout << "   - Varsta insuficienta (" << vizitator->getVarsta()
+                      << " ani < " << atractie->getVarstaNecesara() << " ani)" << std::endl;
         }
     }
     std::cout << std::endl;
