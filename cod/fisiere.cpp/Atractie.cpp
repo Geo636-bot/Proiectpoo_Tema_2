@@ -52,7 +52,7 @@ MontagneRusse::MontagneRusse(const std::string& nume, int inaltimeMinima, int ca
 }
 
 MontagneRusse::MontagneRusse(const MontagneRusse& other)
-    : Atractie(other), vitezaMaxima(other.vitezaMaxima) {}
+    = default;
 
 MontagneRusse& MontagneRusse::operator=(const MontagneRusse& other) {
     if (this != &other) {
@@ -76,7 +76,7 @@ Carusel::Carusel(const std::string& nume, int inaltimeMinima, int capacitate,int
     : Atractie(nume, inaltimeMinima, capacitate,varstanecesara), numarCai(numarCai) {}
 
 Carusel::Carusel(const Carusel& other)
-    : Atractie(other), numarCai(other.numarCai) {}
+    = default;
 
 Carusel& Carusel::operator=(const Carusel& other) {
     if (this != &other) {
@@ -100,7 +100,7 @@ CasaGroazei::CasaGroazei(const std::string& nume, int inaltimeMinima, int capaci
     : Atractie(nume, inaltimeMinima, capacitate,varstanecesara), nivelFrica(nivelFrica) {}
 
 CasaGroazei::CasaGroazei(const CasaGroazei& other)
-    : Atractie(other), nivelFrica(other.nivelFrica) {}
+    = default;
 
 CasaGroazei& CasaGroazei::operator=(const CasaGroazei& other) {
     if (this != &other) {

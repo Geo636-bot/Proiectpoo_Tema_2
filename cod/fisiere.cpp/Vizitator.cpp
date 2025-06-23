@@ -65,7 +65,7 @@ Copil::Copil(const std::string& nume, int varsta, int inaltime, std::unique_ptr<
     : Vizitator(nume, varsta, inaltime, std::move(bilet)), insotitDeAdult(insotitDeAdult) {}
 
 Copil::Copil(const Copil& other)
-    : Vizitator(other), insotitDeAdult(other.insotitDeAdult) {}
+=default;
 
 Copil& Copil::operator=(const Copil& other) {
     if (this != &other) {
@@ -99,7 +99,7 @@ Adolescent::Adolescent(const std::string& nume, int varsta, int inaltime, std::u
     : Vizitator(nume, varsta, inaltime, std::move(bilet)), areBuletin(areBuletin) {}
 
 Adolescent::Adolescent(const Adolescent& other)
-    : Vizitator(other), areBuletin(other.areBuletin) {}
+=default;
 
 Adolescent& Adolescent::operator=(const Adolescent& other) {
     if (this != &other) {
@@ -123,7 +123,7 @@ Adult::Adult(const std::string& nume, int varsta, int inaltime, std::unique_ptr<
     : Vizitator(nume, varsta, inaltime, std::move(bilet)), ocupatie(std::move(ocupatie)) {}
 
 Adult::Adult(const Adult& other)
-    : Vizitator(other), ocupatie(other.ocupatie) {}
+=default;
 
 Adult& Adult::operator=(const Adult& other) {
     if (this != &other) {

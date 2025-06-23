@@ -14,7 +14,7 @@ Bilet::Bilet(double pret, int valabilitateZile)
 }
 
 Bilet::Bilet(const Bilet& other)
-    : pret(other.pret), valabilitateZile(other.valabilitateZile) {}
+=default;
 
 Bilet& Bilet::operator=(const Bilet& other) {
     if (this != &other) {
@@ -52,7 +52,7 @@ BiletCopil::BiletCopil(double pret, int valabilitateZile, int varstaCopil)
     : Bilet(pret, valabilitateZile), varstaCopil(varstaCopil) {}
 
 BiletCopil::BiletCopil(const BiletCopil& other)
-    : Bilet(other), varstaCopil(other.varstaCopil) {}
+=default;
 
 BiletCopil& BiletCopil::operator=(const BiletCopil& other) {
     if (this != &other) {
@@ -80,7 +80,7 @@ BiletAdult::BiletAdult(double pret, int valabilitateZile, bool includeFastPass)
     : Bilet(pret, valabilitateZile), includeFastPass(includeFastPass) {}
 
 BiletAdult::BiletAdult(const BiletAdult& other)
-    : Bilet(other), includeFastPass(other.includeFastPass) {}
+=default;
 
 BiletAdult& BiletAdult::operator=(const BiletAdult& other) {
     if (this != &other) {
@@ -114,7 +114,7 @@ BiletVIP::BiletVIP(double pret, int valabilitateZile, bool accesLounge)
     : Bilet(pret, valabilitateZile), accesLounge(accesLounge) {}
 
 BiletVIP::BiletVIP(const BiletVIP& other)
-    : Bilet(other), accesLounge(other.accesLounge) {}
+=default;
 
 BiletVIP& BiletVIP::operator=(const BiletVIP& other) {
     if (this != &other) {
