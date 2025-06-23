@@ -23,6 +23,7 @@ Atractie& Atractie::operator=(const Atractie& other) {
     if (this != &other) {
         nume = other.nume;
         inaltimeMinima = other.inaltimeMinima;
+        varstanecesara = other.varstanecesara;
         capacitate = other.capacitate;
     }
     return *this;
@@ -31,6 +32,7 @@ Atractie& Atractie::operator=(const Atractie& other) {
 void Atractie::swap(Atractie& other) noexcept {
     std::swap(nume, other.nume);
     std::swap(inaltimeMinima, other.inaltimeMinima);
+    std::swap(varstanecesara, other.varstanecesara);
     std::swap(capacitate, other.capacitate);
 }
 
