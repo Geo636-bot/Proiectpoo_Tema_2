@@ -23,6 +23,7 @@ Atractie& Atractie::operator=(const Atractie& other) {
         nume = other.nume;
         inaltimeMinima = other.inaltimeMinima;
         capacitate = other.capacitate;
+        varstaNecesara = other.varstaNecesara;
     }
     return *this;
 }
