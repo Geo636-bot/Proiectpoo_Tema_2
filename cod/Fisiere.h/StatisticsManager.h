@@ -50,8 +50,8 @@ public:
         return std::accumulate(data.begin(), data.end(), T{});
     }
 
-    [[nodiscard]] size_t getNumarElemente() const { return data.size(); }
-    const std::vector<T>& getData() const { return data; }
+    //[[nodiscard]] size_t getNumarElemente() const { return data.size(); }
+    //const std::vector<T>& getData() const { return data; }
 
     template<typename U>
     friend void afiseazaComparatie(const StatisticsManager<U>& sm1, const StatisticsManager<U>& sm2);

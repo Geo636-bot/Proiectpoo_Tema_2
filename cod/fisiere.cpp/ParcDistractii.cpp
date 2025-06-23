@@ -274,19 +274,19 @@ double ParcDistractii::calculezaCosturiSalariale() const {
     return total;
 }
 
-void ParcDistractii::actualizeazaStatistici() {
-    // Resetez statisticile existente
-    statisticiPreturi = StatisticsManager<double>("Preturi Bilete");
-    statisticiVarste = StatisticsManager<int>("Varste Vizitatori");
-    statisticiInaltimi = StatisticsManager<int>("Inaltimi Vizitatori");
-
-    // Actualizez cu datele curente din vizitatori
-    for (const auto& vizitator : vizitatori) {
-        statisticiVarste.adaugaDate(vizitator->getVarsta());
-        statisticiInaltimi.adaugaDate(vizitator->getInaltime());
-
-        if (vizitator->getBilet()) {
-            statisticiPreturi.adaugaDate(vizitator->getBilet()->calculeazaPretFinal());
-        }
-    }
-}
+// void ParcDistractii::actualizeazaStatistici() {
+//     // Resetez statisticile existente
+//     statisticiPreturi = StatisticsManager<double>("Preturi Bilete");
+//     statisticiVarste = StatisticsManager<int>("Varste Vizitatori");
+//     statisticiInaltimi = StatisticsManager<int>("Inaltimi Vizitatori");
+//
+//     // Actualizez cu datele curente din vizitatori
+//     for (const auto& vizitator : vizitatori) {
+//         statisticiVarste.adaugaDate(vizitator->getVarsta());
+//         statisticiInaltimi.adaugaDate(vizitator->getInaltime());
+//
+//         if (vizitator->getBilet()) {
+//             statisticiPreturi.adaugaDate(vizitator->getBilet()->calculeazaPretFinal());
+//         }
+//     }
+// }

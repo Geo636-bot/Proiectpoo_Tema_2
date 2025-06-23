@@ -62,18 +62,18 @@ public:
 
     // Funcții statice
     static int getNumarParcuri() { return numarParcuri; }
-    static void resetContorParcuri() { numarParcuri = 0; }
+    //static void resetContorParcuri() { numarParcuri = 0; }
 
     // Getters - return const reference for strings
     [[nodiscard]] const std::string& getNume() const { return nume; }
-    [[nodiscard]] size_t getNumarAtractii() const { return atractii.size(); }
-    [[nodiscard]] size_t getNumarAngajati() const { return angajati.size(); }
-    [[nodiscard]] size_t getNumarVizitatori() const { return vizitatori.size(); }
+    //[[nodiscard]] size_t getNumarAtractii() const { return atractii.size(); }
+    //[[nodiscard]] size_t getNumarAngajati() const { return angajati.size(); }
+    //[[nodiscard]] size_t getNumarVizitatori() const { return vizitatori.size(); }
 
     // Getters pentru statistici template
-    [[nodiscard]] const StatisticsManager<double>& getStatisticiPreturi() const { return statisticiPreturi; }
-    [[nodiscard]] const StatisticsManager<int>& getStatisticiVarste() const { return statisticiVarste; }
-    [[nodiscard]] const StatisticsManager<int>& getStatisticiInaltimi() const { return statisticiInaltimi; }
+    //[[nodiscard]] const StatisticsManager<double>& getStatisticiPreturi() const { return statisticiPreturi; }
+    //[[nodiscard]] const StatisticsManager<int>& getStatisticiVarste() const { return statisticiVarste; }
+    //[[nodiscard]] const StatisticsManager<int>& getStatisticiInaltimi() const { return statisticiInaltimi; }
 
 private:
     void swap(ParcDistractii& other) noexcept;

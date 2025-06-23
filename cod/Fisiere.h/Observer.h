@@ -25,12 +25,12 @@ public:
         observeri.push_back(observer);
     }
 
-    void stergeObserver(std::shared_ptr<Observer> observer) {
-        std::erase_if(observeri,
-                      [&observer](const std::weak_ptr<Observer>& weak_obs) {
-                          return weak_obs.expired() || weak_obs.lock() == observer;
-                      });
-    }
+    // void stergeObserver(std::shared_ptr<Observer> observer) {
+    //     std::erase_if(observeri,
+    //                   [&observer](const std::weak_ptr<Observer>& weak_obs) {
+    //                       return weak_obs.expired() || weak_obs.lock() == observer;
+    //                   });
+    // }
 
 protected:
     void notificaObserveri(const std::string& eveniment, const std::string& detalii) {
