@@ -85,7 +85,7 @@ bool CSVLoader::incarcaAtractii(ParcDistractii& parc, const std::string& fisier)
             }
             
         } catch (const exception& e) {
-            cout << "⚠️  Eroare la procesarea liniei: " << linie << endl;
+            cout << "⚠️  Eroare la procesarea liniei: " << linie << e.what() << endl;
             continue;
         }
     }
@@ -136,7 +136,7 @@ bool CSVLoader::incarcaAngajati(ParcDistractii& parc, const std::string& fisier)
             }
             
         } catch (const exception& e) {
-            cout << "⚠️  Eroare la procesarea liniei: " << linie << endl;
+            cout << "⚠️  Eroare la procesarea liniei: " << linie << e.what() << endl;
             continue;
         }
     }
@@ -197,7 +197,7 @@ bool CSVLoader::incarcaVizitatori(ParcDistractii& parc, const std::string& fisie
             }
             
         } catch (const exception& e) {
-            cout << "⚠️  Eroare la procesarea liniei: " << linie << endl;
+            cout << "⚠️  Eroare la procesarea liniei: " << linie << e.what() << endl;
             continue;
         }
     }
