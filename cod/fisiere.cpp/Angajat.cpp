@@ -6,7 +6,7 @@
 using namespace std;
 
 // Inițializare atribut static
-double Angajat::salariuMediu = 2500.0;
+double Angajat::salariuMediu = 0.0;
 
 Angajat::Angajat(std::string  nume, int varsta, int experientaAni, double salariu)
     : nume(std::move(nume)), varsta(varsta), experientaAni(experientaAni), salariu(salariu) {

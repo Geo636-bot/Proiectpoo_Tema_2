@@ -3,6 +3,7 @@
 #include "../Fisiere.h/Exceptions.h"
 #include <iostream>
 #include <limits>
+#include <regex>
 
 Meniu::Meniu(ParcDistractii& parc) : parc(parc) {}
 
@@ -118,12 +119,7 @@ void Meniu::ruleazaMeniu() const {
                 default: ;
             }
         } catch (const ParcException& e) {
-            std::cout << "❌ Eroare: " << e.what() << std::endl;
-        }
-        
-        if (optiune != 0) {
-            std::cout << "\nApasa Enter pentru a continua...";
-            std::cin.get();
+            std::cout << "❌ Eroare: " << e.what();
         }
         
     } while (optiune != 0);
@@ -135,17 +131,17 @@ void Meniu::adaugaAtractieInteractiv() const {
         auto atractie = creeazaAtractie();
         parc.adaugaAtractie(std::move(atractie));
     } catch (const ParcException& e) {
-        std::cout << "❌ Eroare la adaugarea atractiei: " << e.what() << std::endl;
+        std::cout << "❌ Eroare la adaugarea atractiei: " << e.what();
     }
 }
 
 void Meniu::adaugaAngajatInteractiv() const {
     std::cout << "\n➕ ========== ADAUGARE ANGAJAT NOU ========== ➕\n" << std::endl;
     try {
-        auto angajat = creeazaAngajat();
+        auto angajat = creeazaAngajat() ;
         parc.adaugaAngajat(std::move(angajat));
     } catch (const ParcException& e) {
-        std::cout << "❌ Eroare la adaugarea angajatului: " << e.what() << std::endl;
+        std::cout << "❌ Eroare la adaugarea angajatului: " << e.what();
     }
 }
 
@@ -155,16 +151,17 @@ void Meniu::adaugaVizitatorInteractiv() const {
         auto vizitator = creeazaVizitator();
         parc.adaugaVizitator(std::move(vizitator));
     } catch (const ParcException& e) {
-        std::cout << "❌ Eroare la adaugarea vizitatorului: " << e.what() << std::endl;
+        std::cout << "❌ Eroare la adaugarea vizitatorului: " << e.what();
     }
 }
 
 void Meniu::verificaAccesInteractiv() const {
     std::cout << "\n🔍 ========== VERIFICARE ACCES ATRACTIE ========== 🔍\n" << std::endl;
-    
+    if (parc.getNumarAtractii()==0 || parc.getNumarVizitatori()==0) {
+        throw DateInvalide("Trebuie sa ai minim un vizitator si minim o atractie pentru a verifica accesul");
+    }
     std::string numeVizitator = getValidString("Nume vizitator: ");
     std::string numeAtractie = getValidString("Nume atractie: ");
-    
     parc.verificaAccesAtractie(numeVizitator, numeAtractie);
 }
 
@@ -179,7 +176,7 @@ std::unique_ptr<Atractie> Meniu::creeazaAtractie() {
     std::string nume = getValidString("Nume atractie: ");
     int inaltime = getValidInt("Inaltime minima (cm): ", 50, 200);
     int capacitate = getValidInt("Capacitate (persoane): ", 1, 100);
-    int varsta=getValidInt("Varsta (persoane): ", 1, 100);
+    int varsta=getValidInt("Varsta necesara: ", 1, 100);
     
     if (inaltime < 50) {
         throw InaltimeInsuficienta("Inaltimea minima nu poate fi sub 50 cm");
@@ -206,7 +203,7 @@ std::unique_ptr<Atractie> Meniu::creeazaAtractie() {
     }
 }
 
-std::unique_ptr<Angajat> Meniu::creeazaAngajat() {
+std::unique_ptr<Angajat> Meniu::creeazaAngajat() const {
     std::cout << "\nTip angajat:" << std::endl;
     std::cout << "1. Operator Atractie" << std::endl;
     std::cout << "2. Agent Paza" << std::endl;
@@ -225,15 +222,29 @@ std::unique_ptr<Angajat> Meniu::creeazaAngajat() {
     
     switch (tip) {
         case 1: {
-            std::string atractie = getValidString("Atractie deservita: ");
+            std::string atractie;
+            do {
+                atractie = getValidString("Atractie deservita: ");
+                if (!parc.atractieExista(atractie)) {
+                    throw DateInvalide("Atractia nu exista! Introdu alta.");
+                }
+            } while (!parc.atractieExista(atractie));
+
             return std::make_unique<OperatorAtractie>(nume, varsta, experienta, salariu, atractie);
         }
         case 2: {
-            std::string zona = getValidString("Zona asignata: ");
+            std::string zona = getValidString("Zona asignata(N,S,E,W): ");
+            if (zona !="N" && zona !="W" && zona !="E" && zona !="S") {
+                throw zonaInvalida("Zona asignata poate fi doar N,S,E,W");
+            }
             return std::make_unique<AgentPaza>(nume, varsta, experienta, salariu, zona);
         }
         case 3: {
             std::string interval = getValidString("Interval (ex: 08:00-16:00): ");
+                std::regex format("^([01][0-9]|2[0-3]):[0-5][0-9]-([01][0-9]|2[0-3]):[0-5][0-9]$");
+            if (!std::regex_match(interval, format)) {
+                throw DateInvalide("Formatul intervalului este invalid. Exemplu valid: 08:00-16:00");
+            }
             return std::make_unique<Casier>(nume, varsta, experienta, salariu, interval);
         }
         default:

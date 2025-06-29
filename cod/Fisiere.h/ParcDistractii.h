@@ -24,6 +24,9 @@ public:
     ParcDistractii& operator=(const ParcDistractii& other); // assignment operator
     ~ParcDistractii() = default;
 
+    [[nodiscard]]bool atractieExista(const std::string& nume) const;
+
+
     // Metode pentru adaugare
     void adaugaAtractie(std::unique_ptr<Atractie> atractie);
     void adaugaAngajat(std::unique_ptr<Angajat> angajat);
@@ -34,6 +37,8 @@ public:
     void afiseazaAngajati() const;
     void afiseazaVizitatori() const;
     void afiseazaStatistici() const;
+
+
 
     // Metode pentru verificari cu dynamic_cast
     void verificaAccesAtractie(const std::string& numeVizitator, const std::string& numeAtractie) const;
@@ -47,9 +52,9 @@ public:
 
     // Getters
     [[nodiscard]] const std::string& getNume() const { return nume; }
-    //[[nodiscard]] size_t getNumarAtractii() const { return atractii.size(); }
+    [[nodiscard]] size_t getNumarAtractii() const { return atractii.size(); }
     //[[nodiscard]] size_t getNumarAngajati() const { return angajati.size(); }
-    //[[nodiscard]] size_t getNumarVizitatori() const { return vizitatori.size(); }
+    [[nodiscard]] size_t getNumarVizitatori() const { return vizitatori.size(); }
 
 private:
     void swap(ParcDistractii& other) noexcept;

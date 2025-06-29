@@ -51,7 +51,7 @@ public:
     BiletCopil& operator=(const BiletCopil& other);
 
     [[nodiscard]] std::unique_ptr<Bilet> clone() const override;
-    [[nodiscard]] std::string getTip() const override { return "Bi Let Copil"; }
+    [[nodiscard]] std::string getTip() const override { return "BiLet Copil"; }
     [[nodiscard]] double calculeazaPretFinal() const override;
    // [[nodiscard]] int getVarstaCopil() const { return varstaCopil; }
 

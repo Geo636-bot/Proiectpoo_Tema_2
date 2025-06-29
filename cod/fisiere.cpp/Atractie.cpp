@@ -3,6 +3,7 @@
 #include "../Fisiere.h/Atractie.h"
 #include <iostream>
 #include <utility>
+#include <algorithm>
 
 using namespace std;
 
@@ -43,8 +44,10 @@ std::ostream& operator<<(std::ostream& os, const Atractie& atractie) {
 
 void Atractie::afiseaza(std::ostream& os) const {
     os << "🎢 " << getTip() << ": " << nume
-       << " (Inaltime min: " << inaltimeMinima << "cm, Capacitate: " << capacitate << "Varsta necesara: "<<varstanecesara<<"ani)"<<endl;
+       << " (Inaltime min: " << inaltimeMinima << "cm, Capacitate: " << capacitate << " Varsta necesara: "<<varstanecesara<<" ani)"<<endl;
 }
+
+
 
 // MontagneRusse implementation
 MontagneRusse::MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate,int varstanecesara, int vitezaMaxima)

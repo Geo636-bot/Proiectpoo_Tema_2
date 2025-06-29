@@ -42,5 +42,10 @@ public:
     explicit DateInvalide(const std::string& msg)
         : ParcException("Date invalide: " + msg) {}
 };
+class zonaInvalida : public ParcException {
+public:
+    explicit zonaInvalida(const std::string& msg)
+        : ParcException("Zona invalida: "+msg) {}
+};
 
 #endif

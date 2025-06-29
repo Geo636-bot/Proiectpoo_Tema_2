@@ -31,7 +31,7 @@ public:
     // Metode pentru crearea obiectelor
     static std::unique_ptr<Atractie> creeazaAtractie();
 
-    static std::unique_ptr<Angajat> creeazaAngajat();
+    [[nodiscard]] std::unique_ptr<Angajat> creeazaAngajat() const ;
     static std::unique_ptr<Vizitator> creeazaVizitator();
 
     static std::unique_ptr<Bilet> creeazaBilet();
