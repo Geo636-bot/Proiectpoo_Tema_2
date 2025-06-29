@@ -115,8 +115,8 @@ void Meniu::ruleazaMeniu() const {
                 case 9:
                     parc.demonstratieDynamicCast();
                     break;
-                case 10;
-                    CSVLoader::incarcaDate(parc)
+                case 10:
+                    CSVLoader::incarcaDate(parc);
                     break;
                 case 0:
                     std::cout << "\n🎡 Multumim ca ai vizitat " << parc.getNume() << "! La revedere! 🎡\n" << std::endl;
