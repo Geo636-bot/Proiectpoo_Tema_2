@@ -1,5 +1,5 @@
 
-#include "../Fisiere.h/CSVLoader.h"
+#include "../Fisiere.h/CsvLoader.h"
 #include "../Fisiere.h/Exceptions.h"
 #include <fstream>
 #include <sstream>
