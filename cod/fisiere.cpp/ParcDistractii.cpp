@@ -55,12 +55,11 @@ void ParcDistractii::copiazaVizitatori(const std::vector<std::unique_ptr<Vizitat
     }
 }
 
-bool ParcDistractii::atractieExista(const std::string &nume) const {
+bool ParcDistractii::atractieExista(const std::string &numeCautat) const {
     return std::any_of(atractii.begin(), atractii.end(), [&](const std::unique_ptr<Atractie>& a) {
-        return a->getNume() == nume;
+        return a->getNume() == numeCautat;
     });
 }
-
 void ParcDistractii::adaugaAtractie(std::unique_ptr<Atractie> atractie) {
     atractii.push_back(std::move(atractie));
     std::cout << "✅ Atractie adaugata cu succes!" << std::endl;
