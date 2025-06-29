@@ -68,8 +68,18 @@ bool CSVLoader::incarcaAtractii(ParcDistractii& parc, const std::string& fisier)
             int capacitate = stoi(trim(campuri[3]));
             int varstaNecesara = stoi(trim(campuri[4]));
             int parametruSpecific = stoi(trim(campuri[5]));
+
+            std::unique_ptr<Atractie> atractie;
+            if(tip=="montagne"){
+                atractie = std::make_unique<MontagneRusse>(nume, inaltimeMinima, capacitate,varstaNecesara, parametruSpecific);
+            }
+            if(tip=="carusel"){
+                atractie = std::make_unique<Carusel>(nume, inaltimeMinima, capacitate,varstaNecesara, parametruSpecific);
+            }
+            if(tip=="casa"){
+                atractie = std::make_unique<CasaGroazei>(nume, inaltimeMinima, capacitate,varstaNecesara, parametruSpecific);
+            }
             
-            auto atractie = parc.adaugaAtractie(tip, nume, inaltimeMinima, capacitate, parametruSpecific);
             if (atractie) {
                 parc.adaugaAtractie(std::move(atractie));
             }
