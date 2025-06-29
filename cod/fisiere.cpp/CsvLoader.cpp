@@ -175,7 +175,7 @@ bool CSVLoader::incarcaVizitatori(ParcDistractii& parc, const std::string& fisie
             std::unique_ptr<Vizitator> vizitator;
             if (varsta <= 12) {
                 vizitator = std::make_unique<Copil>(nume, varsta, inaltime, std::move(bilet), parametruBilet);
-            } else if (varsta >= 13 && varsta <= 17) {
+            } else if (varsta <= 17) {
                 vizitator = std::make_unique<Adolescent>(nume, varsta, inaltime, std::move(bilet), parametruBilet);
             } else {
                 string ocupatie = "Necunoscuta";
