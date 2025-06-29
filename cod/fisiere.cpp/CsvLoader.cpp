@@ -69,7 +69,7 @@ bool CSVLoader::incarcaAtractii(ParcDistractii& parc, const std::string& fisier)
             int varstaNecesara = stoi(trim(campuri[4]));
             int parametruSpecific = stoi(trim(campuri[5]));
             
-            auto atractie = parc.creeazaAtractie(tip, nume, inaltimeMinima, capacitate, parametruSpecific);
+            auto atractie = parc.adaugaAtractie(tip, nume, inaltimeMinima, capacitate, parametruSpecific);
             if (atractie) {
                 parc.adaugaAtractie(std::move(atractie));
             }
