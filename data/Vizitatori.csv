@@ -1,1 +1,12 @@
 
+nume,varsta,inaltime,tip_bilet,parametru_bilet
+Andrei Popescu,25,175,adult,true
+Maria Ionescu,8,120,copil,false
+Alexandru Marin,16,165,copil,false
+Elena Dumitrescu,35,160,adult,false
+Mihai Stoica,12,140,copil,false
+Ana Radu,28,170,adult,true
+Vasile Georgescu,70,168,vip,true
+Carmen Nistor,45,155,adult,false
+Bogdan Popa,14,150,copil,false
+Diana Matei,22,162,adult,true
