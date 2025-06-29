@@ -268,10 +268,12 @@ std::unique_ptr<Vizitator> Meniu::creeazaVizitator() {
     // Determin tipul de vizitator pe baza vârstei
     std::string tipVizitator;
     if (varsta <= 12) {
-        tipVizitator = "Copil";
-    } else if (varsta >= 13 && varsta <= 17) {
+    t    ipVizitator = "Copil";
+    }
+    else if (varsta <= 17) {
         tipVizitator = "Adolescent";
-    } else {
+    }
+    else {
         tipVizitator = "Adult";
     }
 
