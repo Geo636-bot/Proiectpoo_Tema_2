@@ -103,7 +103,23 @@ void ParcDistractii::demonstratieDynamicCast() const {
             std::cout << "Casier cu intervalul " << casier->getInterval() << std::endl;
         }
     }
-    
+
+    for (const auto& vizitator : vizitatori) {
+        std::cout << "Viztator: " << vizitator->getNume() << " - ";
+        if (auto copil = dynamic_cast<const Copil*>(vizitator.get())) {
+            std::cout << "Este Copil, varsta: " << copil->getVarsta()
+                      << ", insotit: " << (copil->getInsotitDeAdult() ? "da" : "nu") << std::endl;
+        } else if (auto adolescent = dynamic_cast<const Adolescent*>(vizitator.get())) {
+            std::cout << "Este Adolescent, varsta: " << adolescent->getVarsta()
+                      << ", buletin: " << (adolescent->getAreBuletin() ? "da" : "nu") << std::endl;
+        } else if (auto adult = dynamic_cast<const Adult*>(vizitator.get())) {
+            std::cout << "Este Adult, varsta: " << adult->getVarsta()
+                      << ", ocupatie: " << adult->getOcupatie() << std::endl;
+        } else {
+            std::cout << "Tip necunoscut de vizitator." << std::endl;
+        }
+    }
+
     std::cout << "==================================================\n" << std::endl;
 }
 
