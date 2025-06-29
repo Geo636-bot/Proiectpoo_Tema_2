@@ -1,6 +1,7 @@
 
 #include "../Fisiere.h/Meniu.h"
 #include "../Fisiere.h/Exceptions.h"
+#include "../Fisiere.h/CsvLoader.h"
 #include <iostream>
 #include <limits>
 #include <regex>
@@ -73,6 +74,7 @@ void Meniu::afiseazaMeniu() {
     std::cout << "7. Adauga vizitator nou" << std::endl;
     std::cout << "8. Verifica accesul la o atractie" << std::endl;
     std::cout << "9. Demonstratie dynamic_cast" << std::endl;
+    std::cout << "10.Incarca Date din CSV" << std::endl;
     std::cout << "0. Iesire" << std::endl;
     std::cout << "===========================================================\n";
     std::cout << "Alege optiunea: ";
@@ -82,7 +84,7 @@ void Meniu::ruleazaMeniu() const {
     int optiune;
     do {
         afiseazaMeniu();
-        optiune = getValidInt("", 0, 9);
+        optiune = getValidInt("", 0, 10);
         
         try {
             switch (optiune) {
@@ -112,6 +114,9 @@ void Meniu::ruleazaMeniu() const {
                     break;
                 case 9:
                     parc.demonstratieDynamicCast();
+                    break;
+                case 10;
+                    CSVLoader::incarcaDate(parc)
                     break;
                 case 0:
                     std::cout << "\n🎡 Multumim ca ai vizitat " << parc.getNume() << "! La revedere! 🎡\n" << std::endl;
