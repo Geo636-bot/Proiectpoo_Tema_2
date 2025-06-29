@@ -146,7 +146,7 @@ void Meniu::adaugaAngajatInteractiv() const {
 }
 
 void Meniu::adaugaVizitatorInteractiv() const {
-    std::cout << "\n➕ ========== ADAUGARE VIZITATOR NOU ========== ➕\n" << std::endl;
+
     try {
         auto vizitator = creeazaVizitator();
         parc.adaugaVizitator(std::move(vizitator));
@@ -253,43 +253,40 @@ std::unique_ptr<Angajat> Meniu::creeazaAngajat() const {
 }
 
 std::unique_ptr<Vizitator> Meniu::creeazaVizitator() {
-    std::cout << "\nTip vizitator:" << std::endl;
-    std::cout << "1. Copil" << std::endl;
-    std::cout << "2. Adolescent" << std::endl;
-    std::cout << "3. Adult" << std::endl;
-    
-    int tip = getValidInt("Alege tipul: ", 1, 3);
-    
-    std::string nume = getValidString("Nume vizitator: ");
+    std::cout << "\n➕ ========== CREARE VIZITATOR NOU ========== ➕\n" << std::endl;
+
+    // Obțin datele de bază ale vizitatorului
+    std::string nume =getValidString("Nume vizitator: ");
     int varsta = getValidInt("Varsta: ", 1, 120);
     int inaltime = getValidInt("Inaltime (cm): ", 50, 250);
-    
-    auto bilet = creeazaBilet();
-    
-    switch (tip) {
-        case 1: {
-            if (varsta > 17) {
-                throw VarstaNecorespunzatoare("Copilul nu poate avea peste 17 ani");
-            }
-            bool insotit = getYesNo("Insotit de adult?");
-            return std::make_unique<Copil>(nume, varsta, inaltime, std::move(bilet), insotit);
-        }
-        case 2: {
-            if (varsta < 13 || varsta > 19) {
-                throw VarstaNecorespunzatoare("Adolescentul trebuie sa aiba intre 13-19 ani");
-            }
-            bool buletin = getYesNo("Are buletin?");
-            return std::make_unique<Adolescent>(nume, varsta, inaltime, std::move(bilet), buletin);
-        }
-        case 3: {
-            if (varsta < 18) {
-                throw VarstaNecorespunzatoare("Adultul trebuie sa aiba minim 18 ani");
-            }
-            std::string ocupatie = getValidString("Ocupatie: ");
-            return std::make_unique<Adult>(nume, varsta, inaltime, std::move(bilet), ocupatie);
-        }
-        default:
-            throw DateInvalide("Tip vizitator invalid");
+
+    // Determin tipul de vizitator pe baza vârstei
+    std::string tipVizitator;
+    if (varsta <= 12) {
+        tipVizitator = "Copil";
+    } else if (varsta >= 13 && varsta <= 17) {
+        tipVizitator = "Adolescent";
+    } else {
+        tipVizitator = "Adult";
+    }
+
+    std::cout << "📋 Tip vizitator detectat automat: " << tipVizitator << std::endl;
+
+    // Creez biletul automat în funcție de vârstă
+    std::unique_ptr<Bilet> bilet = creeazaBilet();
+
+    // Creez vizitatorul în funcție de tip
+    if (tipVizitator == "Copil") {
+        bool insotit = getYesNo("Este insotit de adult? ");
+        return std::make_unique<Copil>(nume, varsta, inaltime, std::move(bilet), insotit);
+    }
+    else if (tipVizitator == "Adolescent") {
+        bool buletin = getYesNo("Are buletin? ");
+        return std::make_unique<Adolescent>(nume, varsta, inaltime, std::move(bilet), buletin);
+    }
+    else { // Adult
+        std::string ocupatie = getValidString("Ocupatie: ");
+        return std::make_unique<Adult>(nume, varsta, inaltime, std::move(bilet), ocupatie);
     }
 }
 
