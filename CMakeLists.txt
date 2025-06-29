@@ -64,6 +64,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         cod/Fisiere.h/Meniu.h
     cod/Fisiere.h/ParcDistractii.h
     cod/Fisiere.h/Vizitator.h
+    cod/fisiere.cpp/CsvLoader.cpp
+    cod/Fisiere.h/CsvLoader.h
     
 )
 
