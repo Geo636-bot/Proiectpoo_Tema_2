@@ -14,7 +14,7 @@ bool CSVLoader::incarcaDate(ParcDistractii& parc) {
     bool succes = true;
     
     cout << "🎢 Incarcam atractii..." << endl;
-    if (!incarcaAtractii(parc, "data/atractii.csv")) {
+    if (!incarcaAtractii(parc, "../data/Atractii.csv")) {
         cout << "❌ Eroare la incarcarea atractiilor" << endl;
         succes = false;
     } else {
@@ -22,7 +22,7 @@ bool CSVLoader::incarcaDate(ParcDistractii& parc) {
     }
     
     cout << "\n👥 Incarcam angajati..." << endl;
-    if (!incarcaAngajati(parc, "data/angajati.csv")) {
+    if (!incarcaAngajati(parc, "../data/Angajati.csv")) {
         cout << "❌ Eroare la incarcarea angajatilor" << endl;
         succes = false;
     } else {
@@ -30,7 +30,7 @@ bool CSVLoader::incarcaDate(ParcDistractii& parc) {
     }
     
     cout << "\n🎫 Incarcam vizitatori..." << endl;
-    if (!incarcaVizitatori(parc, "data/vizitatori.csv")) {
+    if (!incarcaVizitatori(parc, "../data/Vizitatori.csv")) {
         cout << "❌ Eroare la incarcarea vizitatorilor" << endl;
         succes = false;
     } else {
@@ -42,6 +42,7 @@ bool CSVLoader::incarcaDate(ParcDistractii& parc) {
 }
 
 bool CSVLoader::incarcaAtractii(ParcDistractii& parc, const std::string& fisier) {
+    cout << "📂 Incerc sa deschid fisierul: " << fisier << endl;
     ifstream file(fisier);
     if (!file.is_open()) {
         return false;
