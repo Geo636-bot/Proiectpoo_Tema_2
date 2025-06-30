@@ -4,6 +4,7 @@
 #define MENIU_H
 
 #include "ParcDistractii.h"
+#include "Observer.h"
 #include <memory>
 
 class Meniu {
