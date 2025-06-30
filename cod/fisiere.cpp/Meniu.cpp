@@ -6,7 +6,14 @@
 #include <limits>
 #include <regex>
 
-Meniu::Meniu(ParcDistractii& parc) : parc(parc) {}
+Meniu::Meniu(ParcDistractii& parc) : parc(parc) {
+    // Creez observeri și îi adaug la parc
+    logObserver = std::make_shared<LogObserver>();
+    statsObserver = std::make_shared<StatisticsObserver>();
+    
+    parc.adaugaObserver(logObserver);
+    parc.adaugaObserver(statsObserver);
+}
 
 void Meniu::clearInput() {
     std::cin.clear();
