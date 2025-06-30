@@ -18,7 +18,30 @@ ParcDistractii::ParcDistractii(const std::string& nume)
     ++numarParcuri;
     notificaObserveri("PARC_CREAT", "Parc nou creat: " + nume);
 }
-
+void ParcDistractii::afiseazaStatisticiTemplate() const {
+    std::cout << "\n🔢 ========== STATISTICI TEMPLATE ========== 🔢\n" << std::endl;
+    
+    statisticiPreturi.afiseazaStatistici();
+    statisticiVarste.afiseazaStatistici();
+    statisticiInaltimi.afiseazaStatistici();
+    
+    // Demonstrez funcția template liberă friend
+    afiseazaComparatie(statisticiVarste, statisticiInaltimi);
+    
+    // Demonstrez funcția template generică
+    auto numarCopii = numara_daca(vizitatori, [](const std::unique_ptr<Vizitator>& v) {
+        return v->getVarsta() < 18;
+    });
+    
+    auto numarAdulti = numara_daca(vizitatori, [](const std::unique_ptr<Vizitator>& v) {
+        return v->getVarsta() >= 18;
+    });
+    
+    std::cout << "📊 Analiza cu template generica:\n";
+    std::cout << "Copii (sub 18 ani): " << numarCopii << std::endl;
+    std::cout << "Adulti (18+ ani): " << numarAdulti << std::endl;
+    std::cout << "============================================\n" << std::endl;
+}
 ParcDistractii::ParcDistractii(const ParcDistractii& other) : nume(other.nume) {
     ++numarParcuri;
     copiazaAtractii(other.atractii);
