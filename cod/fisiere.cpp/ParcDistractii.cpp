@@ -56,6 +56,24 @@ ParcDistractii& ParcDistractii::operator=(const ParcDistractii& other) {
     }
     return *this;
 }
+void ParcDistractii::afiseazaStatistici() const {
+    std::cout << "\n📊 ========== STATISTICI PARC ========== 📊\n" << std::endl;
+    std::cout << "Nume parc: " << nume << std::endl;
+    std::cout << "Numar total atractii: " << atractii.size() << std::endl;
+    std::cout << "Numar total angajati: " << angajati.size() << std::endl;
+    std::cout << "Numar total vizitatori: " << vizitatori.size() << std::endl;
+    std::cout << "Venit total din bilete: " << calculezaVenitTotal() << " RON" << std::endl;
+    std::cout << "Costuri salariale totale: " << calculezaCosturiSalariale() << " RON" << std::endl;
+    
+    // Afisare statistici statice
+    std::cout << "Numar total atractii create: " << Atractie::getNumarTotalAtractii() << std::endl;
+    std::cout << "Salariu mediu angajati: " << Angajat::getSalariuMediu() << " RON" << std::endl;
+    std::cout << "Numar parcuri create: " << getNumarParcuri() << std::endl;
+    
+    double profit = calculezaVenitTotal() - calculezaCosturiSalariale();
+    std::cout << "Profit estimat: " << profit << " RON" << std::endl;
+    std::cout << "========================================\n" << std::endl;
+}
 
 void ParcDistractii::swap(ParcDistractii& other) noexcept {
     std::swap(nume, other.nume);
