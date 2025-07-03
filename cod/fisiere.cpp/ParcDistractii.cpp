@@ -1,5 +1,6 @@
 
 
+
 #include "../Fisiere.h/ParcDistractii.h"
 #include <iostream>
 #include <algorithm>
@@ -10,38 +11,11 @@ using namespace std;
 // Inițializare atribut static
 int ParcDistractii::numarParcuri = 0;
 
-ParcDistractii::ParcDistractii(const std::string& nume) 
-    : nume(nume), 
-      statisticiPreturi("Preturi Bilete"),
-      statisticiVarste("Varste Vizitatori"),
-      statisticiInaltimi("Inaltimi Vizitatori") {
+ParcDistractii::ParcDistractii(std::string  nume) : nume(std::move(nume)) {
     ++numarParcuri;
-    notificaObserveri("PARC_CREAT", "Parc nou creat: " + nume);
 }
-void ParcDistractii::afiseazaStatisticiTemplate() const {
-    std::cout << "\n🔢 ========== STATISTICI TEMPLATE ========== 🔢\n" << std::endl;
-    
-    statisticiPreturi.afiseazaStatistici();
-    statisticiVarste.afiseazaStatistici();
-    statisticiInaltimi.afiseazaStatistici();
-    
-    // Demonstrez funcția template liberă friend
-    afiseazaComparatie(statisticiVarste, statisticiInaltimi);
-    
-    // Demonstrez funcția template generică
-    auto numarCopii = numara_daca(vizitatori, [](const std::unique_ptr<Vizitator>& v) {
-        return v->getVarsta() < 18;
-    });
-    
-    auto numarAdulti = numara_daca(vizitatori, [](const std::unique_ptr<Vizitator>& v) {
-        return v->getVarsta() >= 18;
-    });
-    
-    std::cout << "📊 Analiza cu template generica:\n";
-    std::cout << "Copii (sub 18 ani): " << numarCopii << std::endl;
-    std::cout << "Adulti (18+ ani): " << numarAdulti << std::endl;
-    std::cout << "============================================\n" << std::endl;
-}
+
+
 ParcDistractii::ParcDistractii(const ParcDistractii& other) : nume(other.nume) {
     ++numarParcuri;
     copiazaAtractii(other.atractii);
@@ -55,24 +29,6 @@ ParcDistractii& ParcDistractii::operator=(const ParcDistractii& other) {
         swap(temp);
     }
     return *this;
-}
-void ParcDistractii::afiseazaStatistici() const {
-    std::cout << "\n📊 ========== STATISTICI PARC ========== 📊\n" << std::endl;
-    std::cout << "Nume parc: " << nume << std::endl;
-    std::cout << "Numar total atractii: " << atractii.size() << std::endl;
-    std::cout << "Numar total angajati: " << angajati.size() << std::endl;
-    std::cout << "Numar total vizitatori: " << vizitatori.size() << std::endl;
-    std::cout << "Venit total din bilete: " << calculezaVenitTotal() << " RON" << std::endl;
-    std::cout << "Costuri salariale totale: " << calculezaCosturiSalariale() << " RON" << std::endl;
-    
-    // Afisare statistici statice
-    std::cout << "Numar total atractii create: " << Atractie::getNumarTotalAtractii() << std::endl;
-    std::cout << "Salariu mediu angajati: " << Angajat::getSalariuMediu() << " RON" << std::endl;
-    std::cout << "Numar parcuri create: " << getNumarParcuri() << std::endl;
-    
-    double profit = calculezaVenitTotal() - calculezaCosturiSalariale();
-    std::cout << "Profit estimat: " << profit << " RON" << std::endl;
-    std::cout << "========================================\n" << std::endl;
 }
 
 void ParcDistractii::swap(ParcDistractii& other) noexcept {
@@ -105,75 +61,20 @@ bool ParcDistractii::atractieExista(const std::string &numeCautat) const {
         return a->getNume() == numeCautat;
     });
 }
-std::unique_ptr<Atractie> ParcDistractii::creeazaAtractieFactory(
-    const std::string& tip,
-    const std::string& nume,
-    int inaltimeMinima,
-    int capacitate,
-    int parametruSpecific) {
-    
-    auto atractie = factoryManager.creeazaAtractie(tip, nume, inaltimeMinima, capacitate, parametruSpecific);
-    if (atractie) {
-        notificaObserveri("ATRACTIE_CREATA_FACTORY", "Atractie creata cu Factory: " + nume);
-    }
-    return atractie;
-}
-
 void ParcDistractii::adaugaAtractie(std::unique_ptr<Atractie> atractie) {
-    string numeAtractie = atractie->getNume();
     atractii.push_back(std::move(atractie));
-    notificaObserveri("ATRACTIE_ADAUGATA", "Atractie adaugata: " + numeAtractie);
     std::cout << "✅ Atractie adaugata cu succes!" << std::endl;
 }
 
 void ParcDistractii::adaugaAngajat(std::unique_ptr<Angajat> angajat) {
-    string numeAngajat = angajat->getNume();
     angajati.push_back(std::move(angajat));
-    notificaObserveri("ANGAJAT_ADAUGAT", "Angajat adaugat: " + numeAngajat);
     std::cout << "✅ Angajat adaugat cu succes!" << std::endl;
 }
 
 void ParcDistractii::adaugaVizitator(std::unique_ptr<Vizitator> vizitator) {
-    string numeVizitator = vizitator->getNume();
-    
-    // Actualizez statisticile template
-    statisticiVarste.adaugaDate(vizitator->getVarsta());
-    statisticiInaltimi.adaugaDate(vizitator->getInaltime());
-    
-    if (vizitator->getBilet()) {
-        statisticiPreturi.adaugaDate(vizitator->getBilet()->calculeazaPretFinal());
-    }
-    
     vizitatori.push_back(std::move(vizitator));
-    notificaObserveri("VIZITATOR_ADAUGAT", "Vizitator adaugat: " + numeVizitator);
     std::cout << "✅ Vizitator adaugat cu succes!" << std::endl;
 }
-
-void ParcDistractii::afiseazaStatisticiTemplate() const {
-    std::cout << "\n🔢 ========== STATISTICI TEMPLATE ========== 🔢\n" << std::endl;
-    
-    statisticiPreturi.afiseazaStatistici();
-    statisticiVarste.afiseazaStatistici();
-    statisticiInaltimi.afiseazaStatistici();
-    
-    // Demonstrez funcția template liberă friend
-    afiseazaComparatie(statisticiVarste, statisticiInaltimi);
-    
-    // Demonstrez funcția template generică
-    auto numarCopii = numara_daca(vizitatori, [](const std::unique_ptr<Vizitator>& v) {
-        return v->getVarsta() < 18;
-    });
-    
-    auto numarAdulti = numara_daca(vizitatori, [](const std::unique_ptr<Vizitator>& v) {
-        return v->getVarsta() >= 18;
-    });
-    
-    std::cout << "📊 Analiza cu template generica:\n";
-    std::cout << "Copii (sub 18 ani): " << numarCopii << std::endl;
-    std::cout << "Adulti (18+ ani): " << numarAdulti << std::endl;
-    std::cout << "============================================\n" << std::endl;
-}
-
 
 void ParcDistractii::demonstratieDynamicCast() const {
     std::cout << "\n🔬 ========== DEMONSTRATIE DYNAMIC_CAST ========== 🔬\n" << std::endl;
