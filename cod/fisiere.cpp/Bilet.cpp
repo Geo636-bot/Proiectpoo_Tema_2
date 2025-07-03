@@ -6,6 +6,8 @@
 
 using namespace std;
 
+// Inițializare atribut static
+double Bilet::pretMediu = 50.0;
 
 Bilet::Bilet(double pret, int valabilitateZile)
     : pret(pret), valabilitateZile(valabilitateZile) {
