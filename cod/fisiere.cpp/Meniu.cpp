@@ -1,4 +1,5 @@
 
+
 #include "../Fisiere.h/Meniu.h"
 #include "../Fisiere.h/Exceptions.h"
 #include "../Fisiere.h/CsvLoader.h"
@@ -6,14 +7,7 @@
 #include <limits>
 #include <regex>
 
-Meniu::Meniu(ParcDistractii& parc) : parc(parc) {
-    // Creez observeri și îi adaug la parc
-    logObserver = std::make_shared<LogObserver>();
-    statsObserver = std::make_shared<StatisticsObserver>();
-    
-    parc.adaugaObserver(logObserver);
-    parc.adaugaObserver(statsObserver);
-}
+Meniu::Meniu(ParcDistractii& parc) : parc(parc) {}
 
 void Meniu::clearInput() {
     std::cin.clear();
@@ -82,8 +76,6 @@ void Meniu::afiseazaMeniu() {
     std::cout << "8. Verifica accesul la o atractie" << std::endl;
     std::cout << "9. Demonstratie dynamic_cast" << std::endl;
     std::cout << "10.Incarca Date din CSV" << std::endl;
-    std::cout << "11. 📊 Afiseaza Statistici Generale" << endl;
-    std::cout << "12. 🔢 Afiseaza Statistici Template" << endl;
     std::cout << "0. Iesire" << std::endl;
     std::cout << "===========================================================\n";
     std::cout << "Alege optiunea: ";
@@ -93,7 +85,7 @@ void Meniu::ruleazaMeniu() const {
     int optiune;
     do {
         afiseazaMeniu();
-        optiune = getValidInt("", 0, 12);
+        optiune = getValidInt("", 0, 10);
         
         try {
             switch (optiune) {
@@ -126,12 +118,6 @@ void Meniu::ruleazaMeniu() const {
                     break;
                 case 10:
                     CSVLoader::incarcaDate(parc);
-                    break;
-                case 11:
-                    parc.afiseazaStatistici();
-                    break;
-                case 12:
-                    parc.afiseazaStatisticiTemplate();
                     break;
                 case 0:
                     std::cout << "\n🎡 Multumim ca ai vizitat " << parc.getNume() << "! La revedere! 🎡\n" << std::endl;
@@ -314,18 +300,16 @@ std::unique_ptr<Vizitator> Meniu::creeazaVizitator() {
 
 std::unique_ptr<Bilet> Meniu::creeazaBilet() {
     std::cout << "\nTip bilet:" << std::endl;
-    std::cout << "1. Bilet Copil" << std::endl;
-    std::cout << "2. Bilet Adult" << std::endl;
+    std::cout << "1. Bilet Standard" << std::endl;
+    std::cout << "2. Bilet Premium" << std::endl;
     std::cout << "3. Bilet VIP" << std::endl;
     
     int tip = getValidInt("Alege tipul: ", 1, 3);
-    
-    double pret = getValidDouble("Pret de baza: ", 10.0, 1000.0);
     int valabilitate = getValidInt("Valabilitate (zile): ", 1, 365);
     
     switch (tip) {
         case 1: {
-            int varsta = getValidInt("Varsta copilului: ", 1, 17);
+            
             return std::make_unique<BiletCopil>(pret, valabilitate, varsta);
         }
         case 2: {
