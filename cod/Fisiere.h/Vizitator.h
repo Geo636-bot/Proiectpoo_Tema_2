@@ -1,5 +1,6 @@
 
 
+
 #ifndef VIZITATOR_H
 #define VIZITATOR_H
 
