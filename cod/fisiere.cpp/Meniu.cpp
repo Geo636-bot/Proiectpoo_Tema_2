@@ -1,5 +1,4 @@
 
-
 #include "../Fisiere.h/Meniu.h"
 #include "../Fisiere.h/Exceptions.h"
 #include "../Fisiere.h/CsvLoader.h"
@@ -300,16 +299,18 @@ std::unique_ptr<Vizitator> Meniu::creeazaVizitator() {
 
 std::unique_ptr<Bilet> Meniu::creeazaBilet() {
     std::cout << "\nTip bilet:" << std::endl;
-    std::cout << "1. Bilet Standard" << std::endl;
-    std::cout << "2. Bilet Premium" << std::endl;
+    std::cout << "1. Bilet Copil" << std::endl;
+    std::cout << "2. Bilet Adult" << std::endl;
     std::cout << "3. Bilet VIP" << std::endl;
     
     int tip = getValidInt("Alege tipul: ", 1, 3);
+    
+    double pret = getValidDouble("Pret de baza: ", 10.0, 1000.0);
     int valabilitate = getValidInt("Valabilitate (zile): ", 1, 365);
     
     switch (tip) {
         case 1: {
-            
+            int varsta = getValidInt("Varsta copilului: ", 1, 17);
             return std::make_unique<BiletCopil>(pret, valabilitate, varsta);
         }
         case 2: {
