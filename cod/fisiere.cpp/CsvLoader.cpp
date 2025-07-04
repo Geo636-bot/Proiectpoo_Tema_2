@@ -176,9 +176,9 @@ bool CSVLoader::incarcaVizitatori(ParcDistractii& parc, const std::string& fisie
             // Creez biletul
             std::unique_ptr<Bilet> bilet;
             if (tipBilet == "copil") {
-                bilet = std::make_unique<BiletCopil>(50.0, 1, varsta);
+                bilet = std::make_unique<BiletStandard>(50.0, 1, varsta);
             } else if (tipBilet == "adult") {
-                bilet = std::make_unique<BiletAdult>(80.0, 1, parametruBilet);
+                bilet = std::make_unique<BiletPremium>(80.0, 1, parametruBilet);
             } else if (tipBilet == "vip") {
                 bilet = std::make_unique<BiletVIP>(120.0, 1, parametruBilet);
             }

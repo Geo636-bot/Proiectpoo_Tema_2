@@ -28,6 +28,7 @@ public:
     void adaugaAngajatInteractiv() const;
     void adaugaVizitatorInteractiv() const;
     void verificaAccesInteractiv() const;
+    void SimuleazaZi() const;
 
     // Metode pentru crearea obiectelor
     static std::unique_ptr<Atractie> creeazaAtractie();
@@ -35,7 +36,7 @@ public:
     [[nodiscard]] std::unique_ptr<Angajat> creeazaAngajat() const ;
     static std::unique_ptr<Vizitator> creeazaVizitator();
 
-    static std::unique_ptr<Bilet> creeazaBilet();
+    static std::unique_ptr<Bilet> creeazaBilet(int varsta,int zicurenta);
 };
 
 #endif

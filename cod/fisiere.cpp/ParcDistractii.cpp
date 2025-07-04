@@ -8,13 +8,26 @@
 
 using namespace std;
 
-// Inițializare atribut static
-int ParcDistractii::numarParcuri = 0;
-
-ParcDistractii::ParcDistractii(std::string  nume) : nume(std::move(nume)) {
+ParcDistractii::ParcDistractii(std::string nume)
+    : zicurenta(0), nume(std::move(nume)) {
     ++numarParcuri;
 }
 
+void ParcDistractii::simuleazaZi() {
+    zicurenta = (zicurenta + 1) % 7;
+    std::cout << "📅 Zi simulata: " << getZiCurentaString() << std::endl;
+}
+
+int ParcDistractii::getZiCurenta() const {
+    return zicurenta;
+}
+
+std::string ParcDistractii::getZiCurentaString() const {
+    static const std::string zile[] = {
+        "Luni", "Marti", "Miercuri", "Joi", "Vineri", "Sambata", "Duminica"
+    };
+    return zile[zicurenta];
+}
 
 ParcDistractii::ParcDistractii(const ParcDistractii& other) : nume(other.nume) {
     ++numarParcuri;
@@ -57,7 +70,7 @@ void ParcDistractii::copiazaVizitatori(const std::vector<std::unique_ptr<Vizitat
 }
 
 bool ParcDistractii::atractieExista(const std::string &numeCautat) const {
-    return std::any_of(atractii.begin(), atractii.end(), [&](const std::unique_ptr<Atractie>& a) {
+    return ranges::any_of(atractii, [&](const std::unique_ptr<Atractie>& a) {
         return a->getNume() == numeCautat;
     });
 }

@@ -75,6 +75,8 @@ void Meniu::afiseazaMeniu() {
     std::cout << "8. Verifica accesul la o atractie" << std::endl;
     std::cout << "9. Demonstratie dynamic_cast" << std::endl;
     std::cout << "10.Incarca Date din CSV" << std::endl;
+    std::cout << "11. Simuleaza trecerea unei zile" << std::endl;
+
     std::cout << "0. Iesire" << std::endl;
     std::cout << "===========================================================\n";
     std::cout << "Alege optiunea: ";
@@ -118,6 +120,8 @@ void Meniu::ruleazaMeniu() const {
                 case 10:
                     CSVLoader::incarcaDate(parc);
                     break;
+                case 11:
+                    parc.simuleazaZi();
                 case 0:
                     std::cout << "\n🎡 Multumim ca ai vizitat " << parc.getNume() << "! La revedere! 🎡\n" << std::endl;
                     break;
@@ -279,8 +283,9 @@ std::unique_ptr<Vizitator> Meniu::creeazaVizitator() {
 
     std::cout << "📋 Tip vizitator detectat automat: " << tipVizitator << std::endl;
 
-    // Creez biletul automat în funcție de vârstă
-    std::unique_ptr<Bilet> bilet = creeazaBilet();
+    // Creez biletul automat în funcție de vârstă si de ziua curenta
+
+    std::unique_ptr<Bilet> bilet = creeazaBilet(varsta,parc.getZiCurenta());
 
     // Creez vizitatorul în funcție de tip
     if (tipVizitator == "Copil") {
@@ -297,29 +302,36 @@ std::unique_ptr<Vizitator> Meniu::creeazaVizitator() {
     }
 }
 
-std::unique_ptr<Bilet> Meniu::creeazaBilet() {
+std::unique_ptr<Bilet> Meniu::creeazaBilet(int varsta, int zicurenta) {
     std::cout << "\nTip bilet:" << std::endl;
-    std::cout << "1. Bilet Copil" << std::endl;
-    std::cout << "2. Bilet Adult" << std::endl;
+    std::cout << "1. Bilet Standard" << std::endl;
+    std::cout << "2. Bilet Premium" << std::endl;
     std::cout << "3. Bilet VIP" << std::endl;
-    
+
     int tip = getValidInt("Alege tipul: ", 1, 3);
-    
-    double pret = getValidDouble("Pret de baza: ", 10.0, 1000.0);
     int valabilitate = getValidInt("Valabilitate (zile): ", 1, 365);
-    
+
+    // Prețul de bază
+    double pret = 50.0;
+
+    // Weekend = Sambata(5) sau Duminica(6)
+    if (zicurenta == 5 || zicurenta == 6) {
+        pret *= 1.5;  // 50% mai scump
+    }
+
     switch (tip) {
         case 1: {
-            int varsta = getValidInt("Varsta copilului: ", 1, 17);
-            return std::make_unique<BiletCopil>(pret, valabilitate, varsta);
+            return std::make_unique<BiletStandard>(pret, valabilitate);
         }
         case 2: {
-            bool fastPass = getYesNo("Include Fast Pass?");
-            return std::make_unique<BiletAdult>(pret, valabilitate, fastPass);
+            bool bufet = getYesNo("Include acces bufet? ");
+            pret += 30;
+            return std::make_unique<BiletPremium>(pret, valabilitate, bufet);
         }
         case 3: {
-            bool lounge = getYesNo("Include acces Lounge?");
-            return std::make_unique<BiletVIP>(pret, valabilitate, lounge);
+            bool piscina = getYesNo("Include acces piscina? ");
+            pret += 60;
+            return std::make_unique<BiletVIP>(pret, valabilitate, piscina);
         }
         default:
             throw DateInvalide("Tip bilet invalid");

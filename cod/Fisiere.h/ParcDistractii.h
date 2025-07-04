@@ -13,6 +13,7 @@
 
 class ParcDistractii {
 private:
+    int zicurenta{};
     std::string nume;
     std::vector<std::unique_ptr<Atractie>> atractii;
     std::vector<std::unique_ptr<Angajat>> angajati;
@@ -20,6 +21,7 @@ private:
     static int numarParcuri; // atribut static
 
 public:
+
     explicit ParcDistractii(std::string  nume);
     ParcDistractii(const ParcDistractii& other); // copy constructor
     ParcDistractii& operator=(const ParcDistractii& other); // assignment operator
@@ -27,7 +29,9 @@ public:
 
     [[nodiscard]]bool atractieExista(const std::string& nume) const;
 
-
+    void simuleazaZi();
+    [[nodiscard]] int getZiCurenta() const;
+    [[nodiscard]] std::string getZiCurentaString() const;
     // Metode pentru adaugare
     void adaugaAtractie(std::unique_ptr<Atractie> atractie);
     void adaugaAngajat(std::unique_ptr<Angajat> angajat);

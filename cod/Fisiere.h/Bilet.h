@@ -31,46 +31,53 @@ public:
 
     // Funcții statice
     //static double getPretMediu() { return pretMediu; }
-    static void actualizarePretMediu(double nouPret);
+
 
     // Getters
-   // [[nodiscard]] double getPret() const { return pret; }
-    //[[nodiscard]] int getValabilitateZile() const { return valabilitateZile; }
+    [[nodiscard]] double getPret() const { return pret; }
+    [[nodiscard]] int getValabilitateZile() const { return valabilitateZile; }
+
+    void scadeValabilitate() {
+        if (valabilitateZile > 0)
+            --valabilitateZile;
+    }
+
+    [[nodiscard]] bool esteExpirat() const {
+        return valabilitateZile <= 0;
+    }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;
     void swap(Bilet& other) noexcept;
 };
 
-class BiletCopil : public Bilet {
-private:
-    int varstaCopil;
+class BiletStandard : public Bilet {
 
 public:
-    BiletCopil(double pret, int valabilitateZile, int varstaCopil);
-    BiletCopil(const BiletCopil& other);
-    BiletCopil& operator=(const BiletCopil& other);
+    BiletStandard(double pret, int valabilitateZile,int zi);
+    BiletStandard(const BiletStandard& other);
+    BiletStandard& operator=(const BiletStandard& other);
 
     [[nodiscard]] std::unique_ptr<Bilet> clone() const override;
-    [[nodiscard]] std::string getTip() const override { return "BiLet Copil"; }
     [[nodiscard]] double calculeazaPretFinal() const override;
-   // [[nodiscard]] int getVarstaCopil() const { return varstaCopil; }
+    [[nodiscard]] std::string getTip() const override { return "Bilet Standard"; }
+
 
 protected:
     void afiseaza(std::ostream& os) const override;
 };
 
-class BiletAdult : public Bilet {
+class BiletPremium : public Bilet {
 private:
-    bool includeFastPass;
+    bool includeAccesBufet{};
 
 public:
-    BiletAdult(double pret, int valabilitateZile, bool includeFastPass);
-    BiletAdult(const BiletAdult& other);
-    BiletAdult& operator=(const BiletAdult& other);
+    BiletPremium(double pret, int valabilitateZile, bool includeAccesBufet);
+    BiletPremium(const BiletPremium& other);
+    BiletPremium& operator=(const BiletPremium& other);
     
     [[nodiscard]] std::unique_ptr<Bilet> clone() const override;
-    [[nodiscard]] std::string getTip() const override { return "Bilet Adult"; }
+    [[nodiscard]] std::string getTip() const override { return "Bilet Premium"; }
     [[nodiscard]] double calculeazaPretFinal() const override;
     //[[nodiscard]] bool getIncludeFastPass() const { return includeFastPass; }
 

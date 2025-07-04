@@ -9,9 +9,8 @@ using namespace std;
 // Inițializare atribut static
 double Bilet::pretMediu = 50.0;
 
-Bilet::Bilet(double pret, int valabilitateZile)
+Bilet::Bilet(double pret, int valabilitateZile,int zi)
     : pret(pret), valabilitateZile(valabilitateZile) {
-    actualizarePretMediu(pret);
 }
 
 Bilet::Bilet(const Bilet& other)
@@ -30,13 +29,7 @@ void Bilet::swap(Bilet& other) noexcept {
     std::swap(valabilitateZile, other.valabilitateZile);
 }
 
-double Bilet::calculeazaPretFinal() const {
-    return pret;
-}
 
-void Bilet::actualizarePretMediu(double nouPret) {
-    pretMediu = (pretMediu + nouPret) / 2.0;
-}
 
 std::ostream& operator<<(std::ostream& os, const Bilet& bilet) {
     bilet.afiseaza(os);
@@ -49,64 +42,61 @@ void Bilet::afiseaza(std::ostream& os) const {
 }
 
 // BiletCopil implementation
-BiletCopil::BiletCopil(double pret, int valabilitateZile, int varstaCopil)
-    : Bilet(pret, valabilitateZile), varstaCopil(varstaCopil) {}
+BiletStandard::BiletStandard(double pret, int valabilitateZile)
+    : Bilet(pret, valabilitateZile) {}
 
-BiletCopil::BiletCopil(const BiletCopil& other)
+BiletStandard::BiletStandard(const BiletStandard& other)
 =default;
 
-BiletCopil& BiletCopil::operator=(const BiletCopil& other) {
+BiletStandard& BiletStandard::operator=(const BiletStandard& other) {
     if (this != &other) {
         Bilet::operator=(other);
-        varstaCopil = other.varstaCopil;
     }
     return *this;
 }
 
-std::unique_ptr<Bilet> BiletCopil::clone() const {
-    return std::make_unique<BiletCopil>(*this);
+std::unique_ptr<Bilet> BiletStandard::clone() const {
+    return std::make_unique<BiletStandard>(*this);
 }
 
-double BiletCopil::calculeazaPretFinal() const {
-    return pret * 0.5; // 50% reducere pentru copii
+double BiletStandard::calculeazaPretFinal() const {
+    return pret * 0.5;
 }
-
-void BiletCopil::afiseaza(std::ostream& os) const {
+void BiletStandard::afiseaza(std::ostream& os) const {
     Bilet::afiseaza(os);
-    os << " - Varsta copil: " << varstaCopil;
 }
 
-// BiletAdult implementation
-BiletAdult::BiletAdult(double pret, int valabilitateZile, bool includeFastPass)
-    : Bilet(pret, valabilitateZile), includeFastPass(includeFastPass) {}
 
-BiletAdult::BiletAdult(const BiletAdult& other)
+BiletPremium::BiletPremium(double pret, int valabilitateZile, bool includeAccesBufet)
+    : Bilet(pret, valabilitateZile), includeAccesBufet(includeAccesBufet) {}
+
+BiletPremium::BiletPremium(const BiletPremium& other)
 =default;
 
-BiletAdult& BiletAdult::operator=(const BiletAdult& other) {
+BiletPremium& BiletPremium::operator=(const BiletPremium& other) {
     if (this != &other) {
         Bilet::operator=(other);
-        includeFastPass = other.includeFastPass;
+
     }
     return *this;
 }
 
-std::unique_ptr<Bilet> BiletAdult::clone() const {
-    return std::make_unique<BiletAdult>(*this);
+std::unique_ptr<Bilet> BiletPremium::clone() const {
+    return std::make_unique<BiletPremium>(*this);
 }
 
-double BiletAdult::calculeazaPretFinal() const {
+double BiletPremium::calculeazaPretFinal() const {
     double pretFinal = pret;
-    if (includeFastPass) {
-        pretFinal += 30; // taxa Fast Pass
+    if (includeAccesBufet) {
+        pretFinal += 30;
     }
     return pretFinal;
 }
 
-void BiletAdult::afiseaza(std::ostream& os) const {
+void BiletPremium::afiseaza(std::ostream& os) const {
     Bilet::afiseaza(os);
-    if (includeFastPass) {
-        os << " + Fast Pass";
+    if (includeAccesBufet) {
+        os << " + Acces Bufet";
     }
 }
 
