@@ -28,7 +28,7 @@ Acest proiect reprezintă o aplicație simplă care modelează un **parc de dist
 - Atribute comune: `pret`, `valabilitateZile`,`ziCurenta (scumpire la pret cu 25% daca este weekend,pretul se calculeaza pretul de baza * valabilitatezile)`
 - Derivate:
   - `BiletStandard (pret= 50)`
-  - `BiletAdult` → `includeAccesBufet (pret= 75 +30 daca are acces la bufet)`
+  - `BiletPremium` → `includeAccesBufet (pret= 75 +30 daca are acces la bufet)`
   - `BiletVIP` → `accesPiscina (pret= 100 +50 daca are acces la piscina)`
 
 #### 4. `Vizitator`
