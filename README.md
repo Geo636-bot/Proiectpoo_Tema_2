@@ -25,11 +25,11 @@ Acest proiect reprezintă o aplicație simplă care modelează un **parc de dist
   - `Casier` → `Interval`
 
 #### 3. `Bilet`
-- Atribute comune: `pret`, `tip`, `valabilitateZile`
+- Atribute comune: `pret`, `valabilitateZile`,`ziCurenta (scumpire la pret cu 25% daca este weekend,pretul se calculeaza pretul de baza * valabilitatezile)`
 - Derivate:
-  - `BiletCopil` → `reducereProcent`
-  - `BiletAdult` → `includeFastPass`
-  - `BiletVIP` → `accesLounge`
+  - `BiletStandard (pret= 50)`
+  - `BiletAdult` → `includeAccesBufet (pret= 75 +30 daca are acces la bufet)`
+  - `BiletVIP` → `accesPiscina (pret= 100 +50 daca are acces la piscina)`
 
 #### 4. `Vizitator`
 - Atribute comune: `nume`, `varsta`, `inaltime`, `bilet`
@@ -56,6 +56,19 @@ Acest proiect reprezintă o aplicație simplă care modelează un **parc de dist
 - Opțional: Interfață CLI (meniu în consolă)
 
 ---
+## Meniu interactiv
+ -1. Afiseaza toate atractiile
+ -2. Afiseaza toti angajatii
+ -3. Afiseaza toti vizitatorii
+ -4. Afiseaza statistici parc
+ -5. Adauga atractie noua
+ -6. Adauga angajat nou
+ -7. Adauga vizitator nou
+ -8. Verifica accesul la o atractie
+ -9. Demonstratie dynamic_cast
+ -10.Incarca Date din CSV
+ -11. Simuleaza trecerea unei zile
+
 
 ## Structura Proiectului
 
