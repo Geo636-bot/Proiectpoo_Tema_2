@@ -53,20 +53,17 @@ add_executable(${MAIN_EXECUTABLE_NAME}
     cod/fisiere.cpp/Angajat.cpp
     cod/fisiere.cpp/Atractie.cpp
     cod/fisiere.cpp/Bilet.cpp
-        cod/fisiere.cpp/Meniu.cpp
+        cod/fisiere.cpp/Menu.cpp
     cod/fisiere.cpp/ParcDistractii.cpp
     cod/fisiere.cpp/Vizitator.cpp
     cod/fisiere.cpp/main.cpp
     cod/Fisiere.h/Angajat.h
     cod/Fisiere.h/Atractie.h
     cod/Fisiere.h/Bilet.h
-    cod/Fisiere.h/Exceptions.h
-        cod/Fisiere.h/Meniu.h
+        cod/Fisiere.h/Menu.h
     cod/Fisiere.h/ParcDistractii.h
     cod/Fisiere.h/Vizitator.h
-    cod/fisiere.cpp/CsvLoader.cpp
-    cod/Fisiere.h/CsvLoader.h
-    
+
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )

@@ -22,7 +22,7 @@ public:
     virtual ~Angajat() = default;
 
     // Constructor virtual (clone pattern)
-    [[nodiscard]] virtual std::unique_ptr<Angajat> clone() const;
+    [[nodiscard]] virtual std::unique_ptr<Angajat> clone() const = 0;
 
     [[nodiscard]] virtual std::string getTip() const = 0;
     [[nodiscard]] virtual double calculeazaSalariuTotal() const;
@@ -34,11 +34,11 @@ public:
     static double getSalariuMediu() { return salariuMediu; }
     static void actualizareSalariuMediu(double nouSalariu);
 
-    // Getters
+    // Getters - return const references for strings
     [[nodiscard]] const std::string& getNume() const { return nume; }
     [[nodiscard]] int getVarsta() const { return varsta; }
-    // [[nodiscard]] int getExperientaAni() const { return experientaAni; }
-    // [[nodiscard]] double getSalariu() const { return salariu; }
+    [[nodiscard]] int getExperientaAni() const { return experientaAni; }
+    [[nodiscard]] double getSalariu() const { return salariu; }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;

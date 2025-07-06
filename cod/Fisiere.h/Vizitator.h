@@ -1,10 +1,10 @@
 
 
-
 #ifndef VIZITATOR_H
 #define VIZITATOR_H
 
 #include <string>
+#include <iostream>
 #include <memory>
 #include "Bilet.h"
 
@@ -32,10 +32,10 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Vizitator& vizitator);
 
     // Funcții statice
-    //static int getNumarTotalVizitatori() { return numarTotalVizitatori; }
-    //static void resetContorVizitatori() { numarTotalVizitatori = 0; }
+    static int getNumarTotalVizitatori() { return numarTotalVizitatori; }
+    static void resetContorVizitatori() { numarTotalVizitatori = 0; }
 
-    // Getters
+    // Getters - return const reference for strings
     [[nodiscard]] const std::string& getNume() const { return nume; }
     [[nodiscard]] int getVarsta() const { return varsta; }
     [[nodiscard]] int getInaltime() const { return inaltime; }

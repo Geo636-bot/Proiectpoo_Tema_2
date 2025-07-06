@@ -1,35 +1,24 @@
 
 
-
 #include "../Fisiere.h/ParcDistractii.h"
 #include <iostream>
 #include <algorithm>
+#include <fstream>
+#include <sstream>
 #include <utility>
 
 using namespace std;
 
-ParcDistractii::ParcDistractii(std::string nume)
-    : zicurenta(0), nume(std::move(nume)) {
+// Inițializare atribut static
+int ParcDistractii::numarParcuri = 0;
+
+ParcDistractii::ParcDistractii(std::string  nume)
+    : nume(std::move(nume)) {
     ++numarParcuri;
 }
 
-void ParcDistractii::simuleazaZi() {
-    zicurenta = (zicurenta + 1) % 7;
-    std::cout << "📅 Zi simulata: " << getZiCurentaString() << std::endl;
-}
-
-int ParcDistractii::getZiCurenta() const {
-    return zicurenta;
-}
-
-std::string ParcDistractii::getZiCurentaString() const {
-    static const std::string zile[] = {
-        "Luni", "Marti", "Miercuri", "Joi", "Vineri", "Sambata", "Duminica"
-    };
-    return zile[zicurenta];
-}
-
-ParcDistractii::ParcDistractii(const ParcDistractii& other) : nume(other.nume) {
+ParcDistractii::ParcDistractii(const ParcDistractii& other) 
+    : nume(other.nume) {
     ++numarParcuri;
     copiazaAtractii(other.atractii);
     copiazaAngajati(other.angajati);
@@ -69,11 +58,13 @@ void ParcDistractii::copiazaVizitatori(const std::vector<std::unique_ptr<Vizitat
     }
 }
 
-bool ParcDistractii::atractieExista(const std::string &numeCautat) const {
-    return ranges::any_of(atractii, [&](const std::unique_ptr<Atractie>& a) {
-        return a->getNume() == numeCautat;
-    });
+bool ParcDistractii::existaAtractie(const std::string& numeAtractie) const {
+    return ranges::find_if(atractii,
+                           [&numeAtractie](const std::unique_ptr<Atractie>& a) {
+                               return a->getNume() == numeAtractie;
+                           }) != atractii.end();
 }
+
 void ParcDistractii::adaugaAtractie(std::unique_ptr<Atractie> atractie) {
     atractii.push_back(std::move(atractie));
     std::cout << "✅ Atractie adaugata cu succes!" << std::endl;
@@ -117,23 +108,7 @@ void ParcDistractii::demonstratieDynamicCast() const {
             std::cout << "Casier cu intervalul " << casier->getInterval() << std::endl;
         }
     }
-
-    for (const auto& vizitator : vizitatori) {
-        std::cout << "Viztator: " << vizitator->getNume() << " - ";
-        if (auto copil = dynamic_cast<const Copil*>(vizitator.get())) {
-            std::cout << "Este Copil, varsta: " << copil->getVarsta()
-                      << ", insotit: " << (copil->getInsotitDeAdult() ? "da" : "nu") << std::endl;
-        } else if (auto adolescent = dynamic_cast<const Adolescent*>(vizitator.get())) {
-            std::cout << "Este Adolescent, varsta: " << adolescent->getVarsta()
-                      << ", buletin: " << (adolescent->getAreBuletin() ? "da" : "nu") << std::endl;
-        } else if (auto adult = dynamic_cast<const Adult*>(vizitator.get())) {
-            std::cout << "Este Adult, varsta: " << adult->getVarsta()
-                      << ", ocupatie: " << adult->getOcupatie() << std::endl;
-        } else {
-            std::cout << "Tip necunoscut de vizitator." << std::endl;
-        }
-    }
-
+    
     std::cout << "==================================================\n" << std::endl;
 }
 
@@ -236,10 +211,6 @@ void ParcDistractii::verificaAccesAtractie(const std::string& numeVizitator, con
         if (vizitator->getTip() == "Copil" && vizitator->getVarsta() < 8) {
             std::cout << "   - Copilul trebuie insotit de adult" << std::endl;
         }
-        if (vizitator->getVarsta() < atractie->getVarstaNecesara()) {
-            std::cout << "   - Varsta insuficienta (" << vizitator->getVarsta()
-                      << " ani < " << atractie->getVarstaNecesara() << " ani)" << std::endl;
-        }
     }
     std::cout << std::endl;
 }
@@ -260,4 +231,135 @@ double ParcDistractii::calculezaCosturiSalariale() const {
         total += angajat->calculeazaSalariuTotal();
     }
     return total;
+}
+
+// Metode pentru incarcarea datelor din CSV
+void ParcDistractii::incarcaAtractiiDinCSV() {
+    std::ifstream file("../../data/Atractii.csv");
+    if (!file.is_open()) {
+        std::cout << "❌ Nu s-a putut deschide fisierul data/atractii.csv" << std::endl;
+        return;
+    }
+    
+    std::string line;
+    std::getline(file, line); // Skip header
+    
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string nume, tip, param1, param2, param3, param4;
+        
+        std::getline(ss, nume, ',');
+        std::getline(ss, tip, ',');
+        std::getline(ss, param1, ',');
+        std::getline(ss, param2, ',');
+        std::getline(ss, param3, ',');
+        std::getline(ss, param4, ',');
+        
+        int inaltimeMin = std::stoi(param1);
+        int capacitate = std::stoi(param2);
+        int varstaNecesara = std::stoi(param3);
+        int parametruSpecific = std::stoi(param4);
+        
+        if (tip == "montagne") {
+            adaugaAtractie(std::make_unique<MontagneRusse>(nume, inaltimeMin, capacitate, varstaNecesara, parametruSpecific));
+        } else if (tip == "carusel") {
+            adaugaAtractie(std::make_unique<Carusel>(nume, inaltimeMin, capacitate, varstaNecesara, parametruSpecific));
+        } else if (tip == "casa") {
+            adaugaAtractie(std::make_unique<CasaGroazei>(nume, inaltimeMin, capacitate, varstaNecesara, parametruSpecific));
+        }
+    }
+    
+    std::cout << "✅ Atractii incarcate din CSV!" << std::endl;
+}
+
+void ParcDistractii::incarcaAngajatiDinCSV() {
+    std::ifstream file("../../data/Angajati.csv");
+    if (!file.is_open()) {
+        std::cout << "❌ Nu s-a putut deschide fisierul data/angajati.csv" << std::endl;
+        return;
+    }
+    
+    std::string line;
+    std::getline(file, line); // Skip header
+    
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string nume, tip, param1, param2, param3, param4;
+        
+        std::getline(ss, nume, ',');
+        std::getline(ss, param1, ',');
+        std::getline(ss, param2, ',');
+        std::getline(ss, param3, ',');
+        std::getline(ss, tip, ',');
+        std::getline(ss, param4, ',');
+        
+        int varsta = std::stoi(param1);
+        int experienta = std::stoi(param2);
+        double salariu = std::stod(param3);
+        
+        if (tip == "operator") {
+            adaugaAngajat(std::make_unique<OperatorAtractie>(nume, varsta, experienta, salariu, param4));
+        } else if (tip == "paza") {
+            adaugaAngajat(std::make_unique<AgentPaza>(nume, varsta, experienta, salariu, param4));
+        } else if (tip == "casier") {
+            adaugaAngajat(std::make_unique<Casier>(nume, varsta, experienta, salariu, param4));
+        }
+    }
+    
+    std::cout << "✅ Angajati incarcati din CSV!" << std::endl;
+}
+
+void ParcDistractii::incarcaVizitatoriDinCSV() {
+    std::ifstream file("../../data/Vizitatori.csv");
+    if (!file.is_open()) {
+        std::cout << "❌ Nu s-a putut deschide fisierul data/vizitatori.csv" << std::endl;
+        return;
+    }
+    
+    std::string line;
+    std::getline(file, line); // Skip header
+    
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string nume, varsta_str, inaltime_str, tip_bilet, parametru_str;
+        
+        std::getline(ss, nume, ',');
+        std::getline(ss, varsta_str, ',');
+        std::getline(ss, inaltime_str, ',');
+        std::getline(ss, tip_bilet, ',');
+        std::getline(ss, parametru_str, ',');
+        
+        int varsta = std::stoi(varsta_str);
+        int inaltime = std::stoi(inaltime_str);
+        bool parametru = (parametru_str == "true");
+        
+        // Creez biletul bazat pe tip
+        std::unique_ptr<Bilet> bilet;
+        if (tip_bilet == "standard") {
+            bilet = std::make_unique<BiletStandard>(1);
+        } else if (tip_bilet == "adult") {
+            bilet = std::make_unique<BiletAdult>(1, parametru);
+        } else if (tip_bilet == "vip") {
+            bilet = std::make_unique<BiletVIP>(1, parametru);
+        }
+        
+        // Determin tipul de vizitator bazat pe varsta
+        if (varsta < 13) {
+            adaugaVizitator(std::make_unique<Copil>(nume, varsta, inaltime, std::move(bilet), parametru));
+        } else if (varsta < 18) {
+            adaugaVizitator(std::make_unique<Adolescent>(nume, varsta, inaltime, std::move(bilet), parametru));
+        } else {
+            adaugaVizitator(std::make_unique<Adult>(nume, varsta, inaltime, std::move(bilet), "Necunoscut"));
+        }
+    }
+    
+    std::cout << "✅ Vizitatori incarcati din CSV!" << std::endl;
+}
+
+void ParcDistractii::incarcaToateDatale() {
+    std::cout << "\n📁 ========== INCARCARE DATE CSV ========== 📁\n" << std::endl;
+    incarcaAtractiiDinCSV();
+    incarcaAngajatiDinCSV();
+    incarcaVizitatoriDinCSV();
+    std::cout << "==========================================\n" << std::endl;
 }

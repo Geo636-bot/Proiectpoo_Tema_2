@@ -3,20 +3,19 @@
 #include "../Fisiere.h/Atractie.h"
 #include <iostream>
 #include <utility>
-#include <algorithm>
 
 using namespace std;
 
 // Inițializare atribut static
 int Atractie::numarTotalAtractii = 0;
 
-Atractie::Atractie(std::string  nume, int inaltimeMinima, int capacitate,int varstanecesara)
-    : nume(std::move(nume)), inaltimeMinima(inaltimeMinima), capacitate(capacitate), varstanecesara(varstanecesara) {
+Atractie::Atractie(std::string  nume, int inaltimeMinima, int capacitate, int varstaNecesara)
+    : nume(std::move(nume)), inaltimeMinima(inaltimeMinima), capacitate(capacitate), varstaNecesara(varstaNecesara) {
     ++numarTotalAtractii;
 }
 
 Atractie::Atractie(const Atractie& other)
-    : nume(other.nume), inaltimeMinima(other.inaltimeMinima), capacitate(other.capacitate), varstanecesara(other.varstanecesara) {
+    : nume(other.nume), inaltimeMinima(other.inaltimeMinima), capacitate(other.capacitate), varstaNecesara(other.varstaNecesara) {
     ++numarTotalAtractii;
 }
 
@@ -24,8 +23,8 @@ Atractie& Atractie::operator=(const Atractie& other) {
     if (this != &other) {
         nume = other.nume;
         inaltimeMinima = other.inaltimeMinima;
-        varstanecesara = other.varstanecesara;
         capacitate = other.capacitate;
+        varstaNecesara = other.varstaNecesara;
     }
     return *this;
 }
@@ -33,8 +32,8 @@ Atractie& Atractie::operator=(const Atractie& other) {
 void Atractie::swap(Atractie& other) noexcept {
     std::swap(nume, other.nume);
     std::swap(inaltimeMinima, other.inaltimeMinima);
-    std::swap(varstanecesara, other.varstanecesara);
     std::swap(capacitate, other.capacitate);
+    std::swap(varstaNecesara, other.varstaNecesara);
 }
 
 std::ostream& operator<<(std::ostream& os, const Atractie& atractie) {
@@ -44,18 +43,16 @@ std::ostream& operator<<(std::ostream& os, const Atractie& atractie) {
 
 void Atractie::afiseaza(std::ostream& os) const {
     os << "🎢 " << getTip() << ": " << nume
-       << " (Inaltime min: " << inaltimeMinima << "cm, Capacitate: " << capacitate << " Varsta necesara: "<<varstanecesara<<" ani)"<<endl;
+       << " (Inaltime min: " << inaltimeMinima << "cm, Capacitate: " << capacitate
+       << ", Varsta min: " << varstaNecesara << " ani)";
 }
-
-
 
 // MontagneRusse implementation
-MontagneRusse::MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate,int varstanecesara, int vitezaMaxima)
-    : Atractie(nume, inaltimeMinima, capacitate, varstanecesara), vitezaMaxima(vitezaMaxima) {
-}
+MontagneRusse::MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate, int varstaNecesara, int vitezaMaxima)
+    : Atractie(nume, inaltimeMinima, capacitate, varstaNecesara), vitezaMaxima(vitezaMaxima) {}
 
 MontagneRusse::MontagneRusse(const MontagneRusse& other)
-    = default;
+     = default;
 
 MontagneRusse& MontagneRusse::operator=(const MontagneRusse& other) {
     if (this != &other) {
@@ -75,11 +72,11 @@ void MontagneRusse::afiseaza(std::ostream& os) const {
 }
 
 // Carusel implementation
-Carusel::Carusel(const std::string& nume, int inaltimeMinima, int capacitate,int varstanecesara, int numarCai)
-    : Atractie(nume, inaltimeMinima, capacitate,varstanecesara), numarCai(numarCai) {}
+Carusel::Carusel(const std::string& nume, int inaltimeMinima, int capacitate, int varstaNecesara, int numarCai)
+    : Atractie(nume, inaltimeMinima, capacitate, varstaNecesara), numarCai(numarCai) {}
 
 Carusel::Carusel(const Carusel& other)
-    = default;
+     = default;
 
 Carusel& Carusel::operator=(const Carusel& other) {
     if (this != &other) {
@@ -99,11 +96,11 @@ void Carusel::afiseaza(std::ostream& os) const {
 }
 
 // CasaGroazei implementation
-CasaGroazei::CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate,int varstanecesara, int nivelFrica)
-    : Atractie(nume, inaltimeMinima, capacitate,varstanecesara), nivelFrica(nivelFrica) {}
+CasaGroazei::CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate, int varstaNecesara, int nivelFrica)
+    : Atractie(nume, inaltimeMinima, capacitate, varstaNecesara), nivelFrica(nivelFrica) {}
 
 CasaGroazei::CasaGroazei(const CasaGroazei& other)
-    = default;
+     = default;
 
 CasaGroazei& CasaGroazei::operator=(const CasaGroazei& other) {
     if (this != &other) {

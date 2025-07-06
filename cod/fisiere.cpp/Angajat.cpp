@@ -1,5 +1,4 @@
 
-
 #include "../Fisiere.h/Angajat.h"
 #include <iostream>
 #include <utility>
@@ -7,7 +6,7 @@
 using namespace std;
 
 // Inițializare atribut static
-double Angajat::salariuMediu = 0.0;
+double Angajat::salariuMediu = 2500.0;
 
 Angajat::Angajat(std::string  nume, int varsta, int experientaAni, double salariu)
     : nume(std::move(nume)), varsta(varsta), experientaAni(experientaAni), salariu(salariu) {
@@ -15,20 +14,16 @@ Angajat::Angajat(std::string  nume, int varsta, int experientaAni, double salari
 }
 
 Angajat::Angajat(const Angajat& other)
-     = default;
+    = default;
 
 Angajat& Angajat::operator=(const Angajat& other) {
     if (this != &other) {
-         nume = other.nume;
+        nume = other.nume;
         varsta = other.varsta;
         experientaAni = other.experientaAni;
         salariu = other.salariu;
     }
     return *this;
-}
-
-std::unique_ptr<Angajat> Angajat::clone() const {
-    return nullptr;
 }
 
 void Angajat::swap(Angajat& other) noexcept {
@@ -61,8 +56,8 @@ void Angajat::afiseaza(std::ostream& os) const {
 OperatorAtractie::OperatorAtractie(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  atractieDeservita)
     : Angajat(nume, varsta, experientaAni, salariu), atractieDeservita(std::move(atractieDeservita)) {}
 
-OperatorAtractie::OperatorAtractie(const OperatorAtractie& other) =default;
-
+OperatorAtractie::OperatorAtractie(const OperatorAtractie& other)
+     = default;
 
 OperatorAtractie& OperatorAtractie::operator=(const OperatorAtractie& other) {
     if (this != &other) {
@@ -90,7 +85,7 @@ AgentPaza::AgentPaza(const std::string& nume, int varsta, int experientaAni, dou
     : Angajat(nume, varsta, experientaAni, salariu), zonaAsignata(std::move(zonaAsignata)) {}
 
 AgentPaza::AgentPaza(const AgentPaza& other)
-=default;
+     = default;
 
 AgentPaza& AgentPaza::operator=(const AgentPaza& other) {
     if (this != &other) {
@@ -118,7 +113,7 @@ Casier::Casier(const std::string& nume, int varsta, int experientaAni, double sa
     : Angajat(nume, varsta, experientaAni, salariu), interval(std::move(interval)) {}
 
 Casier::Casier(const Casier& other)
-=default;
+     = default;
 
 Casier& Casier::operator=(const Casier& other) {
     if (this != &other) {
