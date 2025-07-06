@@ -57,17 +57,17 @@ Acest proiect reprezintă o aplicație simplă care modelează un **parc de dist
 
 ---
 ## Meniu interactiv
- - 1. Afiseaza toate atractiile
- - 2. Afiseaza toti angajatii
- - 3. Afiseaza toti vizitatorii
- - 4. Afiseaza statistici parc
- - 5. Adauga atractie noua
- - 6. Adauga angajat nou
- - 7. Adauga vizitator nou
- - 8. Verifica accesul la o atractie
- - 9. Demonstratie dynamic_cast
- - 10.Incarca Date din CSV
- - 11. Simuleaza trecerea unei zile
+ - Afiseaza toate atractiile
+ - Afiseaza toti angajatii
+ - Afiseaza toti vizitatorii
+ - Afiseaza statistici parc
+ - Adauga atractie noua
+ - Adauga angajat nou
+ - Adauga vizitator nou
+ - Verifica accesul la o atractie
+ - Demonstratie dynamic_cast
+ - Incarca Date din CSV
+ - Simuleaza trecerea unei zile
 
 
 ## Structura Proiectului
