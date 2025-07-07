@@ -30,7 +30,7 @@ public:
     // Operatorul << virtual pentru polimorfism
     friend std::ostream& operator<<(std::ostream& os, const Angajat& angajat);
 
-    // Funcții statice
+    // Functii statice
     static double getSalariuMediu() { return salariuMediu; }
     static void actualizareSalariuMediu(double nouSalariu);
 

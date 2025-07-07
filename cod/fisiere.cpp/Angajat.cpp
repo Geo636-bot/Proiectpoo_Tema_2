@@ -5,7 +5,7 @@
 
 using namespace std;
 
-// Inițializare atribut static
+// Initializare atribut static
 double Angajat::salariuMediu = 600.0; // salariu mediu saptamanal
 
 Angajat::Angajat(const std::string& nume, int varsta, int experientaAni, double salariu)

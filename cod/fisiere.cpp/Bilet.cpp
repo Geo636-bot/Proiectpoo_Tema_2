@@ -6,14 +6,14 @@
 
 using namespace std;
 
-// Instanțieri explicite pentru tipurile folosite
+// Instantieri explicite pentru tipurile folosite
 template class Bilet<double>;
 template class BiletStandard<double>;
 template class BiletPremium<double>;
 template class BiletVIP<double>;
 template class BiletFactory<double>;
 
-// Instanțieri pentru funcția template liberă
+// Instantieri pentru functia template liberă
 template bool compararePret<BiletStandard<double>, BiletPremium<double>>(const BiletStandard<double>&, const BiletPremium<double>&);
 template bool compararePret<BiletPremium<double>, BiletVIP<double>>(const BiletPremium<double>&, const BiletVIP<double>&);
 
@@ -22,7 +22,7 @@ using BiletStandardDouble = BiletStandard<double>;
 using BiletPremiumDouble = BiletPremium<double>;
 using BiletVIPDouble = BiletVIP<double>;
 
-// Observer simplu pentru demonstrație
+// Observer simplu pentru demonstratie
 class ParcBiletObserver : public BiletObserver {
 public:
     void notificareSchimbarePret(double pretNou) override {
@@ -34,7 +34,7 @@ public:
     }
 };
 
-// Funcție pentru demonstrarea template-urilor și design patterns
+// Functie pentru demonstrarea template-urilor și design patterns
 void demonstreazaTemplatesSiPatterns() {
     std::cout << "\n🔧 ========== DEMONSTRATIE TEMPLATES SI DESIGN PATTERNS ========== 🔧\n" << std::endl;
 
@@ -74,7 +74,7 @@ void demonstreazaTemplatesSiPatterns() {
     // Template member function
     std::cout << "\n💱 Functie Template Membru - Conversie pret:" << std::endl;
     if (biletVIP) {
-        auto pretEUR = biletVIP-> convertestePreț<double>(20.0, 0.2); // 20 EUR la 0.2 rata
+        auto pretEUR = biletVIP-> convertestePret<double>(20.0, 0.2); // 20 EUR la 0.2 rata
         std::cout << "  Pret convertit din EUR: " << pretEUR << " RON" << std::endl;
     }
 

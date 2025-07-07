@@ -27,7 +27,7 @@ public:
     // Operatorul << virtual pentru polimorfism
     friend std::ostream& operator<<(std::ostream& os, const Atractie& atractie);
 
-    // Funcție statică
+    // Functie statică
     static int getNumarTotalAtractii() { return numarTotalAtractii; }
 
     // Getters - return const reference for strings

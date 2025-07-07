@@ -5,7 +5,7 @@
 
 using namespace std;
 
-// Inițializare atribut static
+// Initializare atribut static
 int Atractie::numarTotalAtractii = 0;
 
 Atractie::Atractie(const std::string& nume, int inaltimeMinima, int varstaNecesara)

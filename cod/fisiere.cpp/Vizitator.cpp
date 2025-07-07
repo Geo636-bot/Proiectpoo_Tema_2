@@ -5,7 +5,7 @@
 
 using namespace std;
 
-// Inițializare atribut static
+// Initializare atribut static
 int Vizitator::numarTotalVizitatori = 0;
 
 Vizitator::Vizitator(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet<double>> bilet)

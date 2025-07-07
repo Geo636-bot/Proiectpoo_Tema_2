@@ -10,7 +10,7 @@
 #include "Vizitator.h"
 #include "Bilet.h"
 
-// Declarație înainte pentru funcția de demonstrație
+// Declaratie înainte pentru functia de demonstratie
 void demonstreazaTemplatesSiPatterns();
 
 class ParcDistractii {
@@ -64,7 +64,7 @@ public:
     int getNumarPaznici() const;
     bool verificaZonaOcupata(const std::string& zona) const;
 
-    // Funcții statice
+    // Functii statice
     static int getNumarParcuri() { return numarParcuri; }
     static void resetContorParcuri() { numarParcuri = 0; }
 

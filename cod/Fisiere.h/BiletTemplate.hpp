@@ -5,7 +5,7 @@
 
 #include <algorithm>
 
-// Inițializare atribute statice template
+// Initializare atribute statice template
 template<typename T>
 T Bilet<T>::pretMediu = T(75.0);
 

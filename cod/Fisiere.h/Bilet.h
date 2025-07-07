@@ -14,7 +14,7 @@ enum class ZiSaptamana {
     Luni = 1, Marti, Miercuri, Joi, Vineri, Sambata, Duminica
 };
 
-// Funcție template liberă pentru compararea prețurilor
+// Functie template liberă pentru compararea preturilor
 template<typename T, typename U>
 bool compararePret(const T& bilet1, const U& bilet2) {
     return bilet1.calculeazaPretFinal() < bilet2.calculeazaPretFinal();
@@ -28,7 +28,7 @@ public:
     virtual void notificareExpirare(const std::string& tipBilet) = 0;
 };
 
-// Design Pattern: Strategy pentru calculul prețurilor
+// Design Pattern: Strategy pentru calculul preturilor
 template<typename T>
 class CalculPretStrategy {
 public:
@@ -84,15 +84,14 @@ public:
     virtual std::string getTip() const = 0;
     virtual double calculeazaPretFinal() const;
 
-    // Funcție template membru care depinde de T
+    // Functie template membru care depinde de T
     template<typename U>
-    T convertestePreț(const U& pretStrăin, double ratăSchimb) const {
+    T convertestePret(const U& pretStrăin, double ratăSchimb) const {
         return static_cast<T>(pretStrăin * ratăSchimb);
     }
 
-    // Funcție membru care lucrează cu tip T
+    // Functie membru care lucrează cu tip T
     void actualizeazaPretBaza(const T& pretNou) {
-        T pretVechi = pretBaza;
         pretBaza = pretNou;
         notificaObservatori(static_cast<double>(pretNou));
     }
@@ -118,13 +117,13 @@ public:
     template<typename U>
     friend std::ostream& operator<<(std::ostream& os, const Bilet<U>& bilet);
 
-    // Funcții statice pentru gestionarea zilei
+    // Functii statice pentru gestionarea zilei
     static ZiSaptamana getZiCurenta() { return ziCurenta; }
     static void trecutZi();
     static std::string getNumeZi(ZiSaptamana zi);
     static bool esteWeekend(ZiSaptamana zi);
 
-    // Funcții statice pentru tipul T
+    // Functii statice pentru tipul T
     static void actualizarePretMediu(const T& nouPret);
     static T getPretMediu() { return pretMediu; }
 

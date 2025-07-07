@@ -10,7 +10,7 @@ using namespace std;
 Menu::Menu(ParcDistractii& parc) : parc(parc) {}
 
 void Menu::afiseazaMeniu() {
-    cout << "\n🎪 ========== MENIU PARC DISTRACȚII ========== 🎪" << endl;
+    cout << "\n🎪 ========== MENIU PARC DISTRACtII ========== 🎪" << endl;
     cout << "📅 Ziua curenta: " << Bilet<double>::getNumeZi(Bilet<double>::getZiCurenta());
     if (Bilet<double>::esteWeekend(Bilet<double>::getZiCurenta())) {
         cout << " (Weekend - preturi majorate cu 25%)";
@@ -323,10 +323,10 @@ void Menu::adaugaVizitatorInteractiv() {
         
         parc.adaugaVizitator(std::make_unique<Copil>(nume, varsta, inaltime, std::move(bilet), insotitDeAdult));
     } else if (varsta < 18) {
-        // Pentru adolescenți, nu mai cerem areBuletin - folosim valoarea default
+        // Pentru adolescenti, nu mai cerem areBuletin - folosim valoarea default
         parc.adaugaVizitator(std::make_unique<Adolescent>(nume, varsta, inaltime, std::move(bilet)));
     } else {
-        // Pentru adulți, nu mai cerem ocupația - folosim o valoare default
+        // Pentru adulti, nu mai cerem ocupatia - folosim o valoare default
         parc.adaugaVizitator(std::make_unique<Adult>(nume, varsta, inaltime, std::move(bilet)));
     }
     

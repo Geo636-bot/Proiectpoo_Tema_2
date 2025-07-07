@@ -7,7 +7,7 @@
 
 using namespace std;
 
-// Inițializare atribut static
+// Initializare atribut static
 int ParcDistractii::numarParcuri = 0;
 
 
@@ -62,23 +62,23 @@ void ParcDistractii::copiazaVizitatori(const std::vector<std::unique_ptr<Vizitat
 void ParcDistractii::demonstreazaFunctionalitatiAvansate() const {
     std::cout << "\n🚀 ========== FUNCTIONALITATI AVANSATE ========== 🚀\n" << std::endl;
 
-    // Apelez funcția globală pentru demonstrație
+    // Apelez functia globală pentru demonstratie
     demonstreazaTemplatesSiPatterns();
 
     // Demonstrez template-uri cu biletele existente
     std::cout << "🎫 Template-uri cu biletele din parc:" << std::endl;
 
-    // Creez bilete template pentru demonstrație
+    // Creez bilete template pentru demonstratie
     auto biletTemplate1 = std::make_unique<BiletStandard<double>>(2);
     auto biletTemplate2 = std::make_unique<BiletPremium<double>>(3, true);
 
-    // Folosesc funcția template de comparare
+    // Folosesc functia template de comparare
     bool primul_mai_ieftin = compararePret(*biletTemplate1, *biletTemplate2);
     std::cout << "  Biletul Standard vs Adult: primul mai ieftin = "
               << (primul_mai_ieftin ? "DA" : "NU") << std::endl;
 
     // Demonstrez conversion template
-    double pretInEur = biletTemplate2->template convertestePreț<int>(15, 0.21);
+    double pretInEur = biletTemplate2->template convertestePret<int>(15, 0.21);
     std::cout << "  Conversie pret: 15 EUR = " << pretInEur << " RON" << std::endl;
 
     std::cout << "================================================\n" << std::endl;
