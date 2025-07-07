@@ -63,6 +63,7 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         cod/Fisiere.h/Menu.h
     cod/Fisiere.h/ParcDistractii.h
     cod/Fisiere.h/Vizitator.h
+        cod/Fisiere.h/BiletTemplate.hpp
 
 )
 

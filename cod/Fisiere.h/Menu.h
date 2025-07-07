@@ -1,6 +1,5 @@
 
 
-
 #ifndef MENU_H
 #define MENU_H
 
@@ -25,12 +24,15 @@ public:
     void adaugaVizitatorInteractiv();
     void verificaAccesInteractiv();
 
+    // Noua metoda pentru demonstrarea template-urilor
+    void demonstreazaTemplatesSiPatterns();
+
     // Metode de validare
     int getValidInt(const std::string& prompt, int min = 0, int max = 1000);
     std::string getValidString(const std::string& prompt);
     bool getValidBool(const std::string& prompt);
 
-    // Metode pentru validari angajati - acum implementate corect
+    // Metode pentru validari angajati
     double calculezaSalariuCuExperienta(double salariuBaza, int experientaAni);
     std::string gasesteAtractieFaraOperator();
     bool verificaAtractieDisponibila(const std::string& numeAtractie);

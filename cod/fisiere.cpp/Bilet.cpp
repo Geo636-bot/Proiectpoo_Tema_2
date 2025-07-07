@@ -1,190 +1,82 @@
 
 
+
 #include "../Fisiere.h/Bilet.h"
 #include <iostream>
 
 using namespace std;
 
-// Inițializare atribute statice
-double Bilet::pretMediu = 75.0;
-ZiSaptamana Bilet::ziCurenta = ZiSaptamana::Luni;
+// Instanțieri explicite pentru tipurile folosite
+template class Bilet<double>;
+template class BiletStandard<double>;
+template class BiletPremium<double>;
+template class BiletVIP<double>;
+template class BiletFactory<double>;
 
-Bilet::Bilet(double pretBaza, int valabilitateZile)
-    : pretBaza(pretBaza), valabilitateZile(valabilitateZile) {
-    actualizarePretMediu(Bilet::calculeazaPretFinal());
-}
+// Instanțieri pentru funcția template liberă
+template bool compararePret<BiletStandard<double>, BiletPremium<double>>(const BiletStandard<double>&, const BiletPremium<double>&);
+template bool compararePret<BiletPremium<double>, BiletVIP<double>>(const BiletPremium<double>&, const BiletVIP<double>&);
 
-Bilet::Bilet(const Bilet& other)
-    : pretBaza(other.pretBaza), valabilitateZile(other.valabilitateZile) {}
+// Pentru compatibilitate cu restul codului, creez typedef-uri
+using BiletStandardDouble = BiletStandard<double>;
+using BiletPremiumDouble = BiletPremium<double>;
+using BiletVIPDouble = BiletVIP<double>;
 
-Bilet& Bilet::operator=(const Bilet& other) {
-    if (this != &other) {
-        pretBaza = other.pretBaza;
-        valabilitateZile = other.valabilitateZile;
+// Observer simplu pentru demonstrație
+class ParcBiletObserver : public BiletObserver {
+public:
+    void notificareSchimbarePret(double pretNou) override {
+        std::cout << "📢 Observator: Pretul biletului s-a schimbat la " << pretNou << " RON" << std::endl;
     }
-    return *this;
-}
 
-void Bilet::swap(Bilet& other) noexcept {
-    std::swap(pretBaza, other.pretBaza);
-    std::swap(valabilitateZile, other.valabilitateZile);
-}
-
-void Bilet::scadeValabilitate() {
-    if (valabilitateZile > 0) {
-        valabilitateZile--;
+    void notificareExpirare(const std::string& tipBilet) override {
+        std::cout << "⏰ Observator: " << tipBilet << " a expirat!" << std::endl;
     }
-}
+};
 
-double Bilet::calculeazaPretFinal() const {
-    return calculeazaPretCuWeekend();
-}
+// Funcție pentru demonstrarea template-urilor și design patterns
+void demonstreazaTemplatesSiPatterns() {
+    std::cout << "\n🔧 ========== DEMONSTRATIE TEMPLATES SI DESIGN PATTERNS ========== 🔧\n" << std::endl;
 
-double Bilet::calculeazaPretCuWeekend() const {
-    double pretTotal = pretBaza * valabilitateZile;
-    if (esteWeekend(ziCurenta)) {
-        pretTotal *= 1.25; // scumpire cu 25% in weekend
+    // Creez bilete cu Factory Pattern
+    auto biletStandard = BiletFactory<double>::creeazaBilet("standard", 3, false);
+    auto biletPremium = BiletFactory<double>::creeazaBilet("premium", 5, true);
+    auto biletVIP = BiletFactory<double>::creeazaBilet("vip", 7, true);
+
+    std::cout << "🏭 Factory Pattern - Bilete create:" << std::endl;
+    if (biletStandard) std::cout << "  " << *biletStandard << std::endl;
+    if (biletPremium) std::cout << "  " << *biletPremium << std::endl;
+    if (biletVIP) std::cout << "  " << *biletVIP << std::endl;
+
+    // Observer Pattern
+    std::cout << "\n👁️ Observer Pattern - Adaug observator:" << std::endl;
+    ParcBiletObserver observer;
+    if (biletPremium) {
+        biletPremium->adaugaObserver(&observer);
+        biletPremium->actualizeazaPretBaza(80.0);
     }
-    return pretTotal;
-}
 
-bool Bilet::esteWeekend(ZiSaptamana zi) {
-    return zi == ZiSaptamana::Sambata || zi == ZiSaptamana::Duminica;
-}
-
-void Bilet::trecutZi() {
-    int ziInt = static_cast<int>(ziCurenta);
-    ziInt++;
-    if (ziInt > 7) {
-        ziInt = 1;
+    // Strategy Pattern
+    std::cout << "\n📊 Strategy Pattern - Schimb strategia de calcul:" << std::endl;
+    if (biletStandard) {
+        auto strategieWeekend = std::make_unique<CalculPretWeekend<double>>();
+        biletStandard->setStrategieCalcul(std::move(strategieWeekend));
+        std::cout << "  Pret cu strategie weekend: " << biletStandard->calculeazaPretFinal() << " RON" << std::endl;
     }
-    ziCurenta = static_cast<ZiSaptamana>(ziInt);
-}
 
-std::string Bilet::getNumeZi(ZiSaptamana zi) {
-    switch (zi) {
-        case ZiSaptamana::Luni: return "Luni";
-        case ZiSaptamana::Marti: return "Marti";
-        case ZiSaptamana::Miercuri: return "Miercuri";
-        case ZiSaptamana::Joi: return "Joi";
-        case ZiSaptamana::Vineri: return "Vineri";
-        case ZiSaptamana::Sambata: return "Sambata";
-        case ZiSaptamana::Duminica: return "Duminica";
-        default: return "Necunoscut";
+    // Template function - comparare preturi
+    std::cout << "\n🔢 Functie Template - Comparare preturi:" << std::endl;
+    if (biletStandard && biletPremium) {
+        bool standardMaiIeftin = compararePret(*biletStandard, *biletPremium);
+        std::cout << "  Biletul standard este mai ieftin: " << (standardMaiIeftin ? "DA" : "NU") << std::endl;
     }
-}
 
-void Bilet::actualizarePretMediu(double nouPret) {
-    pretMediu = (pretMediu + nouPret) / 2.0;
-}
-
-std::ostream& operator<<(std::ostream& os, const Bilet& bilet) {
-    bilet.afiseaza(os);
-    return os;
-}
-
-void Bilet::afiseaza(std::ostream& os) const {
-    os << "🎫 " << getTip() << " - Pret: " << calculeazaPretFinal()
-       << " RON (Valabil " << valabilitateZile << " zile)";
-    if (valabilitateZile == 0) {
-        os << " [EXPIRAT]";
-    } else if (esteWeekend(ziCurenta)) {
-        os << " [Weekend +25%]";
+    // Template member function
+    std::cout << "\n💱 Functie Template Membru - Conversie pret:" << std::endl;
+    if (biletVIP) {
+        auto pretEUR = biletVIP-> convertestePreț<double>(20.0, 0.2); // 20 EUR la 0.2 rata
+        std::cout << "  Pret convertit din EUR: " << pretEUR << " RON" << std::endl;
     }
-}
 
-// BiletStandard implementation
-BiletStandard::BiletStandard(int valabilitateZile)
-    : Bilet(50.0, valabilitateZile) {}
-
-BiletStandard::BiletStandard(const BiletStandard& other)
-    : Bilet(other) {}
-
-BiletStandard& BiletStandard::operator=(const BiletStandard& other) {
-    if (this != &other) {
-        Bilet::operator=(other);
-    }
-    return *this;
-}
-
-std::unique_ptr<Bilet> BiletStandard::clone() const {
-    return std::make_unique<BiletStandard>(*this);
-}
-
-void BiletStandard::afiseaza(std::ostream& os) const {
-    Bilet::afiseaza(os);
-}
-
-// BiletPremium implementation
-BiletPremium::BiletPremium(int valabilitateZile, bool includeAccesBufet)
-    : Bilet(75.0, valabilitateZile), includeAccesBufet(includeAccesBufet) {}
-
-BiletPremium::BiletPremium(const BiletPremium& other)
-    : Bilet(other), includeAccesBufet(other.includeAccesBufet) {}
-
-BiletPremium& BiletPremium::operator=(const BiletPremium& other) {
-    if (this != &other) {
-        Bilet::operator=(other);
-        includeAccesBufet = other.includeAccesBufet;
-    }
-    return *this;
-}
-
-std::unique_ptr<Bilet> BiletPremium::clone() const {
-    return std::make_unique<BiletPremium>(*this);
-}
-
-double BiletPremium::calculeazaPretFinal() const {
-    double pretTotal = pretBaza * valabilitateZile;
-    if (includeAccesBufet) {
-        pretTotal += 30;
-    }
-    if (esteWeekend(ziCurenta)) {
-        pretTotal *= 1.25;
-    }
-    return pretTotal;
-}
-
-void BiletPremium::afiseaza(std::ostream& os) const {
-    Bilet::afiseaza(os);
-    if (includeAccesBufet) {
-        os << " + Acces Bufet";
-    }
-}
-
-// BiletVIP implementation
-BiletVIP::BiletVIP(int valabilitateZile, bool accesPiscina)
-    : Bilet(100.0, valabilitateZile), accesPiscina(accesPiscina) {}
-
-BiletVIP::BiletVIP(const BiletVIP& other)
-    : Bilet(other), accesPiscina(other.accesPiscina) {}
-
-BiletVIP& BiletVIP::operator=(const BiletVIP& other) {
-    if (this != &other) {
-        Bilet::operator=(other);
-        accesPiscina = other.accesPiscina;
-    }
-    return *this;
-}
-
-std::unique_ptr<Bilet> BiletVIP::clone() const {
-    return std::make_unique<BiletVIP>(*this);
-}
-
-double BiletVIP::calculeazaPretFinal() const {
-    double pretTotal = pretBaza * valabilitateZile;
-    if (accesPiscina) {
-        pretTotal += 50;
-    }
-    if (esteWeekend(ziCurenta)) {
-        pretTotal *= 1.25;
-    }
-    return pretTotal;
-}
-
-void BiletVIP::afiseaza(std::ostream& os) const {
-    Bilet::afiseaza(os);
-    if (accesPiscina) {
-        os << " + Acces Piscina";
-    }
+    std::cout << "================================================================\n" << std::endl;
 }

@@ -1,5 +1,4 @@
 
-
 #ifndef PARCDISTRACTII_H
 #define PARCDISTRACTII_H
 
@@ -9,6 +8,10 @@
 #include "Atractie.h"
 #include "Angajat.h"
 #include "Vizitator.h"
+#include "Bilet.h"
+
+// Declarație înainte pentru funcția de demonstrație
+void demonstreazaTemplatesSiPatterns();
 
 class ParcDistractii {
 private:
@@ -16,13 +19,13 @@ private:
     std::vector<std::unique_ptr<Atractie>> atractii;
     std::vector<std::unique_ptr<Angajat>> angajati;
     std::vector<std::unique_ptr<Vizitator>> vizitatori;
-    static int numarParcuri; // atribut static
-    double profitSaptamanal; // profit calculat doar Lunea
+    static int numarParcuri;
+    double profitSaptamanal;
 
 public:
     explicit ParcDistractii(const std::string& nume);
-    ParcDistractii(const ParcDistractii& other); // copy constructor
-    ParcDistractii& operator=(const ParcDistractii& other); // assignment operator
+    ParcDistractii(const ParcDistractii& other);
+    ParcDistractii& operator=(const ParcDistractii& other);
     ~ParcDistractii() = default;
 
     // Metode pentru adaugare
@@ -39,6 +42,10 @@ public:
     // Metode pentru verificari cu dynamic_cast
     void verificaAccesAtractie(const std::string& numeVizitator, const std::string& numeAtractie) const;
     void demonstratieDynamicCast() const;
+
+    // Noua metoda pentru demonstrarea template-urilor
+    void demonstreazaFunctionalitatiAvansate() const;
+
     double calculezaVenitTotal() const;
     double calculezaCosturiSalariale() const;
 
@@ -59,9 +66,9 @@ public:
 
     // Funcții statice
     static int getNumarParcuri() { return numarParcuri; }
-    //static void resetContorParcuri() { numarParcuri = 0; }
+    static void resetContorParcuri() { numarParcuri = 0; }
 
-    // Getters - return const reference for strings
+    // Getters
     const std::string& getNume() const { return nume; }
     double getProfitSaptamanal() const { return profitSaptamanal; }
 

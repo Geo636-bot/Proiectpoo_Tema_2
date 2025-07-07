@@ -10,6 +10,7 @@ using namespace std;
 // Inițializare atribut static
 int ParcDistractii::numarParcuri = 0;
 
+
 ParcDistractii::ParcDistractii(const std::string& nume)
     : nume(nume), profitSaptamanal(0.0) {
     ++numarParcuri;
@@ -57,6 +58,32 @@ void ParcDistractii::copiazaVizitatori(const std::vector<std::unique_ptr<Vizitat
     }
 }
 
+// Noua metodă pentru demonstrarea template-urilor și design patterns
+void ParcDistractii::demonstreazaFunctionalitatiAvansate() const {
+    std::cout << "\n🚀 ========== FUNCTIONALITATI AVANSATE ========== 🚀\n" << std::endl;
+
+    // Apelez funcția globală pentru demonstrație
+    demonstreazaTemplatesSiPatterns();
+
+    // Demonstrez template-uri cu biletele existente
+    std::cout << "🎫 Template-uri cu biletele din parc:" << std::endl;
+
+    // Creez bilete template pentru demonstrație
+    auto biletTemplate1 = std::make_unique<BiletStandard<double>>(2);
+    auto biletTemplate2 = std::make_unique<BiletPremium<double>>(3, true);
+
+    // Folosesc funcția template de comparare
+    bool primul_mai_ieftin = compararePret(*biletTemplate1, *biletTemplate2);
+    std::cout << "  Biletul Standard vs Adult: primul mai ieftin = "
+              << (primul_mai_ieftin ? "DA" : "NU") << std::endl;
+
+    // Demonstrez conversion template
+    double pretInEur = biletTemplate2->template convertestePreț<int>(15, 0.21);
+    std::cout << "  Conversie pret: 15 EUR = " << pretInEur << " RON" << std::endl;
+
+    std::cout << "================================================\n" << std::endl;
+}
+
 bool ParcDistractii::existaAtractie(const std::string& numeAtractie) const {
     return std::find_if(atractii.begin(), atractii.end(),
         [&numeAtractie](const std::unique_ptr<Atractie>& a) {
@@ -65,7 +92,6 @@ bool ParcDistractii::existaAtractie(const std::string& numeAtractie) const {
 }
 
 void ParcDistractii::scadeValabilitateBilete() {
-    // Vector pentru a stoca vizitatorii care raman valizi
     std::vector<std::unique_ptr<Vizitator>> vizitatoriValizi;
     bool vizitatorEliminat = false;
 
@@ -73,7 +99,6 @@ void ParcDistractii::scadeValabilitateBilete() {
         if (vizitator->getBilet()) {
             vizitator->getBilet()->scadeValabilitate();
 
-            // Verific daca biletul este inca valid dupa scaderea valabilitatii
             if (vizitator->getBilet()->esteValid()) {
                 vizitatoriValizi.push_back(std::move(vizitator));
             } else {
@@ -82,25 +107,21 @@ void ParcDistractii::scadeValabilitateBilete() {
                 vizitatorEliminat = true;
             }
         } else {
-            // Daca nu are bilet, il elimin oricum
             std::cout << "🗑️ Vizitatorul " << vizitator->getNume()
                      << " a fost eliminat din parc - nu are bilet!" << std::endl;
             vizitatorEliminat = true;
         }
     }
 
-    // Inlocuiesc vectorul de vizitatori cu cei valizi
     vizitatori = std::move(vizitatoriValizi);
 
-    // NU mai resetez profitul - acesta se va actualiza doar Lunea
     if (vizitatorEliminat) {
         std::cout << "💰 Profitul săptămânal va fi actualizat în următoarea zi de Luni!" << std::endl;
     }
 }
 
 void ParcDistractii::actualizeazaProfitSaptamanal() {
-    // Actualizez profitul doar in zilele de Luni
-    if (Bilet::getZiCurenta() == ZiSaptamana::Luni) {
+    if (Bilet<double>::getZiCurenta() == ZiSaptamana::Luni) {
         double venitTotal = calculezaVenitTotal();
         double costuriSalariale = calculezaCosturiSalariale();
         profitSaptamanal = venitTotal - costuriSalariale;
@@ -108,13 +129,10 @@ void ParcDistractii::actualizeazaProfitSaptamanal() {
     }
 }
 
-// Metode noi pentru validari angajati
 std::string ParcDistractii::gasesteAtractieFaraOperator() const {
-    // Gasesc toate atractiile care nu au operator
     for (const auto& atractie : atractii) {
         bool areOperator = false;
 
-        // Verific daca exista un operator pentru aceasta atractie
         for (const auto& angajat : angajati) {
             if (auto operator_atr = dynamic_cast<const OperatorAtractie*>(angajat.get())) {
                 if (operator_atr->getAtractieDeservita() == atractie->getNume()) {
@@ -129,11 +147,10 @@ std::string ParcDistractii::gasesteAtractieFaraOperator() const {
         }
     }
 
-    return ""; // Nu exista atractii fara operator
+    return "";
 }
 
 bool ParcDistractii::atractieAreOperator(const std::string& numeAtractie) const {
-    // Verific daca atractia are deja un operator asignat
     for (const auto& angajat : angajati) {
         if (auto operator_atr = dynamic_cast<const OperatorAtractie*>(angajat.get())) {
             if (operator_atr->getAtractieDeservita() == numeAtractie) {
@@ -155,7 +172,6 @@ int ParcDistractii::getNumarPaznici() const {
 }
 
 bool ParcDistractii::verificaZonaOcupata(const std::string& zona) const {
-    // Verific daca zona este deja ocupata de alt paznic
     for (const auto& angajat : angajati) {
         if (auto agent = dynamic_cast<const AgentPaza*>(angajat.get())) {
             if (agent->getZonaAsignata() == zona) {
@@ -184,7 +200,6 @@ void ParcDistractii::adaugaVizitator(std::unique_ptr<Vizitator> vizitator) {
 void ParcDistractii::demonstratieDynamicCast() const {
     std::cout << "\n🔬 ========== DEMONSTRATIE DYNAMIC_CAST ========== 🔬\n" << std::endl;
 
-    // Dynamic cast pentru atractii
     for (const auto& atractie : atractii) {
         std::cout << "Atractie: " << atractie->getNume() << " - ";
 
@@ -197,7 +212,6 @@ void ParcDistractii::demonstratieDynamicCast() const {
         }
     }
 
-    // Dynamic cast pentru angajati
     for (const auto& angajat : angajati) {
         std::cout << "Angajat: " << angajat->getNume() << " - ";
 
@@ -261,20 +275,18 @@ void ParcDistractii::afiseazaStatistici() const {
     std::cout << "Venit total din bilete: " << calculezaVenitTotal() << " RON" << std::endl;
     std::cout << "Costuri salariale saptamanale: " << calculezaCosturiSalariale() << " RON" << std::endl;
 
-    // Afisare statistici statice
     std::cout << "Numar total atractii create: " << Atractie::getNumarTotalAtractii() << std::endl;
     std::cout << "Salariu mediu angajati (saptamanal): " << Angajat::getSalariuMediu() << " RON" << std::endl;
     std::cout << "Numar parcuri create: " << getNumarParcuri() << std::endl;
 
     std::cout << "Profit saptamanal (actualizat Lunea): " << profitSaptamanal << " RON" << std::endl;
-    if (Bilet::getZiCurenta() != ZiSaptamana::Luni) {
+    if (Bilet<double>::getZiCurenta() != ZiSaptamana::Luni) {
         std::cout << "⚠️ Profitul se va actualiza în următoarea zi de Luni" << std::endl;
     }
     std::cout << "========================================\n" << std::endl;
 }
 
 void ParcDistractii::verificaAccesAtractie(const std::string& numeVizitator, const std::string& numeAtractie) const {
-    // Cauta vizitatorul
     auto vizitatorIt = std::find_if(vizitatori.begin(), vizitatori.end(),
         [&numeVizitator](const std::unique_ptr<Vizitator>& v) {
             return v->getNume() == numeVizitator;
@@ -285,7 +297,6 @@ void ParcDistractii::verificaAccesAtractie(const std::string& numeVizitator, con
         return;
     }
 
-    // Cauta atractia
     auto atractieIt = std::find_if(atractii.begin(), atractii.end(),
         [&numeAtractie](const std::unique_ptr<Atractie>& a) {
             return a->getNume() == numeAtractie;
@@ -346,7 +357,7 @@ void ParcDistractii::incarcaAtractiiDinCSV() {
     }
 
     std::string line;
-    std::getline(file, line); // Skip header
+    std::getline(file, line);
 
     while (std::getline(file, line)) {
         std::stringstream ss(line);
@@ -382,7 +393,7 @@ void ParcDistractii::incarcaAngajatiDinCSV() {
     }
 
     std::string line;
-    std::getline(file, line); // Skip header
+    std::getline(file, line);
 
     while (std::getline(file, line)) {
         std::stringstream ss(line);
@@ -397,7 +408,7 @@ void ParcDistractii::incarcaAngajatiDinCSV() {
 
         int varsta = std::stoi(param1);
         int experienta = std::stoi(param2);
-        double salariu = std::stod(param3); // acum este salariu saptamanal
+        double salariu = std::stod(param3);
 
         if (tip == "operator") {
             adaugaAngajat(std::make_unique<OperatorAtractie>(numeAngajat, varsta, experienta, salariu, param4));
@@ -419,7 +430,7 @@ void ParcDistractii::incarcaVizitatoriDinCSV() {
     }
 
     std::string line;
-    std::getline(file, line); // Skip header
+    std::getline(file, line);
 
     while (std::getline(file, line)) {
         std::stringstream ss(line);
@@ -435,17 +446,9 @@ void ParcDistractii::incarcaVizitatoriDinCSV() {
         int inaltime = std::stoi(inaltime_str);
         bool parametru = (parametru_str == "true");
 
-        // Creez biletul bazat pe tip
-        std::unique_ptr<Bilet> bilet;
-        if (tip_bilet == "standard") {
-            bilet = std::make_unique<BiletStandard>(1);
-        } else if (tip_bilet == "adult") {
-            bilet = std::make_unique<BiletPremium>(1, parametru);
-        } else if (tip_bilet == "vip") {
-            bilet = std::make_unique<BiletVIP>(1, parametru);
-        }
+        // Folosesc Factory pattern pentru crearea biletelor template
+        std::unique_ptr<Bilet<double>> bilet = BiletFactory<double>::creeazaBilet(tip_bilet, 1, parametru);
 
-        // Determin tipul de vizitator bazat pe varsta
         if (varsta < 13) {
             adaugaVizitator(std::make_unique<Copil>(numeVizitator, varsta, inaltime, std::move(bilet), parametru));
         } else if (varsta < 18) {

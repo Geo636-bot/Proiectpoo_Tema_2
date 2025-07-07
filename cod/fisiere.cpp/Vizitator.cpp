@@ -1,4 +1,5 @@
 
+
 #include "../Fisiere.h/Vizitator.h"
 #include <iostream>
 
@@ -7,7 +8,7 @@ using namespace std;
 // Inițializare atribut static
 int Vizitator::numarTotalVizitatori = 0;
 
-Vizitator::Vizitator(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet)
+Vizitator::Vizitator(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet<double>> bilet)
     : nume(nume), varsta(varsta), inaltime(inaltime), bilet(std::move(bilet)) {
     ++numarTotalVizitatori;
 }
@@ -59,7 +60,7 @@ void Vizitator::afiseaza(std::ostream& os) const {
 }
 
 // Copil implementation
-Copil::Copil(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet, bool insotitDeAdult)
+Copil::Copil(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet<double>> bilet, bool insotitDeAdult)
     : Vizitator(nume, varsta, inaltime, std::move(bilet)), insotitDeAdult(insotitDeAdult) {}
 
 Copil::Copil(const Copil& other)
@@ -93,7 +94,7 @@ void Copil::afiseaza(std::ostream& os) const {
 }
 
 // Adolescent implementation
-Adolescent::Adolescent(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet)
+Adolescent::Adolescent(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet<double>> bilet)
     : Vizitator(nume, varsta, inaltime, std::move(bilet)) {}
 
 Adolescent::Adolescent(const Adolescent& other)
@@ -115,7 +116,7 @@ void Adolescent::afiseaza(std::ostream& os) const {
 }
 
 // Adult implementation
-Adult::Adult(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet)
+Adult::Adult(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet<double>> bilet)
     : Vizitator(nume, varsta, inaltime, std::move(bilet)) {}
 
 Adult::Adult(const Adult& other)

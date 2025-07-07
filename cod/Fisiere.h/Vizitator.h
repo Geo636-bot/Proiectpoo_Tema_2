@@ -1,4 +1,5 @@
 
+
 #ifndef VIZITATOR_H
 #define VIZITATOR_H
 
@@ -12,11 +13,11 @@ protected:
     std::string nume;
     int varsta;
     int inaltime;
-    std::unique_ptr<Bilet> bilet;
+    std::unique_ptr<Bilet<double>> bilet; // Actualizat pentru template
     static int numarTotalVizitatori; // atribut static
 
 public:
-    Vizitator(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet);
+    Vizitator(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet<double>> bilet);
     Vizitator(const Vizitator& other);
     Vizitator& operator=(const Vizitator& other);
     virtual ~Vizitator() = default;
@@ -25,20 +26,20 @@ public:
     virtual std::unique_ptr<Vizitator> clone() const = 0;
 
     virtual std::string getTip() const = 0;
-    virtual bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara ) const;
+    virtual bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara = 0) const;
 
     // Operatorul << virtual pentru polimorfism
     friend std::ostream& operator<<(std::ostream& os, const Vizitator& vizitator);
 
     // Funcții statice
-    //static int getNumarTotalVizitatori() { return numarTotalVizitatori; }
+    static int getNumarTotalVizitatori() { return numarTotalVizitatori; }
 
     // Getters - return const reference for strings
     const std::string& getNume() const { return nume; }
     int getVarsta() const { return varsta; }
     int getInaltime() const { return inaltime; }
-    const Bilet* getBilet() const { return bilet.get(); }
-    Bilet* getBilet() { return bilet.get(); } // Non-const version
+    const Bilet<double>* getBilet() const { return bilet.get(); } // Actualizat pentru template
+    Bilet<double>* getBilet() { return bilet.get(); } // Actualizat pentru template
 
 protected:
     virtual void afiseaza(std::ostream& os) const;
@@ -50,14 +51,14 @@ private:
     bool insotitDeAdult;
 
 public:
-    Copil(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet, bool insotitDeAdult);
+    Copil(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet<double>> bilet, bool insotitDeAdult);
     Copil(const Copil& other);
     Copil& operator=(const Copil& other);
 
     std::unique_ptr<Vizitator> clone() const override;
     std::string getTip() const override { return "Copil"; }
     bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara = 0) const override;
-    //bool getInsotitDeAdult() const { return insotitDeAdult; }
+    bool getInsotitDeAdult() const { return insotitDeAdult; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
@@ -65,7 +66,7 @@ protected:
 
 class Adolescent : public Vizitator {
 public:
-    Adolescent(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet);
+    Adolescent(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet<double>> bilet);
     Adolescent(const Adolescent& other);
     Adolescent& operator=(const Adolescent& other);
 
@@ -78,7 +79,7 @@ protected:
 
 class Adult : public Vizitator {
 public:
-    Adult(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet);
+    Adult(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet<double>> bilet);
     Adult(const Adult& other);
     Adult& operator=(const Adult& other);
 
