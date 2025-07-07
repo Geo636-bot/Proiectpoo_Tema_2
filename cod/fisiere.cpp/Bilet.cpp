@@ -11,7 +11,7 @@ ZiSaptamana Bilet::ziCurenta = ZiSaptamana::Luni;
 
 Bilet::Bilet(double pretBaza, int valabilitateZile)
     : pretBaza(pretBaza), valabilitateZile(valabilitateZile) {
-    actualizarePretMediu(calculeazaPretFinal());
+    actualizarePretMediu(Bilet::calculeazaPretFinal());
 }
 
 Bilet::Bilet(const Bilet& other)

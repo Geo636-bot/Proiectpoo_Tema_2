@@ -58,7 +58,7 @@ protected:
 
 class BiletStandard : public Bilet {
 public:
-    BiletStandard(int valabilitateZile);
+    explicit BiletStandard(int valabilitateZile);
     BiletStandard(const BiletStandard& other);
     BiletStandard& operator=(const BiletStandard& other);
 
