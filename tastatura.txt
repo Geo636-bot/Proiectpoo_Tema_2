@@ -1,2 +1,89 @@
 n
+5
+Roller Coaster Deluxe
+150
+14
+1  
+140
+6 
+Florin Marinescu
+32
+6
+1  
+Roller Coaster Deluxe
+7 
+Cristina Popescu
+25
+165
+2 
+3  
+y
+8
+Cristina Popescu
+Roller Coaster Deluxe
+9
+11
+12
+7
+Mihai Junior
+8
+125
+1  
+2  
+y  
+7
+Ana Teenager
+16
+160
+3  
+5 
+y  
+6
+Sergiu Paza
+29
+3
+2  
+E  
+6
+Raluca Casier
+35
+7
+3 
+09:00-17:00
+5
+Carusel Magic
+100
+5
+2  
+12
+5
+Casa Vampirilor
+120
+16
+3  
+8
+6
+Marian Operator
+28
+4
+1
+Carusel Magic
+6
+Elena Operator
+30
+5
+1 
+Casa Vampirilor
+11
+11
+11
+11
+11
+7 
+Raul Ionescu
+25
+165
+2  
+3 
+n
 0
