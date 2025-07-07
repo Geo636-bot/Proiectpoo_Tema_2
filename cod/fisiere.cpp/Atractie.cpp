@@ -2,15 +2,14 @@
 
 #include "../Fisiere.h/Atractie.h"
 #include <iostream>
-#include <utility>
 
 using namespace std;
 
 // Inițializare atribut static
 int Atractie::numarTotalAtractii = 0;
 
-Atractie::Atractie(std::string  nume, int inaltimeMinima, int varstaNecesara)
-    : nume(std::move(nume)), inaltimeMinima(inaltimeMinima), varstaNecesara(varstaNecesara) {
+Atractie::Atractie(const std::string& nume, int inaltimeMinima, int varstaNecesara)
+    : nume(nume), inaltimeMinima(inaltimeMinima), varstaNecesara(varstaNecesara) {
     ++numarTotalAtractii;
 }
 
@@ -28,7 +27,7 @@ Atractie& Atractie::operator=(const Atractie& other) {
     return *this;
 }
 
-void Atractie::swap(Atractie& other) noexcept {
+void Atractie::swap(Atractie& other) {
     std::swap(nume, other.nume);
     std::swap(inaltimeMinima, other.inaltimeMinima);
     std::swap(varstaNecesara, other.varstaNecesara);
@@ -50,7 +49,7 @@ MontagneRusse::MontagneRusse(const std::string& nume, int inaltimeMinima, int va
     : Atractie(nume, inaltimeMinima, varstaNecesara), vitezaMaxima(vitezaMaxima) {}
 
 MontagneRusse::MontagneRusse(const MontagneRusse& other)
-     = default;
+    : Atractie(other), vitezaMaxima(other.vitezaMaxima) {}
 
 MontagneRusse& MontagneRusse::operator=(const MontagneRusse& other) {
     if (this != &other) {
@@ -74,7 +73,7 @@ Carusel::Carusel(const std::string& nume, int inaltimeMinima, int varstaNecesara
     : Atractie(nume, inaltimeMinima, varstaNecesara), numarCai(numarCai) {}
 
 Carusel::Carusel(const Carusel& other)
-     = default;
+    : Atractie(other), numarCai(other.numarCai) {}
 
 Carusel& Carusel::operator=(const Carusel& other) {
     if (this != &other) {
@@ -98,7 +97,7 @@ CasaGroazei::CasaGroazei(const std::string& nume, int inaltimeMinima, int varsta
     : Atractie(nume, inaltimeMinima, varstaNecesara), nivelFrica(nivelFrica) {}
 
 CasaGroazei::CasaGroazei(const CasaGroazei& other)
-    = default;
+    : Atractie(other), nivelFrica(other.nivelFrica) {}
 
 CasaGroazei& CasaGroazei::operator=(const CasaGroazei& other) {
     if (this != &other) {

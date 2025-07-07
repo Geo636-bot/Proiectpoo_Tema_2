@@ -17,9 +17,10 @@ private:
     std::vector<std::unique_ptr<Angajat>> angajati;
     std::vector<std::unique_ptr<Vizitator>> vizitatori;
     static int numarParcuri; // atribut static
+    double profitSaptamanal; // profit calculat doar Lunea
 
 public:
-    explicit ParcDistractii(std::string  nume);
+    explicit ParcDistractii(const std::string& nume);
     ParcDistractii(const ParcDistractii& other); // copy constructor
     ParcDistractii& operator=(const ParcDistractii& other); // assignment operator
     ~ParcDistractii() = default;
@@ -38,25 +39,31 @@ public:
     // Metode pentru verificari cu dynamic_cast
     void verificaAccesAtractie(const std::string& numeVizitator, const std::string& numeAtractie) const;
     void demonstratieDynamicCast() const;
-    [[nodiscard]] double calculezaVenitTotal() const;
-    [[nodiscard]] double calculezaCosturiSalariale() const;
+    double calculezaVenitTotal() const;
+    double calculezaCosturiSalariale() const;
 
     // Metoda pentru verificarea existentei atractiei
-    [[nodiscard]] bool existaAtractie(const std::string& numeAtractie) const;
+    bool existaAtractie(const std::string& numeAtractie) const;
 
     // Metoda pentru scaderea valabilitatii biletelor
-    void scadeValabilitateBilete() const;
-    // Metode noi pentru validari angajati
-    [[nodiscard]] std::string gasesteAtractieFaraOperator() const;
-    [[nodiscard]] bool atractieAreOperator(const std::string& numeAtractie) const;
-    [[nodiscard]] int getNumarPaznici() const;
-    [[nodiscard]] bool verificaZonaOcupata(const std::string& zona) const;
+    void scadeValabilitateBilete();
+
+    // Metoda pentru actualizarea profitului saptamanal
+    void actualizeazaProfitSaptamanal();
+
+    // Metode pentru validari angajati
+    std::string gasesteAtractieFaraOperator() const;
+    bool atractieAreOperator(const std::string& numeAtractie) const;
+    int getNumarPaznici() const;
+    bool verificaZonaOcupata(const std::string& zona) const;
+
+    // Funcții statice
+    static int getNumarParcuri() { return numarParcuri; }
+    static void resetContorParcuri() { numarParcuri = 0; }
 
     // Getters - return const reference for strings
-    [[nodiscard]] const std::string& getNume() const { return nume; }
-    [[nodiscard]] size_t getNumarAtractii() const { return atractii.size(); }
-    [[nodiscard]] size_t getNumarAngajati() const { return angajati.size(); }
-    [[nodiscard]] size_t getNumarVizitatori() const { return vizitatori.size(); }
+    const std::string& getNume() const { return nume; }
+    double getProfitSaptamanal() const { return profitSaptamanal; }
 
     // Metode pentru incarcarea datelor din CSV
     void incarcaAtractiiDinCSV();
@@ -65,7 +72,7 @@ public:
     void incarcaToateDatale();
 
 private:
-    void swap(ParcDistractii& other) noexcept;
+    void swap(ParcDistractii& other);
     void copiazaAtractii(const std::vector<std::unique_ptr<Atractie>>& sursa);
     void copiazaAngajati(const std::vector<std::unique_ptr<Angajat>>& sursa);
     void copiazaVizitatori(const std::vector<std::unique_ptr<Vizitator>>& sursa);

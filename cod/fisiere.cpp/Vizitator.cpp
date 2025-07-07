@@ -1,16 +1,14 @@
 
-
 #include "../Fisiere.h/Vizitator.h"
 #include <iostream>
-#include <utility>
 
 using namespace std;
 
 // Inițializare atribut static
 int Vizitator::numarTotalVizitatori = 0;
 
-Vizitator::Vizitator(std::string  nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet)
-    : nume(std::move(nume)), varsta(varsta), inaltime(inaltime), bilet(std::move(bilet)) {
+Vizitator::Vizitator(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet)
+    : nume(nume), varsta(varsta), inaltime(inaltime), bilet(std::move(bilet)) {
     ++numarTotalVizitatori;
 }
 
@@ -36,7 +34,7 @@ Vizitator& Vizitator::operator=(const Vizitator& other) {
     return *this;
 }
 
-void Vizitator::swap(Vizitator& other) noexcept {
+void Vizitator::swap(Vizitator& other) {
     std::swap(nume, other.nume);
     std::swap(varsta, other.varsta);
     std::swap(inaltime, other.inaltime);
@@ -65,7 +63,7 @@ Copil::Copil(const std::string& nume, int varsta, int inaltime, std::unique_ptr<
     : Vizitator(nume, varsta, inaltime, std::move(bilet)), insotitDeAdult(insotitDeAdult) {}
 
 Copil::Copil(const Copil& other)
-    = default;
+    : Vizitator(other), insotitDeAdult(other.insotitDeAdult) {}
 
 Copil& Copil::operator=(const Copil& other) {
     if (this != &other) {
@@ -95,16 +93,15 @@ void Copil::afiseaza(std::ostream& os) const {
 }
 
 // Adolescent implementation
-Adolescent::Adolescent(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet, bool areBuletin)
-    : Vizitator(nume, varsta, inaltime, std::move(bilet)), areBuletin(areBuletin) {}
+Adolescent::Adolescent(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet)
+    : Vizitator(nume, varsta, inaltime, std::move(bilet)) {}
 
 Adolescent::Adolescent(const Adolescent& other)
-     = default;
+    : Vizitator(other) {}
 
 Adolescent& Adolescent::operator=(const Adolescent& other) {
     if (this != &other) {
         Vizitator::operator=(other);
-        areBuletin = other.areBuletin;
     }
     return *this;
 }
@@ -115,20 +112,18 @@ std::unique_ptr<Vizitator> Adolescent::clone() const {
 
 void Adolescent::afiseaza(std::ostream& os) const {
     Vizitator::afiseaza(os);
-    os << " - " << (areBuletin ? "Cu buletin" : "Fara buletin");
 }
 
 // Adult implementation
-Adult::Adult(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet, std::string  ocupatie)
-    : Vizitator(nume, varsta, inaltime, std::move(bilet)), ocupatie(std::move(ocupatie)) {}
+Adult::Adult(const std::string& nume, int varsta, int inaltime, std::unique_ptr<Bilet> bilet)
+    : Vizitator(nume, varsta, inaltime, std::move(bilet)) {}
 
 Adult::Adult(const Adult& other)
-     = default;
+    : Vizitator(other) {}
 
 Adult& Adult::operator=(const Adult& other) {
     if (this != &other) {
         Vizitator::operator=(other);
-        ocupatie = other.ocupatie;
     }
     return *this;
 }
@@ -139,5 +134,4 @@ std::unique_ptr<Vizitator> Adult::clone() const {
 
 void Adult::afiseaza(std::ostream& os) const {
     Vizitator::afiseaza(os);
-    os << " - Ocupatie: " << ocupatie;
 }

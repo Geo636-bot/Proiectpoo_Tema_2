@@ -1,20 +1,20 @@
 
+
 #include "../Fisiere.h/Angajat.h"
 #include <iostream>
-#include <utility>
 
 using namespace std;
 
 // Inițializare atribut static
 double Angajat::salariuMediu = 600.0; // salariu mediu saptamanal
 
-Angajat::Angajat(std::string  nume, int varsta, int experientaAni, double salariu)
-    : nume(std::move(nume)), varsta(varsta), experientaAni(experientaAni), salariu(salariu) {
+Angajat::Angajat(const std::string& nume, int varsta, int experientaAni, double salariu)
+    : nume(nume), varsta(varsta), experientaAni(experientaAni), salariu(salariu) {
     actualizareSalariuMediu(salariu);
 }
 
 Angajat::Angajat(const Angajat& other)
-    = default;
+    : nume(other.nume), varsta(other.varsta), experientaAni(other.experientaAni), salariu(other.salariu) {}
 
 Angajat& Angajat::operator=(const Angajat& other) {
     if (this != &other) {
@@ -26,7 +26,7 @@ Angajat& Angajat::operator=(const Angajat& other) {
     return *this;
 }
 
-void Angajat::swap(Angajat& other) noexcept {
+void Angajat::swap(Angajat& other) {
     std::swap(nume, other.nume);
     std::swap(varsta, other.varsta);
     std::swap(experientaAni, other.experientaAni);
@@ -54,11 +54,11 @@ void Angajat::afiseaza(std::ostream& os) const {
 }
 
 // OperatorAtractie implementation
-OperatorAtractie::OperatorAtractie(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  atractieDeservita)
-    : Angajat(nume, varsta, experientaAni, salariu), atractieDeservita(std::move(atractieDeservita)) {}
+OperatorAtractie::OperatorAtractie(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& atractieDeservita)
+    : Angajat(nume, varsta, experientaAni, salariu), atractieDeservita(atractieDeservita) {}
 
 OperatorAtractie::OperatorAtractie(const OperatorAtractie& other)
-     = default;
+    : Angajat(other), atractieDeservita(other.atractieDeservita) {}
 
 OperatorAtractie& OperatorAtractie::operator=(const OperatorAtractie& other) {
     if (this != &other) {
@@ -82,11 +82,11 @@ void OperatorAtractie::afiseaza(std::ostream& os) const {
 }
 
 // AgentPaza implementation
-AgentPaza::AgentPaza(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  zonaAsignata)
-    : Angajat(nume, varsta, experientaAni, salariu), zonaAsignata(std::move(zonaAsignata)) {}
+AgentPaza::AgentPaza(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& zonaAsignata)
+    : Angajat(nume, varsta, experientaAni, salariu), zonaAsignata(zonaAsignata) {}
 
 AgentPaza::AgentPaza(const AgentPaza& other)
-    = default;
+    : Angajat(other), zonaAsignata(other.zonaAsignata) {}
 
 AgentPaza& AgentPaza::operator=(const AgentPaza& other) {
     if (this != &other) {
@@ -110,11 +110,11 @@ void AgentPaza::afiseaza(std::ostream& os) const {
 }
 
 // Casier implementation
-Casier::Casier(const std::string& nume, int varsta, int experientaAni, double salariu, std::string  interval)
-    : Angajat(nume, varsta, experientaAni, salariu), interval(std::move(interval)) {}
+Casier::Casier(const std::string& nume, int varsta, int experientaAni, double salariu, const std::string& interval)
+    : Angajat(nume, varsta, experientaAni, salariu), interval(interval) {}
 
 Casier::Casier(const Casier& other)
-     = default;
+    : Angajat(other), interval(other.interval) {}
 
 Casier& Casier::operator=(const Casier& other) {
     if (this != &other) {

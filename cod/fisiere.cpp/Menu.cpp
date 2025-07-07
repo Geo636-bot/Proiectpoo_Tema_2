@@ -35,7 +35,7 @@ void Menu::afiseazaMeniu() {
     cout << "Alegerea ta: ";
 }
 
-void Menu::ruleazaMeniu() const {
+void Menu::ruleazaMeniu() {
     int optiune;
 
     do {
@@ -93,12 +93,15 @@ void Menu::ruleazaMeniu() const {
     } while (optiune != 0);
 }
 
-void Menu::afiseazaProfitSaptamanal() const {
+void Menu::afiseazaProfitSaptamanal() {
     cout << "\n💰 ========== PROFIT SAPTAMANAL ========== 💰\n" << endl;
+
+    // Actualizez profitul doar daca este Luni
+    parc.actualizeazaProfitSaptamanal();
 
     double venitTotal = parc.calculezaVenitTotal();
     double costuriSalariale = parc.calculezaCosturiSalariale();
-    double profitSaptamanal = venitTotal - costuriSalariale;
+    double profitSaptamanal = parc.getProfitSaptamanal();
 
     cout << "📈 Venituri totale (bilete): " << venitTotal << " RON" << endl;
     cout << "💸 Costuri salariale (saptamanal): " << costuriSalariale << " RON" << endl;
@@ -109,14 +112,19 @@ void Menu::afiseazaProfitSaptamanal() const {
         cout << "✅ Parcul genereaza profit!" << endl;
     } else if (profitSaptamanal == 0) {
         cout << "⚖️ ECHILIBRU: " << profitSaptamanal << " RON" << endl;
-        cout << "🔄 Parcul acopera exact costurile!" << endl;
+        cout << "🔄 Parcul acopera exact costurile sau profitul a fost resetat!" << endl;
     } else {
         cout << "💔 PIERDERE SAPTAMANALA: " << profitSaptamanal << " RON" << endl;
         cout << "⚠️ Parcul pierde bani!" << endl;
     }
 
+    if (Bilet::getZiCurenta() != ZiSaptamana::Luni) {
+        cout << "⚠️ Profitul se actualizează doar în zilele de Luni!" << endl;
+        cout << "📅 Ziua curentă: " << Bilet::getNumeZi(Bilet::getZiCurenta()) << endl;
+    }
+
     cout << "\n📊 Analiza profitabilitatii:" << endl;
-    if (costuriSalariale > 0) {
+    if (costuriSalariale > 0 && venitTotal > 0) {
         double marjaProfit = (profitSaptamanal / venitTotal) * 100;
         cout << "📈 Marja de profit: " << marjaProfit << "%" << endl;
     }
@@ -124,7 +132,7 @@ void Menu::afiseazaProfitSaptamanal() const {
     cout << "==========================================\n" << endl;
 }
 
-void Menu::simuleazaTrecereaZilei() const {
+void Menu::simuleazaTrecereaZilei() {
     cout << "\n📅 ========== SIMULARE TRECERE ZI ========== 📅\n" << endl;
 
     ZiSaptamana ziVeche = Bilet::getZiCurenta();
@@ -139,6 +147,9 @@ void Menu::simuleazaTrecereaZilei() const {
     // Scade valabilitatea biletelor pentru toti vizitatorii
     parc.scadeValabilitateBilete();
 
+    // Actualizez profitul daca este Luni
+    parc.actualizeazaProfitSaptamanal();
+
     ZiSaptamana ziNoua = Bilet::getZiCurenta();
     cout << "Ziua noua: " << Bilet::getNumeZi(ziNoua);
     if (Bilet::esteWeekend(ziNoua)) {
@@ -150,7 +161,7 @@ void Menu::simuleazaTrecereaZilei() const {
     cout << "==========================================\n" << endl;
 }
 
-void Menu::adaugaAtractieInteractiv() const {
+void Menu::adaugaAtractieInteractiv() {
     cout << "\n🎢 ========== ADAUGARE ATRACTIE ========== 🎢\n" << endl;
 
     string nume = getValidString("Introduceti numele atractiei: ");
@@ -162,7 +173,9 @@ void Menu::adaugaAtractieInteractiv() const {
     cout << "2. Carusel" << endl;
     cout << "3. Casa Groazei" << endl;
 
-    switch (getValidInt("Alegeti tipul atractiei (1-3): ", 1, 3)) {
+    int tipAtractie = getValidInt("Alegeti tipul atractiei (1-3): ", 1, 3);
+
+    switch (tipAtractie) {
         case 1: {
             int vitezaMaxima = getValidInt("Introduceti viteza maxima (km/h): ", 30, 200);
             parc.adaugaAtractie(std::make_unique<MontagneRusse>(nume, inaltimeMinima, varstaNecesara, vitezaMaxima));
@@ -178,13 +191,12 @@ void Menu::adaugaAtractieInteractiv() const {
             parc.adaugaAtractie(std::make_unique<CasaGroazei>(nume, inaltimeMinima, varstaNecesara, nivelFrica));
             break;
         }
-        default: break;
     }
 
     cout << "==========================================\n" << endl;
 }
 
-void Menu::adaugaAngajatInteractiv() const {
+void Menu::adaugaAngajatInteractiv() {
     cout << "\n👤 ========== ADAUGARE ANGAJAT ========== 👤\n" << endl;
 
     string nume = getValidString("Introduceti numele angajatului: ");
@@ -229,16 +241,16 @@ void Menu::adaugaAngajatInteractiv() const {
             salariu = calculezaSalariuCuExperienta(550.0, experientaAni);
             cout << "Salariul calculat: " << salariu << " RON/saptamana" << endl;
 
-            // Verific numarul de paznici existenti
-            if (parc.getNumarPaznici() >= 4) {
+            // Verific numarul de paznici existenti prin ParcDistractii
+            if (getNumarPaznici() >= 4) {
                 cout << "❌ Nu puteti avea mai mult de 4 paznici!" << endl;
                 return;
             }
 
             string zonaAsignata = getValidZona("Introduceti zona asignata (N/S/E/W): ");
 
-            // Verific daca zona este deja ocupata
-            if (parc.verificaZonaOcupata(zonaAsignata)) {
+            // Verific daca zona este deja ocupata prin ParcDistractii
+            if (verificaZonaOcupata(zonaAsignata)) {
                 cout << "❌ Zona " << zonaAsignata << " este deja ocupata!" << endl;
                 return;
             }
@@ -254,13 +266,12 @@ void Menu::adaugaAngajatInteractiv() const {
             parc.adaugaAngajat(std::make_unique<Casier>(nume, varsta, experientaAni, salariu, interval));
             break;
         }
-        default: break;
     }
 
     cout << "==========================================\n" << endl;
 }
 
-void Menu::adaugaVizitatorInteractiv() const {
+void Menu::adaugaVizitatorInteractiv() {
     cout << "\n🎫 ========== ADAUGARE VIZITATOR ========== 🎫\n" << endl;
 
     string nume = getValidString("Introduceti numele vizitatorului: ");
@@ -270,7 +281,7 @@ void Menu::adaugaVizitatorInteractiv() const {
     // Creez biletul
     cout << "\nTipuri de bilete disponibile:" << endl;
     cout << "1. Bilet Standard (50 RON)" << endl;
-    cout << "2. Bilet Adult (75 RON + optiuni)" << endl;
+    cout << "2. Bilet Premium (75 RON + optiuni)" << endl;
     cout << "3. Bilet VIP (100 RON + optiuni)" << endl;
 
     int tipBilet = getValidInt("Alegeti tipul biletului (1-3): ", 1, 3);
@@ -284,7 +295,7 @@ void Menu::adaugaVizitatorInteractiv() const {
             break;
         case 2: {
             bool accesBufet = getValidBool("Doriti acces la bufet? (y/n): ");
-            bilet = std::make_unique<BiletAdult>(valabilitateZile, accesBufet);
+            bilet = std::make_unique<BiletPremium>(valabilitateZile, accesBufet);
             break;
         }
         case 3: {
@@ -292,7 +303,6 @@ void Menu::adaugaVizitatorInteractiv() const {
             bilet = std::make_unique<BiletVIP>(valabilitateZile, accesPiscina);
             break;
         }
-        default: break;
     }
 
     // Determin tipul de vizitator
@@ -309,16 +319,16 @@ void Menu::adaugaVizitatorInteractiv() const {
         parc.adaugaVizitator(std::make_unique<Copil>(nume, varsta, inaltime, std::move(bilet), insotitDeAdult));
     } else if (varsta < 18) {
         // Pentru adolescenți, nu mai cerem areBuletin - folosim valoarea default
-        parc.adaugaVizitator(std::make_unique<Adolescent>(nume, varsta, inaltime, std::move(bilet), true));
+        parc.adaugaVizitator(std::make_unique<Adolescent>(nume, varsta, inaltime, std::move(bilet)));
     } else {
         // Pentru adulți, nu mai cerem ocupația - folosim o valoare default
-        parc.adaugaVizitator(std::make_unique<Adult>(nume, varsta, inaltime, std::move(bilet), "Necunoscuta"));
+        parc.adaugaVizitator(std::make_unique<Adult>(nume, varsta, inaltime, std::move(bilet)));
     }
 
     cout << "==========================================\n" << endl;
 }
 
-void Menu::verificaAccesInteractiv() const {
+void Menu::verificaAccesInteractiv() {
     cout << "\n🔍 ========== VERIFICARE ACCES ========== 🔍\n" << endl;
 
     string numeVizitator = getValidString("Introduceti numele vizitatorului: ");
@@ -335,25 +345,23 @@ double Menu::calculezaSalariuCuExperienta(double salariuBaza, int experientaAni)
 }
 
 string Menu::gasesteAtractieFaraOperator() {
-    // Implementez logica pentru a gasi o atractie fara operator
-    // Pentru simplitate, returnez prima atractie gasita
-    // In implementarea reala, ar trebui sa verific in parc
-    return "Montagne Russe 1"; // placeholder - ar trebui implementat corect
+    // Folosesc metoda din ParcDistractii pentru a gasi o atractie fara operator
+    return parc.gasesteAtractieFaraOperator();
 }
 
-bool Menu::verificaAtractieDisponibila(const string& numeAtractie) const {
-    // Verific daca atractia exista si nu are operator
-    return parc.existaAtractie(numeAtractie);
+bool Menu::verificaAtractieDisponibila(const string& numeAtractie) {
+    // Verific daca atractia exista si nu are operator prin ParcDistractii
+    return parc.existaAtractie(numeAtractie) && !parc.atractieAreOperator(numeAtractie);
 }
 
 int Menu::getNumarPaznici() {
-    // Numar paznicii existenti - ar trebui implementat in ParcDistractii
-    return 0; // placeholder
+    // Folosesc metoda din ParcDistractii pentru a numara paznicii
+    return parc.getNumarPaznici();
 }
 
 bool Menu::verificaZonaOcupata(const string& zona) {
-    // Verific daca zona este deja ocupata de alt paznic
-    return false; // placeholder
+    // Folosesc metoda din ParcDistractii pentru a verifica zona
+    return parc.verificaZonaOcupata(zona);
 }
 
 string Menu::getValidZona(const string& prompt) {
@@ -408,21 +416,6 @@ int Menu::getValidInt(const std::string& prompt, int min, int max) {
             cout << prompt;
         }
 
-        if (cin >> value && value >= min && value <= max) {
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            return value;
-        } else {
-            cout << "❌ Valoare invalida! Introduceti un numar intre " << min << " si " << max << ": ";
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        }
-    }
-}
-
-double Menu::getValidDouble(const std::string& prompt, double min, double max) {
-    double value;
-    while (true) {
-        cout << prompt;
         if (cin >> value && value >= min && value <= max) {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             return value;
