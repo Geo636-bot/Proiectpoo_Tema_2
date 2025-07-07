@@ -14,13 +14,13 @@ enum class ZiSaptamana {
     Luni = 1, Marti, Miercuri, Joi, Vineri, Sambata, Duminica
 };
 
-// Functie template liberă pentru compararea preturilor
+// Functie template libera pentru compararea preturilor
 template<typename T, typename U>
 bool compararePret(const T& bilet1, const U& bilet2) {
     return bilet1.calculeazaPretFinal() < bilet2.calculeazaPretFinal();
 }
 
-// Design Pattern: Observer pentru notificări
+// Design Pattern: Observer pentru notificari
 class BiletObserver {
 public:
     virtual ~BiletObserver() = default;
@@ -86,11 +86,11 @@ public:
 
     // Functie template membru care depinde de T
     template<typename U>
-    T convertestePret(const U& pretStrăin, double ratăSchimb) const {
-        return static_cast<T>(pretStrăin * ratăSchimb);
+    T convertestePret(const U& pretStrain, double rataSchimb) const {
+        return static_cast<T>(pretStrain * rataSchimb);
     }
 
-    // Functie membru care lucrează cu tip T
+    // Functie membru care lucreaza cu tip T
     void actualizeazaPretBaza(const T& pretNou) {
         pretBaza = pretNou;
         notificaObservatori(static_cast<double>(pretNou));
