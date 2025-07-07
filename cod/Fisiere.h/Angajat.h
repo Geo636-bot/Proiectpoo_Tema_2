@@ -37,8 +37,8 @@ public:
     // Getters - return const references for strings
     const std::string& getNume() const { return nume; }
     int getVarsta() const { return varsta; }
-    int getExperientaAni() const { return experientaAni; }
-    double getSalariu() const { return salariu; }
+    //int getExperientaAni() const { return experientaAni; }
+    //double getSalariu() const { return salariu; }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;

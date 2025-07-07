@@ -43,8 +43,8 @@ public:
     static void actualizarePretMediu(double nouPret);
 
     // Getters
-    double getPretBaza() const { return pretBaza; }
-    int getValabilitateZile() const { return valabilitateZile; }
+   // double getPretBaza() const { return pretBaza; }
+    //int getValabilitateZile() const { return valabilitateZile; }
 
     // Metoda pentru scaderea valabilitatii
     void scadeValabilitate();
@@ -81,7 +81,7 @@ public:
     std::unique_ptr<Bilet> clone() const override;
     std::string getTip() const override { return "Bilet Premium"; }
     double calculeazaPretFinal() const override;
-    bool getIncludeAccesBufet() const { return includeAccesBufet; }
+    //bool getIncludeAccesBufet() const { return includeAccesBufet; }
 
 protected:
     void afiseaza(std::ostream& os) const override;
@@ -99,7 +99,7 @@ public:
     std::unique_ptr<Bilet> clone() const override;
     std::string getTip() const override { return "Bilet VIP"; }
     double calculeazaPretFinal() const override;
-    bool getAccesPiscina() const { return accesPiscina; }
+    //bool getAccesPiscina() const { return accesPiscina; }
 
 protected:
     void afiseaza(std::ostream& os) const override;

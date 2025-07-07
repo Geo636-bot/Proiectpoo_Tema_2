@@ -303,7 +303,7 @@ void ParcDistractii::verificaAccesAtractie(const std::string& numeVizitator, con
     std::cout << "Vizitator: " << vizitator->getNume() << " (" << vizitator->getTip() << ")" << std::endl;
     std::cout << "Atractie: " << atractie->getNume() << " (" << atractie->getTip() << ")" << std::endl;
 
-    bool poateAccesa = vizitator->poateAccesaAtractia(atractie->getInaltimeMinima());
+    bool poateAccesa = vizitator->poateAccesaAtractia(atractie->getInaltimeMinima(),atractie->getVarstaNecesara());
 
     if (poateAccesa) {
         std::cout << "✅ ACCES PERMIS! Vizitatorul poate accesa atractia." << std::endl;

@@ -25,13 +25,13 @@ public:
     virtual std::unique_ptr<Vizitator> clone() const = 0;
 
     virtual std::string getTip() const = 0;
-    virtual bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara = 0) const;
+    virtual bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara ) const;
 
     // Operatorul << virtual pentru polimorfism
     friend std::ostream& operator<<(std::ostream& os, const Vizitator& vizitator);
 
     // Funcții statice
-    static int getNumarTotalVizitatori() { return numarTotalVizitatori; }
+    //static int getNumarTotalVizitatori() { return numarTotalVizitatori; }
 
     // Getters - return const reference for strings
     const std::string& getNume() const { return nume; }
@@ -57,7 +57,7 @@ public:
     std::unique_ptr<Vizitator> clone() const override;
     std::string getTip() const override { return "Copil"; }
     bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara = 0) const override;
-    bool getInsotitDeAdult() const { return insotitDeAdult; }
+    //bool getInsotitDeAdult() const { return insotitDeAdult; }
 
 protected:
     void afiseaza(std::ostream& os) const override;

@@ -59,7 +59,7 @@ public:
 
     // Funcții statice
     static int getNumarParcuri() { return numarParcuri; }
-    static void resetContorParcuri() { numarParcuri = 0; }
+    //static void resetContorParcuri() { numarParcuri = 0; }
 
     // Getters - return const reference for strings
     const std::string& getNume() const { return nume; }
