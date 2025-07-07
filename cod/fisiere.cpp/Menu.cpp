@@ -89,11 +89,6 @@ void Menu::ruleazaMeniu() {
             cout << "❌ Eroare neasteptata: " << e.what() << endl;
         }
         
-        if (optiune != 0) {
-            cout << "\nApasa Enter pentru a continua...";
-            cin.ignore();
-            cin.get();
-        }
         
     } while (optiune != 0);
 }
