@@ -123,7 +123,7 @@ Adult::Adult(const std::string& nume, int varsta, int inaltime, std::unique_ptr<
     : Vizitator(nume, varsta, inaltime, std::move(bilet)), ocupatie(std::move(ocupatie)) {}
 
 Adult::Adult(const Adult& other)
-   = default;
+     = default;
 
 Adult& Adult::operator=(const Adult& other) {
     if (this != &other) {

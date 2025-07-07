@@ -26,7 +26,7 @@ public:
     [[nodiscard]] virtual std::unique_ptr<Vizitator> clone() const = 0;
 
     [[nodiscard]] virtual std::string getTip() const = 0;
-    [[nodiscard]] virtual bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara ) const;
+    [[nodiscard]] virtual bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara) const;
 
     // Operatorul << virtual pentru polimorfism
     friend std::ostream& operator<<(std::ostream& os, const Vizitator& vizitator);
@@ -39,7 +39,7 @@ public:
     [[nodiscard]] const std::string& getNume() const { return nume; }
     [[nodiscard]] int getVarsta() const { return varsta; }
     [[nodiscard]] int getInaltime() const { return inaltime; }
-    [[nodiscard]] const Bilet* getBilet() const { return bilet.get(); }
+    [[nodiscard]] Bilet* getBilet() const { return bilet.get(); }
 
 protected:
     virtual void afiseaza(std::ostream& os) const;
@@ -57,7 +57,7 @@ public:
 
     [[nodiscard]] std::unique_ptr<Vizitator> clone() const override;
     [[nodiscard]] std::string getTip() const override { return "Copil"; }
-    [[nodiscard]] bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara ) const override;
+    [[nodiscard]] bool poateAccesaAtractia(int inaltimeMinima, int varstaNecesara) const override;
     [[nodiscard]] bool getInsotitDeAdult() const { return insotitDeAdult; }
 
 protected:

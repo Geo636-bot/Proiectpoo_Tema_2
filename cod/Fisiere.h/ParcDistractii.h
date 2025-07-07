@@ -44,9 +44,13 @@ public:
     // Metoda pentru verificarea existentei atractiei
     [[nodiscard]] bool existaAtractie(const std::string& numeAtractie) const;
 
-    // Funcții statice
-    static int getNumarParcuri() { return numarParcuri; }
-    static void resetContorParcuri() { numarParcuri = 0; }
+    // Metoda pentru scaderea valabilitatii biletelor
+    void scadeValabilitateBilete() const;
+    // Metode noi pentru validari angajati
+    [[nodiscard]] std::string gasesteAtractieFaraOperator() const;
+    [[nodiscard]] bool atractieAreOperator(const std::string& numeAtractie) const;
+    [[nodiscard]] int getNumarPaznici() const;
+    [[nodiscard]] bool verificaZonaOcupata(const std::string& zona) const;
 
     // Getters - return const reference for strings
     [[nodiscard]] const std::string& getNume() const { return nume; }

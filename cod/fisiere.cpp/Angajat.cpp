@@ -6,7 +6,7 @@
 using namespace std;
 
 // Inițializare atribut static
-double Angajat::salariuMediu = 2500.0;
+double Angajat::salariuMediu = 600.0; // salariu mediu saptamanal
 
 Angajat::Angajat(std::string  nume, int varsta, int experientaAni, double salariu)
     : nume(std::move(nume)), varsta(varsta), experientaAni(experientaAni), salariu(salariu) {
@@ -34,7 +34,8 @@ void Angajat::swap(Angajat& other) noexcept {
 }
 
 double Angajat::calculeazaSalariuTotal() const {
-    return salariu + (experientaAni * 100); // bonus experienta
+    // Salariul este deja calculat pe saptamana + bonus experienta (20 RON/an experienta)
+    return salariu + (experientaAni * 20);
 }
 
 void Angajat::actualizareSalariuMediu(double nouSalariu) {
@@ -49,7 +50,7 @@ std::ostream& operator<<(std::ostream& os, const Angajat& angajat) {
 void Angajat::afiseaza(std::ostream& os) const {
     os << "👤 " << getTip() << ": " << nume
        << " (Varsta: " << varsta << ", Experienta: " << experientaAni
-       << " ani, Salariu: " << salariu << " RON)";
+       << " ani, Salariu saptamanal: " << salariu << " RON)";
 }
 
 // OperatorAtractie implementation
@@ -72,7 +73,7 @@ std::unique_ptr<Angajat> OperatorAtractie::clone() const {
 }
 
 double OperatorAtractie::calculeazaSalariuTotal() const {
-    return Angajat::calculeazaSalariuTotal() + 500; // bonus responsabilitate
+    return Angajat::calculeazaSalariuTotal() + 100; // bonus responsabilitate saptamanal
 }
 
 void OperatorAtractie::afiseaza(std::ostream& os) const {
@@ -85,7 +86,7 @@ AgentPaza::AgentPaza(const std::string& nume, int varsta, int experientaAni, dou
     : Angajat(nume, varsta, experientaAni, salariu), zonaAsignata(std::move(zonaAsignata)) {}
 
 AgentPaza::AgentPaza(const AgentPaza& other)
-     = default;
+    = default;
 
 AgentPaza& AgentPaza::operator=(const AgentPaza& other) {
     if (this != &other) {
@@ -100,7 +101,7 @@ std::unique_ptr<Angajat> AgentPaza::clone() const {
 }
 
 double AgentPaza::calculeazaSalariuTotal() const {
-    return Angajat::calculeazaSalariuTotal() + 300; // bonus paza
+    return Angajat::calculeazaSalariuTotal() + 75; // bonus paza saptamanal
 }
 
 void AgentPaza::afiseaza(std::ostream& os) const {

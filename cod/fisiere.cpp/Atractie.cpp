@@ -9,13 +9,13 @@ using namespace std;
 // Inițializare atribut static
 int Atractie::numarTotalAtractii = 0;
 
-Atractie::Atractie(std::string  nume, int inaltimeMinima, int capacitate, int varstaNecesara)
-    : nume(std::move(nume)), inaltimeMinima(inaltimeMinima), capacitate(capacitate), varstaNecesara(varstaNecesara) {
+Atractie::Atractie(std::string  nume, int inaltimeMinima, int varstaNecesara)
+    : nume(std::move(nume)), inaltimeMinima(inaltimeMinima), varstaNecesara(varstaNecesara) {
     ++numarTotalAtractii;
 }
 
 Atractie::Atractie(const Atractie& other)
-    : nume(other.nume), inaltimeMinima(other.inaltimeMinima), capacitate(other.capacitate), varstaNecesara(other.varstaNecesara) {
+    : nume(other.nume), inaltimeMinima(other.inaltimeMinima), varstaNecesara(other.varstaNecesara) {
     ++numarTotalAtractii;
 }
 
@@ -23,7 +23,6 @@ Atractie& Atractie::operator=(const Atractie& other) {
     if (this != &other) {
         nume = other.nume;
         inaltimeMinima = other.inaltimeMinima;
-        capacitate = other.capacitate;
         varstaNecesara = other.varstaNecesara;
     }
     return *this;
@@ -32,7 +31,6 @@ Atractie& Atractie::operator=(const Atractie& other) {
 void Atractie::swap(Atractie& other) noexcept {
     std::swap(nume, other.nume);
     std::swap(inaltimeMinima, other.inaltimeMinima);
-    std::swap(capacitate, other.capacitate);
     std::swap(varstaNecesara, other.varstaNecesara);
 }
 
@@ -43,13 +41,13 @@ std::ostream& operator<<(std::ostream& os, const Atractie& atractie) {
 
 void Atractie::afiseaza(std::ostream& os) const {
     os << "🎢 " << getTip() << ": " << nume
-       << " (Inaltime min: " << inaltimeMinima << "cm, Capacitate: " << capacitate
+       << " (Inaltime min: " << inaltimeMinima << "cm"
        << ", Varsta min: " << varstaNecesara << " ani)";
 }
 
 // MontagneRusse implementation
-MontagneRusse::MontagneRusse(const std::string& nume, int inaltimeMinima, int capacitate, int varstaNecesara, int vitezaMaxima)
-    : Atractie(nume, inaltimeMinima, capacitate, varstaNecesara), vitezaMaxima(vitezaMaxima) {}
+MontagneRusse::MontagneRusse(const std::string& nume, int inaltimeMinima, int varstaNecesara, int vitezaMaxima)
+    : Atractie(nume, inaltimeMinima, varstaNecesara), vitezaMaxima(vitezaMaxima) {}
 
 MontagneRusse::MontagneRusse(const MontagneRusse& other)
      = default;
@@ -72,8 +70,8 @@ void MontagneRusse::afiseaza(std::ostream& os) const {
 }
 
 // Carusel implementation
-Carusel::Carusel(const std::string& nume, int inaltimeMinima, int capacitate, int varstaNecesara, int numarCai)
-    : Atractie(nume, inaltimeMinima, capacitate, varstaNecesara), numarCai(numarCai) {}
+Carusel::Carusel(const std::string& nume, int inaltimeMinima, int varstaNecesara, int numarCai)
+    : Atractie(nume, inaltimeMinima, varstaNecesara), numarCai(numarCai) {}
 
 Carusel::Carusel(const Carusel& other)
      = default;
@@ -96,11 +94,11 @@ void Carusel::afiseaza(std::ostream& os) const {
 }
 
 // CasaGroazei implementation
-CasaGroazei::CasaGroazei(const std::string& nume, int inaltimeMinima, int capacitate, int varstaNecesara, int nivelFrica)
-    : Atractie(nume, inaltimeMinima, capacitate, varstaNecesara), nivelFrica(nivelFrica) {}
+CasaGroazei::CasaGroazei(const std::string& nume, int inaltimeMinima, int varstaNecesara, int nivelFrica)
+    : Atractie(nume, inaltimeMinima, varstaNecesara), nivelFrica(nivelFrica) {}
 
 CasaGroazei::CasaGroazei(const CasaGroazei& other)
-     = default;
+    = default;
 
 CasaGroazei& CasaGroazei::operator=(const CasaGroazei& other) {
     if (this != &other) {

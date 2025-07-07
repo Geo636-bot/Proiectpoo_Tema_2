@@ -9,13 +9,13 @@ using namespace std;
 double Bilet::pretMediu = 75.0;
 ZiSaptamana Bilet::ziCurenta = ZiSaptamana::Luni;
 
-Bilet::Bilet(double pretBaza, int valabilitateZile) 
+Bilet::Bilet(double pretBaza, int valabilitateZile)
     : pretBaza(pretBaza), valabilitateZile(valabilitateZile) {
     actualizarePretMediu(Bilet::calculeazaPretFinal());
 }
 
-Bilet::Bilet(const Bilet& other) 
-    = default;
+Bilet::Bilet(const Bilet& other)
+     = default;
 
 Bilet& Bilet::operator=(const Bilet& other) {
     if (this != &other) {
@@ -25,9 +25,16 @@ Bilet& Bilet::operator=(const Bilet& other) {
     return *this;
 }
 
-void Bilet::swap(Bilet& other) noexcept{
+void Bilet::swap(Bilet& other) noexcept {
     std::swap(pretBaza, other.pretBaza);
     std::swap(valabilitateZile, other.valabilitateZile);
+}
+
+
+void Bilet::scadeValabilitate() {
+    if (valabilitateZile > 0) {
+        valabilitateZile--;
+    }
 }
 
 double Bilet::calculeazaPretFinal() const {
@@ -42,7 +49,7 @@ double Bilet::calculeazaPretCuWeekend() const {
     return pretTotal;
 }
 
-bool Bilet::esteWeekend(const ZiSaptamana zi) {
+bool Bilet::esteWeekend(ZiSaptamana zi) {
     return zi == ZiSaptamana::Sambata || zi == ZiSaptamana::Duminica;
 }
 
@@ -78,9 +85,11 @@ std::ostream& operator<<(std::ostream& os, const Bilet& bilet) {
 }
 
 void Bilet::afiseaza(std::ostream& os) const {
-    os << "🎫 " << getTip() << " - Pret: " << calculeazaPretFinal() 
+    os << "🎫 " << getTip() << " - Pret: " << calculeazaPretFinal()
        << " RON (Valabil " << valabilitateZile << " zile)";
-    if (esteWeekend(ziCurenta)) {
+    if (valabilitateZile == 0) {
+        os << " [EXPIRAT]";
+    } else if (esteWeekend(ziCurenta)) {
         os << " [Weekend +25%]";
     }
 }
@@ -90,7 +99,7 @@ BiletStandard::BiletStandard(int valabilitateZile)
     : Bilet(50.0, valabilitateZile) {}
 
 BiletStandard::BiletStandard(const BiletStandard& other)
-    =default;
+    = default;
 
 BiletStandard& BiletStandard::operator=(const BiletStandard& other) {
     if (this != &other) {
@@ -112,7 +121,7 @@ BiletAdult::BiletAdult(int valabilitateZile, bool includeAccesBufet)
     : Bilet(75.0, valabilitateZile), includeAccesBufet(includeAccesBufet) {}
 
 BiletAdult::BiletAdult(const BiletAdult& other)
-    = default;
+     = default;
 
 BiletAdult& BiletAdult::operator=(const BiletAdult& other) {
     if (this != &other) {
